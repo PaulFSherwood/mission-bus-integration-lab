@@ -241,5 +241,65 @@ MBIL produces these outputs
     \item scenario run artifacts
 \end{itemize}
 
+\textbf{Operational Modes}
+
+The system may be in several broad operational modes:
+\begin{itemize}[leftmargin=*]
+    \item normal operation
+    \item degraded operation
+    \item failover / recovery transition
+    \item post-failover operation
+    \item terminated / end of scenario
+\end{itemize}
+
+\textbf{Failure Context}
+
+MBIL is specifically intended to model how the system behaves when faults are present.
+
+Examples of modeled failures include:
+\begin{itemize}[leftmargin=*]
+    \item message drop
+    \item message delay
+    \item message corruption
+    \item subsystem offline
+    \item loss of heartbeat leading to controller failover
+\end{itemize}
+
+The project is not just a simulator of happy-path behavior. It is intended to demonstrate resilience and traceability under failure.
+
+\textbf{Context Diagram Narrative}
+
+If described as a simple context diagram in words:
+\begin{itemize}[leftmargin=*]
+    \item the configuration layer defines the system and scenario
+    \item the simulation engine builds and drives the system
+    \item subsystems communicate only through the bus
+    \item the fault engine modifies message or subsystem behavior according to the scenario
+    \item the observability layer records the behavior of the whole system
+    \item reviewers and tests consume the logs, snapshots, and outputs
+\end{itemize}
+
+\textbf{Design Constraints Implied by Context}
+
+This system context leads to several design constraints:
+\begin{itemize}[leftmargin=*]
+    \item communication should remain bus-mediated
+    \item runtime behavior should remain deterministic
+    \item subsystem boundaries should remain explicit
+    \item observability must not be optional for critical events
+    \item failover behavior must be visible and testable
+    \item configuration should drive topology wherever practical
+\end{itemize}
+
+\textbf{Intended Use of This Document}
+
+This system context document should be used to:
+\begin{itemize}[leftmargin=*]
+    \item explain the top-level structure of MBIL
+    \item support architecture and ICD work
+    \item define boundaries before implementation
+    \item help derive implementation tickets
+    \item keep the project aligned with its mission-oriented purpose
+\end{itemize}
 
 \end{document}
