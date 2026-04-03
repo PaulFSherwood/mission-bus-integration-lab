@@ -1,0 +1,156 @@
+\documentclass[12pt]{article}
+
+\input{preamble}
+% \input{macros}
+
+\title{Mission Bus Integration Lab (MBIL)}
+\author{Paul Sherwood}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\section{Project Title}
+Mission Bus Integration Lab (MBIL)
+
+\section{Project Summary}
+Mission Bus Integration Lab (MBIL) is a deterministic, configuration-driven software project that simulates a simplified aerospace-style mission environment built around a central message bus, redundant mission computers, subsystem messaging, defined failure modes, and observable system behavior.
+
+The project is not intended to be a flashy simulator, game, or UI-heavy application. Its purpose is to demonstrate software engineering and systems engineering capability in modular architecture, interface-driven design, deterministic runtime behavior, fault handling, recovery, logging, and testability.
+
+\section{Problem Statement}
+Many software projects show coding ability but do not clearly demonstrate systems thinking, interface discipline, fault handling, observability, or recoverable degraded operation. MBIL is intended to fill that gap by modeling how a mission-oriented system behaves under normal conditions, under fault conditions, and during controller failover from a primary mission computer to a backup mission computer.
+
+\section{Project Purpose}
+The purpose of MBIL is to build a professional-quality portfolio project that demonstrates the ability to design and implement a modular, deterministic, fault-aware mission-system simulation using real-world engineering patterns.
+
+\section{Project Objectives}
+The objectives of MBIL are:
+
+\begin{itemize}[leftmargin=*]
+    \item Design and implement a modular software system with clear subsystem boundaries.
+    \item Model a simplified 1553-inspired message bus architecture.
+    \item Simulate subsystem communication through messages rather than direct coupling.
+    \item Implement deterministic runtime behavior using a fixed tick-based execution model.
+    \item Support defined failure scenarios such as delayed messages, dropped messages, corrupted data, and node failure.
+    \item Implement redundancy and failover between a primary and backup mission computer.
+    \item Provide structured observability through logging, event tracing, and state snapshots.
+    \item Support configuration-driven system definition using external files.
+    \item Produce documentation and tests that support professional review of the design.
+\end{itemize}
+
+\section{Business/Portfolio Purpose}
+MBIL is intended to serve as a portfolio project for senior or lead engineering opportunities, especially roles involving systems engineering, software architecture, simulation, reliability, cyber-adjacent infrastructure, aerospace-style control systems, or mission-support software.
+
+The project should communicate the following:
+
+\begin{itemize}[leftmargin=*]
+    \item the engineer understands how mission-oriented systems are structured
+    \item the engineer can design around interfaces and contracts
+    \item the engineer can model failures and degraded operation
+    \item the engineer can implement deterministic logic and traceable behavior
+    \item the engineer can produce professional documentation and verification artifacts
+\end{itemize}
+
+\textbf{Scope}
+
+In scope for the initial version of MBIL:
+
+\begin{itemize}[leftmargin=*]
+    \item fixed-tick simulation engine
+    \item subsystem interface and lifecycle
+    \item central bus for message transport
+    \item mission computers, sensors, and display endpoint
+    \item heartbeat and failover logic
+    \item defined fault injection mechanisms
+    \item structured logging
+    \item state snapshots
+    \item JSON or similar configuration files
+    \item documentation including design and ICD-style artifacts
+    \item unit tests and scenario-level verification
+\end{itemize}
+
+Out of scope for the initial version:
+
+\begin{itemize}[leftmargin=*]
+    \item exact MIL-STD-1553 protocol compliance
+    \item advanced graphics or game-style UI
+    \item real hardware integration
+    \item distributed deployment across real machines
+    \item multithreaded runtime behavior in the MVP
+    \item deep real-time operating system support
+    \item highly complex arbitration or controller reintegration behavior
+\end{itemize}
+
+\textbf{Success Criteria}
+
+The project will be considered successful if it can:
+
+\begin{itemize}[leftmargin=*]
+    \item run deterministically from a defined scenario
+    \item simulate normal operation with subsystem message flow
+    \item demonstrate mission computer failover when the primary controller fails
+    \item demonstrate at least a few defined failure modes
+    \item provide logs and snapshots that make system behavior easy to trace
+    \item be built, run, understood, and reviewed from the repository and docs alone
+\end{itemize}
+
+\textbf{Primary Deliverables}
+
+The project should produce:
+
+\begin{itemize}[leftmargin=*]
+    \item source code repository
+    \item configuration files for example scenarios
+    \item architecture and design documentation
+    \item ICD-style interface documentation
+    \item test plan
+    \item scenario descriptions
+    \item unit and integration/scenario tests
+    \item README with build and run instructions
+\end{itemize}
+
+\textbf{Constraints}
+
+The project should follow these constraints:
+
+\begin{itemize}[leftmargin=*]
+    \item language should be C++ for the current implementation direction
+    \item cross-platform design is acceptable, Linux-first is preferred
+    \item design should favor clarity and maintainability over raw performance
+    \item initial implementation should avoid unnecessary complexity
+    \item the code and documents should be understandable by a reviewer without verbal explanation
+\end{itemize}
+
+\textbf{Guiding Principles}
+
+The project should be built according to these principles:
+
+\begin{itemize}[leftmargin=*]
+    \item determinism over cleverness
+    \item clear interfaces over hidden coupling
+    \item observability over silent behavior
+    \item reliability modeling over visual polish
+    \item professional documentation over informal assumptions
+    \item incremental delivery over overbuilding
+\end{itemize}
+
+\textbf{Initial Milestones}
+
+The high-level project milestones are:
+
+\begin{itemize}[leftmargin=*]
+    \item Foundation and repository setup
+    \item Core simulation engine
+    \item Bus and message model
+    \item Subsystem implementation
+    \item Redundancy and failover
+    \item Fault handling
+    \item Observability
+    \item Documentation and test completion
+    \item MVP baseline release
+\end{itemize}
+
+
+\end{document}
