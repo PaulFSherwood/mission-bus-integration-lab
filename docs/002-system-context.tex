@@ -1,0 +1,245 @@
+\documentclass[12pt]{article}
+
+\input{preamble}
+% \input{macros}
+
+\title{Mission Bus Integration Lab (MBIL) System Context}
+\author{Paul Sherwood}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\section{Purpose}
+This document defines the system context for MBIL by identifying the major runtime parts of the system, the role of each part, and the high-level interactions between them.  Its purpose is to explain what exists in the system, what communicates with what, and where responsibilities begin and end.
+
+\section{System Description}
+MBIL is a deterministic, tick-driven software simulation of a simplified mission-system environment.  It models subsystems that exchange messages over a central bus, with fault injection, observabilitiy, and failover behavior.
+
+At a high level, MBIL contains:
+
+\begin{itemize}[leftmargin=*]
+    \item a simulation engine
+    \item a message bus
+    \item a fault engine
+    \item an observability layer
+    \item multiple subsystems
+    \item a configuration layer
+\end{itemize}
+
+The simulation engine coordinates the runtime.  The bus transports messages.  The fault engine applies defined failures.  The observability layer records what happens.  Subsystems generate and consume data.  The configuration layer defines the topology and runtime parameters.
+
+\section{System Boundary}
+Inside the MBIL system boundary are:
+
+\begin{itemize}[leftmargin=*]
+    \item simulation timing and tick progression
+    \item subsystem creation and registration
+    \item message creation, queuing, routing, and delivery
+    \item subsystem behavior and state updates
+    \item fault activation and application
+    \item logging, tracing, and snapshots
+    \item configuration loading and interpretation
+\end{itemize}
+
+Outside the MBIL system boundary are:
+
+\begin{itemize}[leftmargin=*]
+    \item real aircraft or real aerospace hardware
+    \item real MIL-STD-1553 hardware interfaces
+    \item actual fielded mission computers
+    \item external telemetry systems
+    \item live operator interfaces
+    \item production safety certification
+    \item external databases or network services for the MVP
+\end{itemize}
+
+\section{Major Internal Components}
+\begin{enumerate}
+    \item \textbf{Simulation Engine}
+    \item[] The simulation engine is the top-level runtime controller
+\end{enumerate}
+
+Responsibilities:
+\begin{itemize}[leftmargin=*]
+    \item initialize the system
+    \item advance the simulation tick by tick
+    \item enforce a deterministic execution order
+    \item coordinate subsystem updates
+    \item invoke bus processing
+    \item invoke fault processing
+    \item trigger logging and snapshots
+    \item stop the run at the configured duration
+\end{itemize}
+
+The simulation engine does not implement subsystem-specific behavior.  It orchestrates the system.
+
+\begin{enumerate}[start=2]
+    \item \textbf{Message Bus}
+    \item[] The message bus is the central transport mechanism for subsystem communication.
+\end{enumerate}
+
+Responsibilities:
+\begin{itemize}[leftmargin=*]
+    \item accept messages emitted by subsystems
+    \item hold pending and delayed messages
+    \item route messages by destination
+    \item support broadcast delivery if enabled
+    \item apply message-level fault effects
+    \item record message lifecycle events
+\end{itemize}
+
+The bus is the only approved path for communication between subsystems in the MVP design.
+
+\begin{enumerate}[start=3]
+    \item \textbf{Fault Engine}
+    \item[] The fault engine manages defined operational failure scenarios.
+\end{enumerate}
+
+Responsibilities:
+\begin{itemize}[leftmargin=*]
+    \item load fault definitions from configuration
+    \item activate and deactivate faults at scheduled times
+    \item target subsystem- or message-level behaviors
+    \item apply effects such as drop, delay, corruption, or offline state
+    \item log fault activation and resolution events
+\end{itemize}
+
+The fault engine centralizes failure behavior so fault logic is not hidden throughout the codebase.
+\begin{enumerate}[start=4]
+    \item \textbf{Observability Layer}
+    \item[] The observabilitity layer makes the runtime understandable and auditable.
+\end{enumerate}
+
+Responsibilities:
+\begin{itemize}[leftmargin=*]
+    \item write structured logs
+    \item trace message lifecycle events
+    \item record subsystem state changes
+    \item produce snapshots of system state
+    \item highlight failover and fault-related events
+\end{itemize}
+
+This layer exists so that a reviewer can understand what happened without stepping through code.
+\begin{enumerate}[start=5]
+    \item \textbf{Configuration Layer}
+    \item[] The configuration layer defines what system gets built and how it behaves.
+\end{enumerate}
+
+Responsibilities:
+\begin{itemize}[leftmargin=*]
+    \item load system topology from config
+    \item define subsystem IDs and types
+    \item define timing and interval values
+    \item define fault scenarios
+    \item define snapshot and logging settings
+\end{itemize}
+
+The goal is that the system structure and scenario can change without core code rewrites.
+
+\textbf{Subsystem Context}
+
+The Minimum Viable Product (MVP) subsystem set includes:
+\begin{itemize}[leftmargin=*]
+    \item MC1: primary mission computer
+    \item MC2: backup mission computer
+    \item ALT1: altitude sensor
+    \item TMP1: temperature sensor
+    \item DSP1: display endpoint
+\end{itemize}
+
+\textbf{Mission Computers}
+
+The mission computers represent control nodes within the system.
+
+MC1 is the primary controller in normal operation.
+MC2 is the backup controller in standby during normal operation.
+
+
+Responsibilities:
+\begin{itemize}[leftmargin=*]
+    \item process incoming sensor messages
+    \item generate status and command messages
+    \item emit heartbeat messages
+    \item participate in controller role logic
+    \item transition appropriately during failover
+\end{itemize}
+
+\textbf{Sensors}
+
+Sensors are data-producing subsystems.
+
+Responsibilities:
+\begin{itemize}[leftmargin=*]
+    \item emit periodic sensor data
+    \item identify their sensor type and data quality
+    \item continue, degrade, or fail based on scenario conditions
+\end{itemize}
+
+\textbf{Display Endpoint}
+
+The display endpoint is a data-consuming subsystem used to show system state through log or summary output.
+
+Responsibilities:
+\begin{itemize}[leftmargin=*]
+    \item receive status and failover messages
+    \item maintain a current view of the active controller
+    \item reflect degraded or faulted conditions
+\end{itemize}
+
+\textbf{High-Level Interaction Model}
+
+The primary interaction model is:
+\begin{itemize}[leftmargin=*]
+    \item sensors generate data
+    \item mission computers receive and process data
+    \item mission computers generate heartbeats and status or command messages
+    \item the bus routes all messages
+    \item the display endpoint receives status and notices
+    \item the observability layer records the lifecycle of all important events
+    \item the fault engine may alter or interrupt normal behavior
+\end{itemize}
+
+No subsystem should bypass the bus to directly invoke another subsystem's logic.
+
+\textbf{Primary Runtime Flow}
+
+At a high level, a normal simulation tick proceeds as follows:
+
+\begin{enumerate}
+    \item the simulation engine advances the current tick
+    \item the fault engine activates or deactivates scheduled faults
+    \item sensors determine whether they should emit new data
+    \item mission computers process local state and emit heartbeats or status
+    \item the bus processes queued messages and routes deliverable items
+    \item receiving subsystems consume delivered messages
+    \item logs are written and snapshots are captured when scheduled
+\end{enumerate}
+
+The order should remain stable to preserve deterministic behavior.
+
+\textbf{External Inputs}
+
+MBIL receives these kinds of external inputs:
+\begin{itemize}[leftmargin=*]
+    \item system configuration file
+    \item scenario / fault configuration file
+    \item runtime parameters such as duration or logging settings
+    \item possible manual triggers later, if added
+\end{itemize}
+
+\textbf{External Outputs}
+
+MBIL produces these outputs
+\begin{itemize}[leftmargin=*]
+    \item structured logs
+    \item event traces
+    \item state snapshots
+    \item console output or summary status
+    \item test results
+    \item scenario run artifacts
+\end{itemize}
+
+
+\end{document}
