@@ -281,6 +281,7 @@ LOTGD-Clone
 ##############################
 # LaTeX build files
 *.aux
+*.gz
 *.log
 *.toc
 *.out
