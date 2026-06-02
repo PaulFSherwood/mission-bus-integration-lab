@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="panel full-panel">
+    <div class="panel-title">Sensor Status</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Sensor ID</th>
+                <th>Type</th>
+                <th>State</th>
+                <th>Last Update</th>
+                <th>Value Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="linkish">ADS_1</td>
+                <td>AIR DATA</td>
+                <td class="good">ONLINE</td>
+                <td>Tick 1234</td>
+                <td>Alt: 10000 ft, IAS: 284 kts</td>
+            </tr>
+            <tr>
+                <td class="linkish">INS_1</td>
+                <td>INS</td>
+                <td class="good">ONLINE</td>
+                <td>Tick 1234</td>
+                <td>HDG: 123.4°, P: 2.1°, R: -0.4°</td>
+            </tr>
+            <tr>
+                <td class="linkish">ENG_1</td>
+                <td>ENGINE</td>
+                <td class="good">ONLINE</td>
+                <td>Tick 1234</td>
+                <td>T: 680 °C, N1: 92%</td>
+            </tr>
+            <tr>
+                <td class="linkish">FUEL_1</td>
+                <td>FUEL</td>
+                <td class="good">ONLINE</td>
+                <td>Tick 1234</td>
+                <td>Qty: 5120 lbs</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+{% endblock %}

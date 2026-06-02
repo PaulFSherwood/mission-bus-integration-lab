@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MBIL - {{ page.title }}</title>
+    <link rel="stylesheet" href="/static/css/mbil.css">
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="brand-block">
+            <div class="brand">MBIL</div>
+            <div class="subtitle">Mission Bus Integration Lab</div>
+        </div>
+
+        <nav class="tabs">
+            {% for item in nav_items %}
+                <a class="tab {% if active_path == item.endpoint %}active{% endif %}" href="{{ item.endpoint }}">
+                    {{ item.label }}
+                </a>
+            {% endfor %}
+        </nav>
+
+        <div class="sim-status">
+            <div>
+                <div class="label">Sim Time</div>
+                <div class="tick">{{ sim_tick }}</div>
+            </div>
+
+            <div class="state-pill">{{ sim_state }}</div>
+
+            <button class="top-button">Pause</button>
+            <button class="top-button">Step</button>
+        </div>
+    </header>
+
+    <main class="page">
+        <div class="page-heading">
+            <h1 class="page-title">{{ page.title }}</h1>
+            <p class="page-subtitle">{{ page.subtitle }}</p>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        MBIL v0.1 — Local Simulation Environment — No npm / No hardware
+    </footer>
+</body>
+</html>

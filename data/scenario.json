@@ -1,0 +1,9 @@
+{
+  "name": "default_scenario",
+  "tick_rate_hz": 10,
+  "aircraft_state": {
+    "altitude_ft": 10000,
+    "airspeed_kts": 284,
+    "heading_deg": 123.4
+  }
+}

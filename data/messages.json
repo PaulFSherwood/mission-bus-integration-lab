@@ -1,0 +1,5 @@
+[
+  {"tick": 1231, "bus": "BUS A", "source": "ADS_1", "destination": "MC1", "type": "AIR_DATA"},
+  {"tick": 1232, "bus": "BUS A", "source": "INS_1", "destination": "MC1", "type": "ATTITUDE"},
+  {"tick": 1233, "bus": "BUS B", "source": "MC1", "destination": "PFD_1", "type": "DISPLAY_UPDATE"}
+]

@@ -1,0 +1,6 @@
+{
+  "mission_computers": ["MC1", "MC2"],
+  "buses": ["BUS A", "BUS B"],
+  "sensors": ["ADS_1", "INS_1", "ENG_1", "FUEL_1"],
+  "displays": ["PFD_1", "MFD_1"]
+}

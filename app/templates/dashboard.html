@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="summary-grid">
+    <div class="summary-card">
+        <div class="summary-title">Mission Computers</div>
+        <div class="summary-number">2</div>
+        <div class="summary-detail">Online <span>{{ mc_online }}</span></div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-title">Buses</div>
+        <div class="summary-number">2</div>
+        <div class="summary-detail">Healthy <span>{{ bus_healthy }}</span></div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-title">Sensors</div>
+        <div class="summary-number">4</div>
+        <div class="summary-detail">Online <span>{{ sensor_online }}</span></div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-title">Displays</div>
+        <div class="summary-number">2</div>
+        <div class="summary-detail">Online <span>{{ display_online }}</span></div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-title">Faults</div>
+        <div class="summary-number">0</div>
+        <div class="summary-detail">Active <span>{{ active_faults }}</span></div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-title">Simulation</div>
+        <div class="summary-number running-text">{{ sim_state }}</div>
+        <div class="summary-detail">Tick Rate: {{ tick_rate }}</div>
+    </div>
+</section>
+
+<section class="dashboard-grid">
+    <div class="panel">
+        <div class="panel-title">Mission Computer Status</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Role</th>
+                    <th>State</th>
+                    <th>Last Heartbeat</th>
+                    <th>Input Msgs</th>
+                    <th>Output Msgs</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="linkish">MC1</td>
+                    <td class="good">PRIMARY</td>
+                    <td class="good">ONLINE</td>
+                    <td>Tick 1234</td>
+                    <td>44</td>
+                    <td>31</td>
+                </tr>
+                <tr>
+                    <td class="linkish">MC2</td>
+                    <td class="warn">STANDBY</td>
+                    <td class="good">ONLINE</td>
+                    <td>Tick 1234</td>
+                    <td>44</td>
+                    <td>4</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">Aircraft State <span class="muted">(simulated)</span></div>
+        <div class="state-grid">
+            <div class="state-row"><span>Altitude</span><strong>10,000 ft</strong></div>
+            <div class="state-row"><span>Airspeed</span><strong>284 kts</strong></div>
+            <div class="state-row"><span>Heading</span><strong>123.4°</strong></div>
+            <div class="state-row"><span>Vertical Speed</span><strong>500 ft/min</strong></div>
+            <div class="state-row"><span>Pitch</span><strong>2.1°</strong></div>
+            <div class="state-row"><span>Roll</span><strong>-0.4°</strong></div>
+            <div class="state-row"><span>Engine Temp</span><strong>680 °C</strong></div>
+            <div class="state-row"><span>Fuel Qty</span><strong>5,120 lbs</strong></div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">Bus Status</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Bus ID</th>
+                    <th>Status</th>
+                    <th>Last Activity</th>
+                    <th>Msg Rate</th>
+                    <th>Errors</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="linkish">BUS A</td>
+                    <td class="good">HEALTHY</td>
+                    <td>Tick 1234</td>
+                    <td>12.4 msg/s</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td class="linkish">BUS B</td>
+                    <td class="good">HEALTHY</td>
+                    <td>Tick 1234</td>
+                    <td>8.7 msg/s</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">Recent Alerts / Events</div>
+        <div class="empty-alerts">
+            <div class="checkmark">✓</div>
+            <h2>No Active Alerts</h2>
+            <p>All systems normal.</p>
+        </div>
+    </div>
+</section>
+
+<section class="controls-panel">
+    <div class="panel-title">Simulation Controls</div>
+    <div class="controls-row">
+        <button class="control-button start">Start</button>
+        <button class="control-button pause">Pause</button>
+        <button class="control-button step">Step</button>
+        <button class="control-button reset">Reset</button>
+
+        <div class="control-group">
+            <label>Tick Rate</label>
+            <select>
+                <option>1 Hz</option>
+                <option selected>10 Hz</option>
+                <option>30 Hz</option>
+                <option>60 Hz</option>
+            </select>
+        </div>
+
+        <div class="control-group wide-control">
+            <label>Scenario</label>
+            <select>
+                <option selected>default_scenario.json</option>
+                <option>cold_start.json</option>
+                <option>bus_failure.json</option>
+            </select>
+        </div>
+
+        <button class="control-button load">Load Scenario</button>
+    </div>
+</section>
+
+{% endblock %}

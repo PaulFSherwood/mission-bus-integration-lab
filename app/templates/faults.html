@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="dashboard-grid">
+    <div class="panel">
+        <div class="panel-title">Mission Computer Faults</div>
+        <div class="fault-buttons">
+            <button class="control-button reset">Kill MC1</button>
+            <button class="control-button pause">Freeze MC1</button>
+            <button class="control-button step">Recover MC1</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">Bus Faults</div>
+        <div class="fault-buttons">
+            <button class="control-button reset">Fail BUS A</button>
+            <button class="control-button pause">Drop Messages</button>
+            <button class="control-button step">Recover BUS A</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">Sensor Faults</div>
+        <div class="fault-buttons">
+            <button class="control-button reset">Freeze ADS_1</button>
+            <button class="control-button pause">Add Noise</button>
+            <button class="control-button step">Recover Sensors</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">Active Faults</div>
+        <div class="empty-alerts small-empty">
+            <div class="checkmark">✓</div>
+            <h2>No Active Faults</h2>
+            <p>Fault injection buttons are display-only for now.</p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

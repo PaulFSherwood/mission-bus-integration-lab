@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="dashboard-grid">
+    <div class="panel">
+        <div class="panel-title">MC1</div>
+        <div class="kv-list">
+            <div><span>Role</span><strong class="good">Primary</strong></div>
+            <div><span>State</span><strong class="good">Online</strong></div>
+            <div><span>Last Heartbeat</span><strong>Tick 1234</strong></div>
+            <div><span>Input Messages</span><strong>44</strong></div>
+            <div><span>Output Messages</span><strong>31</strong></div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">MC2</div>
+        <div class="kv-list">
+            <div><span>Role</span><strong class="warn">Standby</strong></div>
+            <div><span>State</span><strong class="good">Online</strong></div>
+            <div><span>Last Heartbeat</span><strong>Tick 1234</strong></div>
+            <div><span>Input Messages</span><strong>44</strong></div>
+            <div><span>Output Messages</span><strong>4</strong></div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

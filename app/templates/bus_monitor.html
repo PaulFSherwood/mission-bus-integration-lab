@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="panel full-panel">
+    <div class="panel-title">Live Bus Traffic</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Tick</th>
+                <th>Bus</th>
+                <th>Source</th>
+                <th>Destination</th>
+                <th>Message Type</th>
+                <th>Payload</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1231</td>
+                <td>BUS A</td>
+                <td>ADS_1</td>
+                <td>MC1</td>
+                <td>AIR_DATA</td>
+                <td>alt=10000, ias=284</td>
+                <td class="good">OK</td>
+            </tr>
+            <tr>
+                <td>1232</td>
+                <td>BUS A</td>
+                <td>INS_1</td>
+                <td>MC1</td>
+                <td>ATTITUDE</td>
+                <td>hdg=123.4, pitch=2.1, roll=-0.4</td>
+                <td class="good">OK</td>
+            </tr>
+            <tr>
+                <td>1233</td>
+                <td>BUS B</td>
+                <td>MC1</td>
+                <td>PFD_1</td>
+                <td>DISPLAY_UPDATE</td>
+                <td>airspeed=284, altitude=10000</td>
+                <td class="good">OK</td>
+            </tr>
+            <tr>
+                <td>1234</td>
+                <td>BUS B</td>
+                <td>MC2</td>
+                <td>MONITOR</td>
+                <td>HEARTBEAT</td>
+                <td>role=standby, state=online</td>
+                <td class="good">OK</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+{% endblock %}
