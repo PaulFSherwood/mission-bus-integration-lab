@@ -51,6 +51,7 @@ build/
 [Oo]bj/
 build-PlantSimulator-Desktop-Debug/
 *.venv/
+venv/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
