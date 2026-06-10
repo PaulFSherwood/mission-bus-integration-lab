@@ -2,6 +2,7 @@ from time import time
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from app.sim.runtime import SimulatorRuntime
 from starlette.responses import RedirectResponse
 
 app = FastAPI(title="MBIL")
@@ -9,6 +10,8 @@ app = FastAPI(title="MBIL")
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 templates = Jinja2Templates(directory="app/templates")
+
+sim_runtime = SimulatorRuntime("data/routes/kpns_kabq_points.txt")
 
 NAV_ITEMS = [
     {"label": "Cockpit", "endpoint": "/overview", "icon": "cockpit"},
@@ -80,39 +83,17 @@ DEMO_CONTEXT = {
 
 @app.get("/api/state")
 def api_state():
-    tick = int(time() * 2)
-
-    altitude = 9600 + (tick % 100)
-    airspeed = 210 + (tick % 10)
-    heading = 142 + (tick % 5)
-    engine_temp = 620 + (tick % 20)
-
-    return {
-
-        "mc1": {
-            "role": "PRIMARY",
-            "state": "ONLINE",
-        },
-
-        "mc2": {
-            "role": "STANDBY",
-            "state": "ONLINE",
-        },
-
-        "aircraft": {
-            "altitude": f"{altitude:,} FT",
-            "airspeed": f"{airspeed} KTS",
-            "heading": f"{heading}",
-            "vertical_speed": "+501 FPM",
-            "fuel": "5,320 LBS",
-            "engine_temp": f"{engine_temp} C",
-        },
-    }
+    return sim_runtime.to_api_state()
 
 @app.get("/", include_in_schema=False)
 def root():
     return RedirectResponse("/overview")
 
+@app.get("/api/messages")
+def api_messages():
+    return {
+        "messages": sim_runtime.recent_messages()
+    }
 
 @app.get("/{page_path:path}")
 def render_page(request: Request, page_path: str):

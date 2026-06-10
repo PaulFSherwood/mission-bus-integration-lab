@@ -28,16 +28,49 @@ function showJsHeartbeat() {
   box.textContent = "JS LIVE " + new Date().toLocaleTimeString();
 }
 
+function getValueByPath(data, path) {
+   return path.split(".").reduce((obj, key) => {
+      if (obj == undefined || obj == null) {
+         return undefined;
+      }
+      return obj[key];
+   }, data);
+}
+
+function bindText(data) {
+   const elements = document.querySelectorAll("[data-bind]");
+
+   elements.forEach((el) => {
+      const path = el.getAttribute("data-bind");
+      const value = getValueByPath(data, path);
+
+      if (value !== undefined && value !== null) {
+         el.textContent = value;
+      }
+   });
+}
+
 async function updateCockpit() {
+   try {
+      const respone = await fetch("/api/state");
+      const data = await response.json();
+      bindText(data);
+   } catch (error) {
+      console.error("Cockpit update failed:", error);
+   }
+
   const response = await fetch("/api/state");
   const data = await response.json();
-  document.title = data.aircraft.altitude;
+  document.title = "data.aircraft.altitude";
 
   setText("mc1-role", data.mc1.role);
   setText("mc1-state", data.mc1.state);
 
   setText("mc2-role", data.mc2.role);
   setText("mc2-state", data.mc2.state);
+
+  setText("current_wp", data.current_wp);
+  setText("next_wp", data.next_wp);
 
   setText("aircraft-altitude", data.aircraft.altitude);
   setText("aircraft-airspeed", data.aircraft.airspeed);
