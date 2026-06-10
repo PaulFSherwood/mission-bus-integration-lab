@@ -1,0 +1,25 @@
+{
+  "route_id": "KPNS_KABQ",
+  "name": "Pensacoloa to Albuquerque",
+  "reverse_name": "Albuquerque to Pensacoloa",
+  "depature": "KPNS",
+  "arrival": "KABQ",
+  "cruise_altitue_ft": 28000,
+  "cruise_speed_kts": 430,
+  "waypoints": [
+    { "id": "KPNS",  "type": "AIRPORT" },
+    { "id": "LOXLY", "type": "FIX" },
+    { "id": "SJI",   "type": "VOR", "airway_in": "V241" },
+    { "id": "PCU",   "type": "VOR", "airway_in": "V552" },
+    { "id": "DILLS", "type": "FIX", "airway_in": "V70" },
+    { "id": "EIC",   "type": "VOR", "airway_in": "V566" },
+    { "id": "TXK",   "type": "VOR", "airway_in": "V13" },
+    { "id": "BYP",   "type": "VOR", "airway_in": "V16" },
+    { "id": "CDS",   "type": "VOR", "airway_in": "V114" },
+    { "id": "TXO",   "type": "VOR", "airway_in": "V530" },
+    { "id": "ACH",   "type": "VOR", "airway_in": "V62" },
+    { "id": "OTO",   "type": "VOR", "airway_in": "V12" },
+    { "id": "CYOTE", "type": "FIX", "airway_in": "V60" },
+    { "id": "KABQ",  "type": "AIRPORT" },
+  ]
+}

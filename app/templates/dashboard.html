@@ -2,162 +2,188 @@
 
 {% block content %}
 
-<section class="summary-grid">
-    <div class="summary-card">
-        <div class="summary-title">Mission Computers</div>
-        <div class="summary-number">2</div>
-        <div class="summary-detail">Online <span>{{ mc_online }}</span></div>
+<section class="cockpit-shell">
+    <div class="display-row">
+        <article class="av-display pfd-display">
+            <div class="display-bezel">
+                <div class="display-header">
+                    <span>Pilot PFD</span>
+                    <strong class="good">OK</strong>
+                </div>
+                <div class="pfd-screen">
+                    <div class="airspeed-tape">
+                        <span>IAS</span>
+                        <b><strong id="aircraft-airspeed2">210</strong></b>
+                        <small>KTS</small>
+                    </div>
+                    <div class="attitude-ball">
+                        <div class="sky"></div>
+                        <div class="ground"></div>
+                        <div class="horizon-line"></div>
+                        <div class="pitch-scale">20<br>10<br><b>─ ─ ─</b><br>-10<br>-20</div>
+                        <div class="aircraft-symbol">◇</div>
+                    </div>
+                    <div class="altitude-tape">
+                        <span>ALT</span>
+                        <b>9600</b>
+                        <small>FT</small>
+                    </div>
+                    <div class="pfd-bottom">
+                        <span>TAS 215</span>
+                        <strong>HDG 142°</strong>
+                        <span>29.92 IN</span>
+                    </div>
+                </div>
+                <div class="display-buttons"><span>BRT</span><span>DIM</span><span>PFD</span><span>MSG</span><span>MENU</span></div>
+            </div>
+        </article>
+
+        <article class="av-display radar-display">
+            <div class="display-bezel">
+                <div class="display-header">
+                    <span>Radar</span>
+                    <strong class="good">GAIN 73%</strong>
+                </div>
+                <div class="radar-screen">
+                    <div class="radar-data top-left">RNG 40 NM<br>TILT 0.0°</div>
+                    <div class="radar-data top-right">BRG 142°<br>HDG UP</div>
+                    <div class="radar-scope">
+                        <span class="ring r1"></span>
+                        <span class="ring r2"></span>
+                        <span class="ring r3"></span>
+                        <span class="sweep"></span>
+                        <span class="contact c1">TGT01<br>12.4NM</span>
+                        <span class="contact c2">TGT02<br>18.7NM</span>
+                        <span class="contact c3">TGT03<br>9.3NM</span>
+                        <span class="center-plane">✈</span>
+                    </div>
+                </div>
+                <div class="display-buttons"><span>BRT</span><span>DIM</span><span>RADAR</span><span>CNTL</span><span>MENU</span></div>
+            </div>
+        </article>
+
+        <article class="av-display map-display">
+            <div class="display-bezel">
+                <div class="display-header">
+                    <span>Map / Nav</span>
+                    <strong class="good">OK</strong>
+                </div>
+                <div class="map-screen">
+                    <div class="map-grid"></div>
+                    <div class="map-water"></div>
+                    <div class="map-route"></div>
+                    <span class="wp wp1">WP1</span>
+                    <span class="wp wp2">WP2</span>
+                    <span class="wp wp3">WP3</span>
+                    <span class="dest">DEST</span>
+                    <span class="ownship">✈</span>
+                    <div class="map-data">TRK 142°<br>GS 205 KTS<br>DTK 142°<br>XTK 0.2 NM</div>
+                    <div class="eta-box">ETA DEST<br>00:18:24</div>
+                </div>
+                <div class="display-buttons"><span>BRT</span><span>DIM</span><span>MAP</span><span>CNTL</span><span>MENU</span></div>
+            </div>
+        </article>
+
+        <article class="av-display pfd-display">
+            <div class="display-bezel">
+                <div class="display-header">
+                    <span>Copilot PFD</span>
+                    <strong class="good">OK</strong>
+                </div>
+                <div class="pfd-screen">
+                    <div class="airspeed-tape">
+                        <span>IAS</span>
+                        <b>210</b>
+                        <small>KTS</small>
+                    </div>
+                    <div class="attitude-ball">
+                        <div class="sky"></div>
+                        <div class="ground"></div>
+                        <div class="horizon-line"></div>
+                        <div class="pitch-scale">20<br>10<br><b>─ ─ ─</b><br>-10<br>-20</div>
+                        <div class="aircraft-symbol">◇</div>
+                    </div>
+                    <div class="altitude-tape">
+                        <span>ALT</span>
+                        <b>9600</b>
+                        <small>FT</small>
+                    </div>
+                    <div class="pfd-bottom">
+                        <span>TAS 215</span>
+                        <strong>HDG 142°</strong>
+                        <span>29.92 IN</span>
+                    </div>
+                </div>
+                <div class="display-buttons"><span>BRT</span><span>DIM</span><span>PFD</span><span>MSG</span><span>MENU</span></div>
+            </div>
+        </article>
     </div>
 
-    <div class="summary-card">
-        <div class="summary-title">Buses</div>
-        <div class="summary-number">2</div>
-        <div class="summary-detail">Healthy <span>{{ bus_healthy }}</span></div>
+    <div class="cni-row">
+        <article class="cni-unit primary-cni">
+            <div class="cni-side-keys"><span>MSG</span><span>DATA</span><span>FPL</span><span>SYS</span><span>DIM</span></div>
+            <div class="cni-screen">
+                <h2>MC1 (CNI) - PRIMARY</h2>
+                <div class="cni-columns">
+                    <div><b>Status</b><span>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc1-role">PRIMARY</span></span><span>Health&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc1-state">OK</span></span><span>Heartbeat&nbsp;00:00:00.25</span><span>Bus A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span><span>Bus B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span></div>
+                    <div><b>Inputs</b><span>Air Data&nbsp;&nbsp; <span id="mc1-air-data">OK</span></span><span>INS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc1-ins">OK</span></span><span>Engine&nbsp;&nbsp;&nbsp;&nbsp;OK</span><span>Fuel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span></div>
+                    <div><b>Outputs</b><span>Displays&nbsp;&nbsp; <span id="mc1-display">OK</span></span><span>Autopilot&nbsp; <span id="mc1-autoplit">OK</span></span><span>Other MC&nbsp;&nbsp; <span id="mc1-other-mc">OK</span></span></div>
+                </div>
+            </div>
+            <div class="cni-keypad"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>CLR</span><span>0</span><span>ENT</span></div>
+        </article>
+
+        <article class="cni-unit standby-cni">
+            <div class="cni-side-keys"><span>MSG</span><span>DATA</span><span>FPL</span><span>SYS</span><span>DIM</span></div>
+            <div class="cni-screen">
+                <h2>MC2 (CNI) - STANDBY</h2>
+                <div class="cni-columns amber-text">
+                    <div><b>Status</b><span>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-role">STANDBY</span></span><span>Health&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-state">OK</span></span><span>Heartbeat&nbsp;00:00:00.28</span><span>Bus A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span><span>Bus B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span></div>
+                    <div><b>Inputs</b><span>Air Data&nbsp;&nbsp; <span id="mc2-air-data">OK</span></span><span>INS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-ins">OK</span></span><span>Engine&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-engine">OK</span></span><span>Fuel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span></div>
+                    <div><b>Outputs</b><span>Displays&nbsp;&nbsp; <span id="mc2-display">STANDBY</span></span><span>Autopilot&nbsp; <span id="mc2-autopilot">STANDBY</span></span><span>Other MC&nbsp;&nbsp; <span id="mc2-other-mc">OK</span></span></div>
+                </div>
+            </div>
+            <div class="cni-keypad"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>CLR</span><span>0</span><span>ENT</span></div>
+        </article>
     </div>
 
-    <div class="summary-card">
-        <div class="summary-title">Sensors</div>
-        <div class="summary-number">4</div>
-        <div class="summary-detail">Online <span>{{ sensor_online }}</span></div>
-    </div>
+    <div class="cockpit-bottom-row">
+        <section class="status-card system-status-card">
+            <h3>System Status</h3>
+            <div class="bus-pill-row"><span>BUS A</span><strong class="good-pill">HEALTHY</strong></div>
+            <div class="bus-pill-row"><span>BUS B</span><strong class="good-pill">HEALTHY</strong></div>
+        </section>
 
-    <div class="summary-card">
-        <div class="summary-title">Displays</div>
-        <div class="summary-number">2</div>
-        <div class="summary-detail">Online <span>{{ display_online }}</span></div>
-    </div>
+        <section class="status-card aircraft-state-card">
+            <h3>Aircraft State</h3>
+            <div class="mini-state-grid">
+                <div><span>Altitude</span><strong id="aircraft-altitude">9,600 FT</strong></strong></div>
+                <div><span>Airspeed</span><strong id="aircraft-airspeed">210 KTS</strong></strong></div>
+                <div><span>Heading</span><strong id="aircraft-heading">142°</strong></strong></div>
+                <div><span>Vert Speed</span><strong id="aircraft-vertical-speed">+500 FPM</strong></strong></div>
+                <div><span>Fuel</span><strong id="aircraft-fuel">5,320 LBS</strong></strong></div>
+                <div><span>Eng Temp</span><strong id="aircraft-engine-temp">625 °C</strong></strong></div>
+            </div>
+        </section>
 
-    <div class="summary-card">
-        <div class="summary-title">Faults</div>
-        <div class="summary-number">0</div>
-        <div class="summary-detail">Active <span>{{ active_faults }}</span></div>
-    </div>
+        <section class="status-card quick-controls-card">
+            <h3>Quick Controls</h3>
+            <div class="quick-controls">
+                <button class="control-button start">Start</button>
+                <button class="control-button pause amber-button">Pause</button>
+                <button class="control-button step">Step</button>
+                <button class="control-button reset">Reset</button>
+            </div>
+        </section>
 
-    <div class="summary-card">
-        <div class="summary-title">Simulation</div>
-        <div class="summary-number running-text">{{ sim_state }}</div>
-        <div class="summary-detail">Tick Rate: {{ tick_rate }}</div>
-    </div>
-</section>
-
-<section class="dashboard-grid">
-    <div class="panel">
-        <div class="panel-title">Mission Computer Status</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Role</th>
-                    <th>State</th>
-                    <th>Last Heartbeat</th>
-                    <th>Input Msgs</th>
-                    <th>Output Msgs</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="linkish">MC1</td>
-                    <td class="good">PRIMARY</td>
-                    <td class="good">ONLINE</td>
-                    <td>Tick 1234</td>
-                    <td>44</td>
-                    <td>31</td>
-                </tr>
-                <tr>
-                    <td class="linkish">MC2</td>
-                    <td class="warn">STANDBY</td>
-                    <td class="good">ONLINE</td>
-                    <td>Tick 1234</td>
-                    <td>44</td>
-                    <td>4</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="panel">
-        <div class="panel-title">Aircraft State <span class="muted">(simulated)</span></div>
-        <div class="state-grid">
-            <div class="state-row"><span>Altitude</span><strong>10,000 ft</strong></div>
-            <div class="state-row"><span>Airspeed</span><strong>284 kts</strong></div>
-            <div class="state-row"><span>Heading</span><strong>123.4°</strong></div>
-            <div class="state-row"><span>Vertical Speed</span><strong>500 ft/min</strong></div>
-            <div class="state-row"><span>Pitch</span><strong>2.1°</strong></div>
-            <div class="state-row"><span>Roll</span><strong>-0.4°</strong></div>
-            <div class="state-row"><span>Engine Temp</span><strong>680 °C</strong></div>
-            <div class="state-row"><span>Fuel Qty</span><strong>5,120 lbs</strong></div>
-        </div>
-    </div>
-
-    <div class="panel">
-        <div class="panel-title">Bus Status</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Bus ID</th>
-                    <th>Status</th>
-                    <th>Last Activity</th>
-                    <th>Msg Rate</th>
-                    <th>Errors</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="linkish">BUS A</td>
-                    <td class="good">HEALTHY</td>
-                    <td>Tick 1234</td>
-                    <td>12.4 msg/s</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td class="linkish">BUS B</td>
-                    <td class="good">HEALTHY</td>
-                    <td>Tick 1234</td>
-                    <td>8.7 msg/s</td>
-                    <td>0</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="panel">
-        <div class="panel-title">Recent Alerts / Events</div>
-        <div class="empty-alerts">
-            <div class="checkmark">✓</div>
-            <h2>No Active Alerts</h2>
-            <p>All systems normal.</p>
-        </div>
-    </div>
-</section>
-
-<section class="controls-panel">
-    <div class="panel-title">Simulation Controls</div>
-    <div class="controls-row">
-        <button class="control-button start">Start</button>
-        <button class="control-button pause">Pause</button>
-        <button class="control-button step">Step</button>
-        <button class="control-button reset">Reset</button>
-
-        <div class="control-group">
-            <label>Tick Rate</label>
-            <select>
-                <option>1 Hz</option>
-                <option selected>10 Hz</option>
-                <option>30 Hz</option>
-                <option>60 Hz</option>
-            </select>
-        </div>
-
-        <div class="control-group wide-control">
-            <label>Scenario</label>
-            <select>
-                <option selected>default_scenario.json</option>
-                <option>cold_start.json</option>
-                <option>bus_failure.json</option>
-            </select>
-        </div>
-
-        <button class="control-button load">Load Scenario</button>
+        <section class="status-card alert-card">
+            <h3>Alerts <span>3</span></h3>
+            <ul>
+                <li><time>12:34:10</time><b class="good">MC1 Heartbeat OK</b></li>
+                <li><time>12:34:05</time><b class="warn">Sensor: Engine Temp High</b></li>
+                <li><time>12:33:58</time><b class="warn">Bus A Message Delay</b></li>
+            </ul>
+        </section>
     </div>
 </section>
 
