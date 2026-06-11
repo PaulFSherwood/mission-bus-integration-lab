@@ -52,6 +52,7 @@ build/
 build-PlantSimulator-Desktop-Debug/
 .venv/pyvenv.cfg
 *.venv/
+.venv/
 venv/
 
 # MSTest test Results
