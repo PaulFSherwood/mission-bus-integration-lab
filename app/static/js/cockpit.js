@@ -1,3 +1,5 @@
+const canvas = document.getElementById("moving-map-canvas");
+
 function setText(id, value) {
   const el = document.getElementById(id);
 

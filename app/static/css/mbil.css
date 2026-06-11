@@ -487,6 +487,15 @@ td {
     box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.9);
 }
 
+.moving-map-canvas {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+   height: 100%;
+   display: block;
+   z-index: 1;
+}
+
 .pfd-screen {
     display: grid;
     grid-template-columns: 58px 1fr 64px;

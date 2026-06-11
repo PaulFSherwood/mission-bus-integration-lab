@@ -69,16 +69,18 @@
                     <strong class="good">OK</strong>
                 </div>
                 <div class="map-screen">
-                    <div class="map-grid"></div>
-                    <div class="map-water"></div>
-                    <div class="map-route"></div>
-                    <span class="wp wp1">WP1</span>
-                    <span class="wp wp2">WP2</span>
-                    <span class="wp wp3">WP3</span>
-                    <span class="dest">DEST</span>
-                    <span class="ownship">✈</span>
-                    <div class="map-data">TRK 142°<br>GS 205 KTS<br>DTK 142°<br>XTK 0.2 NM</div>
-                    <div class="eta-box">ETA DEST<br>00:18:24</div>
+                  <canvas id=""moving-map-canvas" class=""moving-map-canvas"></canvas>
+
+                  <div class="map-data">
+                     TRK <span data-bind="aircraft.heading">142</span><br>
+                     GS <span data-bind="aircraft-airspeed">205 KTS</span><br>
+                     FROM <span data-bind="sim.current_wp">KPNS</span><br>
+                     TO <span data-bind="sim.next_wp">LOXLY</span>
+                  </div>
+                  <div class="eta-box">
+                     ROUTE<br>
+                     <span data-bind="sim.route">KPNS-KABQ</span>
+                  </div>
                 </div>
                 <div class="display-buttons"><span>BRT</span><span>DIM</span><span>MAP</span><span>CNTL</span><span>MENU</span></div>
             </div>
