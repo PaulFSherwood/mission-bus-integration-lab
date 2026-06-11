@@ -1,3 +1,23 @@
+let movingMapImage = null;
+let movingMapImagePath = null;
+
+function getMovingMapImage(path) {
+    if (!path) {
+        return null;
+    }
+
+    if (movingMapImagePath !== path) {
+        movingMapImagePath = path;
+        movingMapImage = new Image();
+        movingMapImage.src = path;
+    }
+
+    if (!movingMapImage.complete || movingMapImage.naturalWidth === 0) {
+        return null;
+    }
+
+    return movingMapImage;
+}
 
 function numberOrZero(value) {
    const n = Number(value);
@@ -49,8 +69,10 @@ function drawMovingMap(data) {
 
    ctx.clearRect(0, 0, width, height);
 
-   drawMapBackground(ctx, width, height);
-   drawMapRings(ctx, centerX, centerY, width, height);
+   // drawMapBackground(ctx, width, height);
+   // drawMapRings(ctx, centerX, centerY, width, height);
+   ctx.fillStyle = "#071018";
+   ctx.fillRect(0, 0, width, height);
 
    const pixelsPerNm = 2.2;
 
@@ -61,14 +83,55 @@ function drawMovingMap(data) {
       const eastNm = (lon - aircraftLon) * 60.0 * Math.cos(avgLatRad);
 
       return {
-         y: centerX + eastNm * pixelsPerNm,
+         x: centerX + eastNm * pixelsPerNm,
          y: centerY - northNm * pixelsPerNm,
       };
    }
 
+   // drawMapImage(ctx, data, project);
+   const mapWasDrawn = drawMapImage(ctx, data, project);
+
+   if (!mapWasDrawn) {
+      ctx.fillStyle = "#ffff66";
+      ctx.font = "12px monospace";
+      ctx.fillText("MAP IMAGE NOT LOADED", 10, height - 12);
+   }
+
+   drawMapRings(ctx, centerX, centerY, width, height);
    drawRoute(ctx, routePoints, project);
    drawWaypoints(ctx, routePoints, project, data);
    drawOwnship(ctx, centerX, centerY, data.aircraft.heading);   
+
+}
+
+function drawMapImage(ctx, data, project) {
+    if (!data.map || !data.map.image) {
+        return false;
+    }
+
+    const image = getMovingMapImage(data.map.image);
+
+    if (!image) {
+        return false;
+    }
+
+    const north = numberOrZero(data.map.north);
+    const south = numberOrZero(data.map.south);
+    const west = numberOrZero(data.map.west);
+    const east = numberOrZero(data.map.east);
+
+    const topLeft = project(north, west);
+    const bottomRight = project(south, east);
+
+    const x = topLeft.x;
+    const y = topLeft.y;
+    const w = bottomRight.x - topLeft.x;
+    const h = bottomRight.y - topLeft.y;
+
+    ctx.globalAlpha = 1.0;
+    ctx.drawImage(image, x, y, w, h);
+
+    return true;
 }
 
 function drawMapBackground(ctx, width, height) {

@@ -332,3 +332,7 @@ LOTGD-Clone
 *.sublime-project
 vscode/
 idea/
+# Large local/generate map source files
+data/maps/*.tif
+data/maps/*_geo.tif
+data/maps/world.topo*.jpg

@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 from dataclasses import dataclass, field 
 from time import time 
 
@@ -33,6 +36,14 @@ class SimulatorRuntime:
    last_update_time: float = field(default_factory=time)
    messages: list[BusMessage] = field(default_factory=list)
    
+   def map_info(self) -> dict:
+       path = Path("data/maps/kpns_kabq_map_bounds.json")
+
+       if not path.exists():
+           return {}
+
+       return json.loads(path.read_text())
+
    def start(self) -> None:
       self.route = load_route_points(self.route_path)
 
@@ -219,6 +230,7 @@ class SimulatorRuntime:
             "leg": self.current_leg_index + 1,
             "total_legs": len(self.route) - 1,
          },
+         "map": self.map_info(),
          "route_points": route_points,
          "mc1": {
             "role": "PRIMARY",
@@ -229,7 +241,7 @@ class SimulatorRuntime:
             "state": "ONLINE",
          },
          "aircraft": {
-            "alititude": f"{round(aircraft.altitude_ft):,} FT",
+            "altitude": f"{round(aircraft.altitude_ft):,} FT",
             "airspeed": f"{round(aircraft.airspeed_kts)} KTS",
             "heading": f"{round(aircraft.heading_deg):03d}",
             "vertical_speed": f"{round(aircraft.vertical_speed_fpm):+} FPM",
