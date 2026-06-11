@@ -200,6 +200,15 @@ class SimulatorRuntime:
       else:
          next_wp = self.route[-1].ident
 
+      route_points = [
+         {
+            "id": waypoint.ident,
+            "lat": round(waypoint.lat, 5),
+            "lon": round(waypoint.lon, 5),
+         }
+         for waypoint in self.route 
+      ]
+
       return {
          "sim": {
             "tick": self.tick,
@@ -210,6 +219,7 @@ class SimulatorRuntime:
             "leg": self.current_leg_index + 1,
             "total_legs": len(self.route) - 1,
          },
+         "route_points": route_points,
          "mc1": {
             "role": "PRIMARY",
             "state": "ONLINE",
@@ -219,7 +229,7 @@ class SimulatorRuntime:
             "state": "ONLINE",
          },
          "aircraft": {
-            "alititude_ft": f"{round(aircraft.altitude_ft):,} FT",
+            "alititude": f"{round(aircraft.altitude_ft):,} FT",
             "airspeed": f"{round(aircraft.airspeed_kts)} KTS",
             "heading": f"{round(aircraft.heading_deg):03d}",
             "vertical_speed": f"{round(aircraft.vertical_speed_fpm):+} FPM",
