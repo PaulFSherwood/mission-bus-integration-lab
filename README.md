@@ -2,6 +2,10 @@
 
 Local-only FastAPI/Jinja2 web simulator. No npm, no hardware.
 
+## ##ScreenShot
+
+![](/home/sherwood/.var/app/com.github.marktext.marktext/config/marktext/images/2026-06-11-02-57-42-image.png)
+
 ## Install
 
 ```bash

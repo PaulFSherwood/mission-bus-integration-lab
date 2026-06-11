@@ -336,3 +336,4 @@ idea/
 data/maps/*.tif
 data/maps/*_geo.tif
 data/maps/world.topo*.jpg
+data/maps/world_blue_marble*
