@@ -29,8 +29,8 @@
                         <small>FT</small>
                     </div>
                     <div class="pfd-bottom">
-                        <span>TAS 215</span>
-                        <strong>HDG 142°</strong>
+                        <span data-bind="aircraft.airspeed">215</span>
+                        <strong><span data-bind="aircraft.heading">142</span>°</strong>
                         <span>29.92 IN</span>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="radar-screen">
                     <div class="radar-data top-left">RNG 40 NM<br>TILT 0.0°</div>
-                    <div class="radar-data top-right">BRG 142°<br>HDG UP</div>
+                    <div class="radar-data top-right">BRG <span data-bind="aircraft.heading">142°</span><br>HDG UP</div>
                     <div class="radar-scope">
                         <span class="ring r1"></span>
                         <span class="ring r2"></span>
@@ -111,8 +111,8 @@
                         <small>FT</small>
                     </div>
                     <div class="pfd-bottom">
-                        <span>TAS 215</span>
-                        <strong>HDG 142°</strong>
+                        <span data-bind="aircraft.airspeed">215</span>
+                        <strong>HDG <span data-bind="aircraft.heading">142°</span></strong>
                         <span>29.92 IN</span>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
             <div class="mini-state-grid">
                 <div><span>Altitude</span><strong id="aircraft-altitude">9,601 FT</strong></strong></div>
                 <div><span>Airspeed</span><strong id="aircraft-airspeed">210 KTS</strong></strong></div>
-                <div><span>Heading</span><strong id="aircraft-heading">142°</strong></strong></div>
+                <div><span>Heading</span><strong id="aircraft-heading">142</strong>°</strong></div>
                 <div><span>Vert Speed</span><strong id="aircraft-vertical-speed">+500 FPM</strong></strong></div>
                 <div><span>Fuel</span><strong id="aircraft-fuel">5,320 LBS</strong></strong></div>
                 <div><span>Eng Temp</span><strong id="aircraft-engine-temp">625 °C</strong></strong></div>
