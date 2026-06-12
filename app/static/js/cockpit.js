@@ -325,7 +325,7 @@ async function updateCockpit() {
 
   const response = await fetch("/api/state");
   const data = await response.json();
-  document.title = "data.aircraft.altitude";
+  document.title = "Mission Bus Lab";
 
   setText("mc1-role", data.mc1.role);
   setText("mc1-state", data.mc1.state);

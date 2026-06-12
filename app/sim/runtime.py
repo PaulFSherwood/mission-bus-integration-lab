@@ -4,6 +4,7 @@ from pathlib import Path
 from dataclasses import dataclass, field 
 from time import time 
 
+from app.sim.bus1553 import Bus1553
 from app.sim.route_loader import Waypoint, bearing_deg, distance_nm, load_route_points
 
 @dataclass
@@ -35,6 +36,7 @@ class SimulatorRuntime:
    tick: int = 0
    last_update_time: float = field(default_factory=time)
    messages: list[BusMessage] = field(default_factory=list)
+   bus: Bus1553 = field(default_factory=Bus1553)
    
    def map_info(self) -> dict:
        path = Path("data/maps/kpns_kabq_map_bounds.json")
@@ -84,7 +86,13 @@ class SimulatorRuntime:
       self.tick += 1
 
       self._fly_aircraft(dt)
-      self._publish_sensor_messages()
+      self.bus.run_tick(
+         tick=self.tick,
+         aircraft=self.aircraft,
+         runtime=self,
+      )
+      # Old simple message bus
+      # self._publish_sensor_messages()
 
    def _fly_aircraft(self, dt: float) -> None:
       aircraft = self.aircraft
@@ -201,6 +209,11 @@ class SimulatorRuntime:
       self.update()
 
       aircraft = self.aircraft 
+      air_data = self.bus.get_latest_payload("AIR_DATA")
+      nav_data = self.bus.get_latest_payload("NAV_DATA")
+      engine_data = self.bus.get_latest_payload("ENGINE_DATA")
+      fuel_data = self.bus.get_latest_payload("FUEL_DATA")
+      weather_data = self.bus.get_latest_payload("WEATHER_RADAR")
 
       if aircraft is None:
          raise RuntimeError("Simulator not started")
@@ -241,17 +254,24 @@ class SimulatorRuntime:
             "state": "ONLINE",
          },
          "aircraft": {
-            "altitude": f"{round(aircraft.altitude_ft):,} FT",
-            "airspeed": f"{round(aircraft.airspeed_kts)} KTS",
-            "heading": f"{round(aircraft.heading_deg):03d}",
-            "vertical_speed": f"{round(aircraft.vertical_speed_fpm):+} FPM",
-            "fuel": f"{round(aircraft.fuel_lbs):,} LBS",
-            "engine_temp": f"{round(aircraft.engine_temp_c)} C",
-            "lat": round(aircraft.lat, 5),
-            "lon": round(aircraft.lon, 5),
-            "current_wp": current_wp,
-            "next_wp": next_wp,
+            "altitude": f"{round(air_data.get('altitude_ft', aircraft.altitude_ft)):,} FT",
+            "airspeed": f"{round(air_data.get('airspeed_kts', aircraft.airspeed_kts))} KTS",
+            "heading": f"{round(nav_data.get('heading_deg', aircraft.heading_deg)):03d}",
+            "vertical_speed": f"{round(air_data.get('vertical_speed_fpm', aircraft.vertical_speed_fpm)):+} FPM",
+            "fuel": f"{round(fuel_data.get('fuel_lbs', aircraft.fuel_lbs)):,} LBS",
+            "engine_temp": f"{round(engine_data.get('engine_temp_c', aircraft.engine_temp_c))} C",
+            "lat": round(nav_data.get('lat', aircraft.lat), 5),
+            "lon": round(nav_data.get('lon', aircraft.lon), 5),
+            "current_wp": nav_data.get("current_wp", current_wp),
+            "next_wp": nav_data.get("next_wp", next_wp),
          },
+         "bus1553": {
+            "active_controller": "MC1",
+            "bus_a": "ONLINE",
+            "bus_b": "ONLINE",
+            "message_count": len(self.bus.monitor_log),
+         },
+         "weather": weather_data,
       }
    
    def recent_messages(self) -> list[dict]:
@@ -266,4 +286,25 @@ class SimulatorRuntime:
             "type": msg.message_type,
          }
          for msg in reversed(self.messages[-20:])
+      ]
+
+   def weather_cells(self) -> list[dict]:
+      if self.aircraft is None:
+         return []
+      
+      return [
+         {
+            "id": "WX01",
+            "lat": round(self.aircraft.lat + 0.35, 5),
+            "lon": round(self.aircraft.lon - 0.45, 5),
+            "radius_nm": 12,
+            "intensity": 0.75,
+         },
+         {
+            "id": "WX02",
+            "lat": round(self.aircraft.lat - 0.35, 5),
+            "lon": round(self.aircraft.lon + 0.45, 5),
+            "radius_nm": 7,
+            "intensity": 0.45,
+         }
       ]

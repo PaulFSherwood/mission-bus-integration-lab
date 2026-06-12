@@ -92,7 +92,7 @@ def root():
 @app.get("/api/messages")
 def api_messages():
     return {
-        "messages": sim_runtime.recent_messages()
+        "messages": sim_runtime.bus.recent_messages()
     }
 
 @app.get("/{page_path:path}")
