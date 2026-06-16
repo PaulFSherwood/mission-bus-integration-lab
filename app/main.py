@@ -16,7 +16,7 @@ sim_runtime = SimulatorRuntime("data/routes/kpns_kabq_points.txt")
 NAV_ITEMS = [
     {"label": "Cockpit", "endpoint": "/overview", "icon": "cockpit"},
     {"label": "Mission Computers", "endpoint": "/mission-computers", "icon": "computer"},
-    {"label": "Bus Messages", "endpoint": "/bus-monitor", "icon": "bus"},
+    {"label": "Bus Messages", "endpoint": "/bus-messages", "icon": "bus"},
     {"label": "Sensors", "endpoint": "/sensors", "icon": "sensor"},
     {"label": "Displays", "endpoint": "/displays", "icon": "display"},
     {"label": "Fault Injection", "endpoint": "/faults", "icon": "fault"},
@@ -37,15 +37,10 @@ PAGE_DATA = {
         "subtitle": "MC1 / MC2 role, heartbeat, failover, and message processing state.",
         "template": "mission_computers.html",
     },
-    "/bus-monitor": {
-        "title": "Bus Messages",
-        "subtitle": "Simulated message traffic, bus timing, and message health.",
-        "template": "bus_monitor.html",
-    },
     "/bus-messages": {
-        "template": "bus_messages.html",
         "title": "Bus Messages",
-        "active_tab": "bus_messages",
+        "subtitle": "Live 1553-style bus monitor traffic.",
+        "template": "bus_messages.html",
     },
     "/sensors": {
         "title": "Sensors",

@@ -430,6 +430,7 @@ async function updateCockpit() {
       const data = await response.json();
 
       bindText(data);
+      updateBusMessages(data);
       drawMovingMap(data);
    } catch (error) {
       console.error("Cockpit update failed:", error);
@@ -458,3 +459,22 @@ async function updateCockpit() {
 
 setInterval(updateCockpit, 500);
 updateCockpit();
+
+function updateMissionComputerHeartbeat(data) {
+   const mc1Heartbeat = document.getElementById("mc1-heartbeat");
+   const mc2Heartbeat = document.getElementById("mc2-heartbeat");
+   
+   if (!data || !data.sim) {
+      return;
+   }
+
+   const seconds = data.sim.tick / 10.0;
+   const formatted = "00:00:" + seconds.toFixed(2).padStart(5, "0");
+
+   if (mc1Heartbeat) {
+      mc1Heartbeat.textContent = formatted;
+   }
+   if (mc2Heartbeat) {
+      mc2Heartbeat.textContent = formatted;
+   }
+}
