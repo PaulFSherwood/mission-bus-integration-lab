@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="bus-page-shell">
+    <div class="bus-page-header">
+        <div>
+            <h1>1553 Bus Monitor</h1>
+            <p>Live simulated bus traffic from BUS_A / BUS_B</p>
+        </div>
+
+        <div class="bus-summary-strip">
+            <div>
+                <span>Messages</span>
+                <strong id="bus-message-count">0</strong>
+            </div>
+            <div>
+                <span>BUS A</span>
+                <strong class="good">ONLINE</strong>
+            </div>
+            <div>
+                <span>BUS B</span>
+                <strong class="good">ONLINE</strong>
+            </div>
+            <div>
+                <span>Controller</span>
+                <strong>MC1</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="bus-monitor-card">
+        <div class="bus-monitor-toolbar">
+            <strong>MONITOR LOG</strong>
+            <span id="bus-monitor-status">waiting for messages...</span>
+        </div>
+
+        <div class="bus-table-wrap">
+            <table class="bus-table">
+                <thead>
+                    <tr>
+                        <th>Tick</th>
+                        <th>Bus</th>
+                        <th>BC</th>
+                        <th>RT</th>
+                        <th>SA</th>
+                        <th>Dir</th>
+                        <th>Words</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Payload</th>
+                    </tr>
+                </thead>
+                <tbody id="bus-message-body">
+                    <tr>
+                        <td colspan="10">No messages yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

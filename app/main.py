@@ -42,6 +42,11 @@ PAGE_DATA = {
         "subtitle": "Simulated message traffic, bus timing, and message health.",
         "template": "bus_monitor.html",
     },
+    "/bus-messages": {
+        "template": "bus_messages.html",
+        "title": "Bus Messages",
+        "active_tab": "bus_messages",
+    },
     "/sensors": {
         "title": "Sensors",
         "subtitle": "Air data, INS, engine, and fuel sensor output.",

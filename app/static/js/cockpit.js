@@ -312,6 +312,118 @@ function bindText(data) {
    });
 }
 
+function compactPayload(payload) {
+    if (!payload) {
+        return "";
+    }
+
+    return Object.entries(payload)
+        .map(([key, value]) => {
+            if (Array.isArray(value)) {
+                return key + "=" + value.length + " items";
+            }
+
+            if (typeof value === "object" && value !== null) {
+                return key + "=" + JSON.stringify(value);
+            }
+
+            return key + "=" + value;
+        })
+        .join(" | ");
+}
+
+function statusClass(status) {
+    if (status === "OK") {
+        return "status-ok";
+    }
+
+    if (status === "STALE") {
+        return "status-stale";
+    }
+
+    return "status-fail";
+}
+
+function busClass(bus) {
+    if (bus === "BUS_A") {
+        return "bus-a";
+    }
+
+    if (bus === "BUS_B") {
+        return "bus-b";
+    }
+
+    return "";
+}
+
+async function updateBusMessages() {
+    const tableBody = document.getElementById("bus-message-body");
+
+    if (!tableBody) {
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/messages");
+        const data = await response.json();
+        const messages = data.messages || [];
+
+        const countEl = document.getElementById("bus-message-count");
+        const statusEl = document.getElementById("bus-monitor-status");
+
+        if (countEl) {
+            countEl.textContent = messages.length;
+        }
+
+        if (statusEl) {
+            statusEl.textContent = "live - " + messages.length + " recent messages";
+        }
+
+        if (messages.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="10">No messages yet.</td></tr>';
+            return;
+        }
+
+        tableBody.innerHTML = messages.map((msg) => {
+            const controller = msg.controller ?? msg.bc ?? msg.source ?? "";
+            const rt = msg.rt ?? msg.remote_terminal ?? msg.destination ?? "";
+            const subaddress = msg.subaddress ?? msg.sa ?? "";
+            const direction = msg.direction ?? msg.dir ?? "";
+            const wordCount = msg.word_count ?? msg.words ?? "";
+            const messageType = msg.message_type ?? msg.type ?? "";
+            const status = msg.status ?? "OK";
+            const payloadText = compactPayload(msg.payload);
+        
+            return `
+                <tr>
+                    <td>${msg.tick ?? ""}</td>
+                    <td class="${busClass(msg.bus)}">${msg.bus ?? ""}</td>
+                    <td>${controller}</td>
+                    <td>${rt}</td>
+                    <td>${subaddress}</td>
+                    <td>${direction}</td>
+                    <td>${wordCount}</td>
+                    <td>${messageType}</td>
+                    <td class="${statusClass(status)}">${status}</td>
+                    <td class="payload-cell">${payloadText}</td>
+                </tr>
+            `;
+        }).join("");
+
+    } catch (error) {
+        console.error("Bus message update failed:", error);
+
+        const statusEl = document.getElementById("bus-monitor-status");
+
+        if (statusEl) {
+            statusEl.textContent = "error reading /api/messages";
+        }
+    }
+}
+
+setInterval(updateBusMessages, 500);
+updateBusMessages();
+
 async function updateCockpit() {
    try {
       const response = await fetch("/api/state");
