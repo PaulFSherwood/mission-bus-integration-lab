@@ -1,12 +1,33 @@
+/* Sensors page
+   Mockup-style layout:
+   - Left main column: overview + sensor cards
+   - Right sidebar: status list + history + events
+   - Bottom full-width: detail/fault/mode panels
+*/
+
 .sensors-page-shell {
     padding: 10px 12px 28px;
     color: #d8e8f5;
 }
 
-.sensors-top-grid {
+.sensors-layout {
     display: grid;
-    grid-template-columns: 1fr 435px;
+    grid-template-columns: minmax(0, 1fr) 430px;
     gap: 12px;
+    align-items: start;
+}
+
+.sensors-left-column {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+}
+
+.sensors-right-column {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    min-width: 0;
 }
 
 .sensor-overview-card,
@@ -23,7 +44,11 @@
 }
 
 .sensor-overview-card,
-.sensor-status-list-card {
+.sensor-status-list-card,
+.sensor-history-card,
+.sensor-events-card,
+.sensor-card,
+.sensor-bottom-panel {
     padding: 10px;
 }
 
@@ -43,7 +68,7 @@
 
 .sensor-overview-row {
     display: grid;
-    grid-template-columns: repeat(4, 1fr) 220px;
+    grid-template-columns: repeat(4, minmax(150px, 1fr)) 190px;
     gap: 10px;
 }
 
@@ -135,40 +160,48 @@
     font-size: 10px;
 }
 
+/* Main left sensor card grid */
 .sensors-main-grid {
     display: grid;
-    grid-template-columns: 1.35fr 1.35fr 1.35fr 1fr 1fr;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 10px;
-    margin-top: 12px;
+    align-items: stretch;
 }
 
-.sensor-card {
-    padding: 10px;
-    min-height: 205px;
-}
-
+/* Row 1: AIR DATA | INS/NAV | ENGINE */
 .sensor-air {
-    grid-column: span 2;
+    grid-column: span 4;
 }
 
 .sensor-nav {
-    grid-column: span 2;
+    grid-column: span 4;
 }
 
 .sensor-engine {
-    grid-column: span 2;
+    grid-column: span 4;
 }
 
-.sensor-fuel,
-.sensor-bus,
+/* Row 2: FUEL | BUS A | BUS B | OAT */
+.sensor-fuel {
+    grid-column: span 3;
+}
+
+.sensor-bus {
+    grid-column: span 3;
+}
+
 .sensor-oat {
-    min-height: 175px;
+    grid-column: span 3;
 }
 
-.sensor-history-card,
-.sensor-events-card {
-    grid-column: span 2;
-    padding: 10px;
+.sensor-card {
+    min-height: 205px;
+}
+
+.sensor-air,
+.sensor-nav,
+.sensor-engine {
+    min-height: 250px;
 }
 
 .sensor-card-header {
@@ -204,13 +237,13 @@
 .air-data-layout,
 .nav-layout {
     display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 12px;
+    grid-template-columns: 125px 1fr;
+    gap: 10px;
 }
 
 .round-gauge-face {
-    width: 136px;
-    height: 136px;
+    width: 116px;
+    height: 116px;
     border: 1px solid rgba(210, 230, 240, 0.7);
     border-radius: 999px;
     position: relative;
@@ -266,7 +299,7 @@
 }
 
 .attitude-mini {
-    height: 140px;
+    height: 118px;
     border: 1px solid rgba(120, 180, 220, 0.18);
     position: relative;
     overflow: hidden;
@@ -305,8 +338,8 @@
 
 .engine-gauge-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
     margin: 6px 0 10px;
 }
 
@@ -315,8 +348,8 @@
 }
 
 .mini-gauge-arc {
-    width: 76px;
-    height: 44px;
+    width: 62px;
+    height: 36px;
     border: 2px solid #ffd84d;
     border-bottom: none;
     border-radius: 76px 76px 0 0;
@@ -406,9 +439,30 @@
     margin-left: 8px;
 }
 
+/* Right sidebar */
+.sensor-history-card {
+    min-height: 255px;
+}
+
+.sensor-events-card {
+    min-height: 230px;
+}
+
+.health-history-time-row {
+    display: grid;
+    grid-template-columns: 72px repeat(7, 1fr);
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0 7px;
+    color: #c9d3dd;
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+}
+
 .health-history-grid {
     display: grid;
-    grid-template-columns: 75px 1fr;
+    grid-template-columns: 72px 1fr;
     gap: 7px 10px;
     align-items: center;
 }
@@ -417,22 +471,72 @@
     color: #ffffff;
     font-size: 11px;
     font-weight: 800;
+    text-transform: uppercase;
 }
 
 .history-row {
-    height: 14px;
-    background-size: 12px 14px;
+    height: 16px;
     border: 1px solid rgba(120, 180, 220, 0.14);
+    background-color: rgba(0, 0, 0, 0.28);
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.65);
 }
 
+/* Dense tick marks: high-rate sensor/bus data */
+.history-row.rate-fast {
+    background-size: 10px 16px;
+}
+
+.history-row.rate-med {
+    background-size: 12px 16px;
+}
+
+.history-row.rate-slow {
+    background-size: 16px 16px;
+}
+
+.history-row.rate-bus {
+    background-size: 8px 16px;
+}
+
+/* Healthy glowing green ticks */
 .history-row.healthy {
-    background-image: repeating-linear-gradient(90deg, #45b750 0 7px, #214d29 7px 12px);
+    background-image:
+        repeating-linear-gradient(
+            90deg,
+            rgba(89, 220, 98, 0.95) 0 6px,
+            rgba(28, 78, 35, 0.85) 6px 10px
+        );
+    box-shadow:
+        inset 0 0 8px rgba(0, 0, 0, 0.65),
+        0 0 6px rgba(89, 220, 98, 0.18);
 }
 
-.history-row.warning {
-    background-image: repeating-linear-gradient(90deg, #45b750 0 7px, #214d29 7px 9px, #ffd84d 9px 12px);
+/* Mostly green, warning near the current/right side */
+.history-row.warning-tail {
+    background-image:
+        linear-gradient(
+            90deg,
+            transparent 0%,
+            transparent 68%,
+            rgba(255, 216, 77, 0.22) 68%,
+            rgba(255, 216, 77, 0.22) 100%
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(89, 220, 98, 0.95) 0 6px,
+            rgba(28, 78, 35, 0.85) 6px 10px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 6px,
+            rgba(255, 216, 77, 0.95) 6px 10px
+        );
+    box-shadow:
+        inset 0 0 8px rgba(0, 0, 0, 0.65),
+        0 0 6px rgba(255, 216, 77, 0.16);
 }
 
+/* Bottom full-width row */
 .sensors-bottom-grid {
     display: grid;
     grid-template-columns: 1fr 1.4fr 1.6fr;
@@ -441,7 +545,6 @@
 }
 
 .sensor-bottom-panel {
-    padding: 12px;
     min-height: 74px;
 }
 
@@ -505,91 +608,35 @@
     font-size: 12px;
 }
 
-/* Sensors page layout correction
-   Row 1: AIR DATA | INS/NAV | ENGINE
-   Row 2: FUEL | BUS A | BUS B | OAT
-   Row 3: HEALTH HISTORY | SENSOR EVENTS
-*/
-.sensors-top-grid {
-    grid-template-columns: minmax(0, 1fr) 430px;
-    align-items: start;
+/* Reasonable fallback on smaller screens */
+@media (max-width: 1400px) {
+    .sensors-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sensors-right-column {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .sensor-status-list-card {
+        grid-column: 1 / -1;
+    }
 }
 
-.sensor-overview-row {
-    grid-template-columns: repeat(4, minmax(150px, 1fr)) 190px;
-}
+@media (max-width: 900px) {
+    .sensor-overview-row,
+    .sensors-main-grid,
+    .sensors-bottom-grid,
+    .sensors-right-column {
+        grid-template-columns: 1fr;
+    }
 
-.sensors-main-grid {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 10px;
-    margin-top: 12px;
-    align-items: stretch;
-}
-
-.sensor-air {
-    grid-column: span 4;
-}
-
-.sensor-nav {
-    grid-column: span 4;
-}
-
-.sensor-engine {
-    grid-column: span 4;
-}
-
-.sensor-fuel {
-    grid-column: span 3;
-}
-
-.sensor-bus {
-    grid-column: span 3;
-}
-
-.sensor-oat {
-    grid-column: span 3;
-}
-
-.sensor-history-card {
-    grid-column: span 7;
-}
-
-.sensor-events-card {
-    grid-column: span 5;
-}
-
-.sensor-card {
-    min-height: 210px;
-}
-
-.sensor-air,
-.sensor-nav,
-.sensor-engine {
-    min-height: 245px;
-}
-
-.air-data-layout,
-.nav-layout {
-    grid-template-columns: 125px 1fr;
-    gap: 10px;
-}
-
-.round-gauge-face {
-    width: 116px;
-    height: 116px;
-}
-
-.attitude-mini {
-    height: 118px;
-}
-
-.engine-gauge-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 8px;
-}
-
-.mini-gauge-arc {
-    width: 62px;
-    height: 36px;
+    .sensor-air,
+    .sensor-nav,
+    .sensor-engine,
+    .sensor-fuel,
+    .sensor-bus,
+    .sensor-oat {
+        grid-column: auto;
+    }
 }
