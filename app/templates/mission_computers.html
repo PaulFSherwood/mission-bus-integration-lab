@@ -1,214 +1,242 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<section class="mc-page-shell">
-   <div class="mc-page-header">
-      <div>
-         <h1>Mission Computing</h1>
-         <p>MC1 / MC2 bus controller state, latest 1553 payloads, and display data flow.</p>
-      </div>
-
-      <div class="mc-summary-strip">
-         <div>
-            <span>Active BC</span>
-            <strong data-bind=""bus1553.active_controller">MC1</strong>
-         </div>
-         <div>
-            <span>BUS A</span>
-            <strong class="good" data-bind="bus1553.bus_a">ONLINE</strong>
-         </div>
-         <div>
-            <span>BUS B</span>
-            <strong class="good" data-bind="bus1553.bus_b">ONLINE</strong>
-         </div>
-         <div>
-            <span>Messages</span>
-            <strong data-bind="bus1553.message_count">0</strong>
-         </div>
-      </div>
+<section class="mc2-page-shell">
+   <div class="mc2-page-title">
+      <h1>Mission Computers Overview</h1>
    </div>
 
-   <div class="mc-grid">
-      <article class="mc-console-card mc-primary">
-         <div class="mc-card-header">
-            <div>
-               <h2>MC1</h2>
-               <span>Mission Computer 1</span>
-            </div>
-            <strong class="mc-role-primary" data-bind="mc1.role">PRIMARY</strong>
+   <div class="mc2-computer-grid">
+      <article class="mc2-card mc2-card-primary">
+         <div class="mc2-card-title green">
+            <span class="mc2-dot"></span>
+            <h2>MC1 (CNI) - <span data-bind="mc1.role">PRIMARY</span></h2>
          </div>
 
-         <div class="mc-status-row">
-            <div>
-               <span>State</span>
-               <strong class="good" data-bind="mc1.state">ONLINE</strong>
-            </div>
-            <div>
-               <span>Bus Role</span>
-               <strong>BUS CONTROLLER</strong>
-            </div>
-            <div>
-               <span>Heartbeat</span>
-               <strong id=""mc1-heartbeat">00:00:00.00</strong>
-            </div>
-         </div>
-
-         <div class=""mc-flow-panel">
-            <div class="mc-flow-node active">AIR DATA RT</div>
-            <div class="mc-flow-line"></div>
-            <div class="mc-flow-node active">NAV RT</div>
-            <div class="mc-flow-line"></div>
-            <div class="mc-flow-node primary">MC1</div>
-            <div class="mc-flow-line"></div>
-            <div class="mc-flow-node">DISPLAYS</div>
-         </div>
-
-         <div class="mc-data-panels">
-            <section>
-               <h3>Latest AIR_DATA</h3>
+         <div class="mc2-card-main">
+            <section class="mc2-status-panel">
+               <h3>Status</h3>
                <dl>
-                  <dt>Altitude</dt>
-                  <dd data-bind="aircraft.altitude">--</dd>
-                  <dt>Airspeed</dt>
-                  <dd data-bind="aircraft.airspeed">--</dd>
-                  <dt>Vert Speed</dt>
-                  <dd data-bind="aircraft.vertical_speed">--</dd>
+                  <dt>Role</dt><dd data-bind="mc1.role">PRIMARY</dd>
+                  <dt>Health</dt><dd class="good" data-bind="mc1.state">ONLINE</dd>
+                  <dt>Mode</dt><dd class="good">ACTIVE</dd>
+                  <dt>Uptime</dt><dd id="mc1-uptime">00:00:00.00</dd>
+                  <dt>Last Heartbeat</dt><dd id="mc1-heartbeat">00:00:00.00</dd>
+                  <dt>Heartbeat Count</dt><dd data-bind="sim.tick">0</dd>
+                  <dt>CPU Load</dt><dd><span id="mc1-cpu">28%</span> <span class="mc2-bar"><span style="width:28%"></span></span></dd>
+                  <dt>Memory Used</dt><dd><span>42%</span> <span class="mc2-bar"><span style="width:42%"></span></span></dd>
+                  <dt>Temp</dt><dd>38 °C</dd>
+                  <dt>Voltage</dt><dd>27.3 V</dd>
                </dl>
             </section>
 
-            <section>
-               <h3>Latest NAV_DATA</h3>
-               <dl>
-                  <dt>Heading</dt>
-                  <dd data-bind="aircraft.heading">--</dd>
-                  <dt>Current WP</dt>
-                  <dd data-bind="aircraft.current_wp">--</dd>
-                  <dt>Next WP</dt>
-                  <dd data-bind="aircraft.next_wp">--</dd>
-               </dl>
+            <section class="mc2-io-panel">
+               <h3>Inputs (Receiving)</h3>
+                  <table>
+                     <thead>
+                        <tr><th>Source</th><th>Type</th><th>Rate</th><th>Status</th></tr>
+                     </thead>
+                     <tbody id="mc1-inputs">
+                        <tr><td>AIR DATA RT</td><td>AIR_DATA</td><td>1 tick</td><td class="good">OK</td></tr>
+                        <tr><td>NAV RT</td><td>NAV_DATA</td><td>1 tick</td><td class="good">OK</td></tr>
+                        <tr><td>ENGINE RT</td><td>ENGINE_DATA</td><td>2 ticks</td><td class="good">OK</td></tr>
+                        <tr><td>FUEL RT</td><td>FUEL_DATA</td><td>2 ticks</td><td class="good">OK</td></tr>
+                        <tr><td>WEATHER RADAR RT</td><td>WEATHER_RADAR</td><td>5 ticks</td><td class="good">OK</td></tr>
+                     </tbody>
+                  </table>
+
+               <h3>Outputs (Transmitting)</h3>
+               <table>
+                  <thead>
+                     <tr><th>Destination</th><th>Type</th><th>Rate</th><th>Status</th></tr>
+                  </thead>
+                  <tbody>
+                     <tr><td>PILOT DISPLAY</td><td>DISP_UPDATE</td><td>20 Hz</td><td class="good">OK</td></tr>
+                     <tr><td>COPILOT DISPLAY</td><td>DISP_UPDATE</td><td>20 Hz</td><td class="good">OK</td></tr>
+                     <tr><td>RADAR DISPLAY</td><td>RADAR_DATA</td><td>10 Hz</td><td class="good">OK</td></tr>
+                     <tr><td>MAP DISPLAY</td><td>MAP_DATA</td><td>5 Hz</td><td class="good">OK</td></tr>
+                     <tr><td>MC2 (CNI)</td><td>STATE_SYNC</td><td>10 Hz</td><td class="good">OK</td></tr>
+                  </tbody>
+               </table>
             </section>
+
+            <aside class="mc2-side-stack">
+               <section>
+                  <h3>Heartbeat</h3>
+                  <canvas id="mc1-heartbeat-canvas" class="mc2-heartbeat-canvas"></canvas>
+                  <p>LAST 10 SEC</p>
+               </section>
+
+               <section>
+                  <h3>Processor</h3>
+                  <div class="mc2-core-row">CORE 1 <span>26%</span><span class="mc2-bar"><span style="width:26%"></span></span></div>
+                  <div class="mc2-core-row">CORE 2 <span>31%</span><span class="mc2-bar"><span style="width:31%"></span></span></div>
+                  <div class="mc2-core-row">CORE 3 <span>24%</span><span class="mc2-bar"><span style="width:24%"></span></span></div>
+                  <div class="mc2-core-row">CORE 4 <span>30%</span><span class="mc2-bar"><span style="width:30%"></span></span></div>
+               </section>
+
+               <section>
+                  <h3>Memory</h3>
+                  <div class="mc2-core-row">USED <span>42%</span><span class="mc2-bar"><span style="width:42%"></span></span></div>
+                  <div class="mc2-core-row">FREE <span>58%</span><span class="mc2-bar"><span style="width:58%"></span></span></div>
+                  <div class="mc2-core-row">TOTAL <span>1024 MB</span></div>
+               </section>
+            </aside>
          </div>
+
+         <section class="mc2-events">
+            <h3>Events (Last 5)</h3>
+            <div id="mc1-events">
+               <p><span>INFO</span> MC1 HEARTBEAT OK</p>
+               <p><span>INFO</span> MC1 OUTPUTS NORMAL</p>
+               <p><span>INFO</span> MC1 RECEIVED BUS A STATUS</p>
+               <p><span>INFO</span> MC1 SYNC WITH MC2 OK</p>
+               <p><span>INFO</span> MC1 STARTUP COMPLETE</p>
+            </div>
+         </section>
       </article>
 
-      <article class="mc-console-card mc-standby">
-         <div class="mc-card-header">
-            <div>
-               <h2>MC2</h2>
-               <span>Mission Computer 2</span>
-            </div>
-            <strong class="mc-role-standby" data-bind="mc2.role">STANDBY</strong>
+      <article class="mc2-card mc2-card-standby">
+         <div class="mc2-card-title yellow">
+            <span class="mc2-dot"></span>
+            <h2>MC2 (CNI) - <span data-bind="mc2.role">STANDBY</span></h2>
          </div>
 
-         <div class="mc-status-row">
-            <div>
-               <span>State</span>
-               <strong class="good" data-bind="mc2.state">ONLINE</strong>
-            </div>
-            <div>
-               <span>Bus Role</span>
-               <strong>MONITOR / BACKUP BC</strong>
-            </div>
-            <div>
-               <span>Heartbeat</span>
-               <strong id="mc2-heartbeat">00:00:00.00</strong>
-            </div>
-         </div>
-
-         <div class="mc-flow-panel">
-            <div class="mc-flow-node active">BUS B</div>
-            <div class="mc-flow-line"></div>
-            <div class="mc-flow-node active">AIR DATA RT</div>
-            <div class="mc-flow-line"></div>
-            <div class="mc-flow-node standby">MC2</div>
-            <div class="mc-flow-line"></div>
-            <div class="mc-flow-node">STANDBY</div>
-         </div>
-
-         <div class="mc-flow-panel">
-            <div class="mc-flow-node active">BUS B</div>
-            <div class="mc-flow-line"></div>
-            <div class="mc-flow-node active">AIR DATA RT</div>
-            <div class="mc-flow-line"></div>
-            <div class="mc-flow-node standby">MC2</div>
-            <div class="mc-flow-line"></div>
-            <div class="mc-flow-node">STANDBY</div>
-         </div>
-
-         <div class="mc-data-panels">
-            <section>
-               <h3>Latest ENGINE_DATA</h3>
+         <div class="mc2-card-main">
+            <section class="mc2-status-panel">
+               <h3>Status</h3>
                <dl>
-                  <dt>Engine Temp</dt>
-                  <dd data-bind="aircraft.engine_temp">--</dd>
-                  <dt>Status</dt>
-                  <dd class="good">NORMAL</dd>
+                  <dt>Role</dt><dd data-bind="mc2.role">STANDBY</dd>
+                  <dt>Health</dt><dd class="good" data-bind="mc2.state">ONLINE</dd>
+                  <dt>Mode</dt><dd class="warn">HOT STANDBY</dd>
+                  <dt>Uptime</dt><dd id="mc2-uptime">00:00:00.00</dd>
+                  <dt>Last Heartbeat</dt><dd id="mc2-heartbeat">00:00:00.00</dd>
+                  <dt>Heartbeat Count</dt><dd id="mc2-heartbeat-count">0</dd>
+                  <dt>CPU Load</dt><dd><span>22%</span> <span class="mc2-bar yellow"><span style="width:22%"></span></span></dd>
+                  <dt>Memory Used</dt><dd><span>38%</span> <span class="mc2-bar yellow"><span style="width:38%"></span></span></dd>
+                  <dt>Temp</dt><dd>36 °C</dd>
+                  <dt>Voltage</dt><dd>27.2 V</dd>
                </dl>
             </section>
 
-            <section>
-               <h3>Latest FUEL_DATA</h3>
-               <dl>
-                  <dt>Fuel</dt>
-                  <dd data-bind="aircraft.fuel">--</dd>
-                  <dt>Status</dt>
-                  <dd class="good">NORMAL</dd>
-               </dl>
+            <section class="mc2-io-panel">
+               <h3>Inputs (Receiving)</h3>
+               <table>
+                  <thead>
+                     <tr><th>Source</th><th>Type</th><th>Rate</th><th>Status</th></tr>
+                  </thead>
+                  <tbody id="mc2-inputs">
+                     <tr><td>AIR DATA RT</td><td>AIR_DATA</td><td>2 ticks</td><td class="good">OK</td></tr>
+                     <tr><td>NAV RT</td><td>NAV_DATA</td><td>2 ticks</td><td class="good">OK</td></tr>
+                     <tr><td>BUS A MONITOR</td><td>BUS_STATUS</td><td>20 Hz</td><td class="good">OK</td></tr>
+                     <tr><td>BUS B MONITOR</td><td>BUS_STATUS</td><td>20 Hz</td><td class="good">OK</td></tr>
+                  </tbody>
+               </table>
+
+               <h3>Outputs (Transmitting)</h3>
+               <table>
+                  <thead>
+                     <tr><th>Destination</th><th>Type</th><th>Rate</th><th>Status</th></tr>
+                  </thead>
+                  <tbody>
+                     <tr><td>MC1 (CNI)</td><td>STATE_SYNC</td><td>10 Hz</td><td class="good">OK</td></tr>
+                     <tr><td>PILOT DISPLAY READY</td><td>DISP_UPDATE</td><td>20 Hz</td><td class="warn">STANDBY</td></tr>
+                     <tr><td>COPILOT DISPLAY READY</td><td>DISP_UPDATE</td><td>20 Hz</td><td class="warn">STANDBY</td></tr>
+                     <tr><td>RADAR DISPLAY READY</td><td>RADAR_DATA</td><td>10 Hz</td><td class="warn">STANDBY</td></tr>
+                     <tr><td>MAP DISPLAY READY</td><td>MAP_DATA</td><td>5 Hz</td><td class="warn">STANDBY</td></tr>
+                  </tbody>
+               </table>
             </section>
+
+            <aside class="mc2-side-stack">
+               <section>
+                  <h3>Heartbeat</h3>
+                  <canvas id="mc2-heartbeat-canvas" class="mc2-heartbeat-canvas"></canvas>
+                  <p>LAST 10 SEC</p>
+               </section>
+
+               <section>
+                  <h3>Processor</h3>
+                  <div class="mc2-core-row">CORE 1 <span>20%</span><span class="mc2-bar yellow"><span style="width:20%"></span></span></div>
+                  <div class="mc2-core-row">CORE 2 <span>24%</span><span class="mc2-bar yellow"><span style="width:24%"></span></span></div>
+                  <div class="mc2-core-row">CORE 3 <span>21%</span><span class="mc2-bar yellow"><span style="width:21%"></span></span></div>
+                  <div class="mc2-core-row">CORE 4 <span>22%</span><span class="mc2-bar yellow"><span style="width:22%"></span></span></div>
+               </section>
+
+               <section>
+                  <h3>Memory</h3>
+                  <div class="mc2-core-row">USED <span>38%</span><span class="mc2-bar yellow"><span style="width:38%"></span></span></div>
+                  <div class="mc2-core-row">FREE <span>62%</span><span class="mc2-bar yellow"><span style="width:62%"></span></span></div>
+                  <div class="mc2-core-row">TOTAL <span>1024 MB</span></div>
+               </section>
+            </aside>
          </div>
+
+         <section class="mc2-events">
+            <h3>Events (Last 5)</h3>
+            <div id="mc2-events">
+               <p><span>INFO</span> MC2 HEARTBEAT OK</p>
+               <p><span>INFO</span> MC2 STATE SYNC OK</p>
+               <p><span>INFO</span> MC2 RECEIVED BUS B STATUS</p>
+               <p><span>INFO</span> MC2 STANDBY MODE ACTIVE</p>
+               <p><span>INFO</span> MC2 STARTUP COMPLETE</p>
+            </div>
+         </section>
       </article>
    </div>
 
-   <div class="mc-lower-grid">
-      <article class="mc-console-card">
-         <div class="mc-card-header small">
-            <div>
-               <h2>1553 Schedule</h2>
-               <span>Current simplified bus-controller polling schedule</span>
-            </div>
-         </div>
+   <div class="mc2-bottom-grid">
+      <section class="mc2-small-panel">
+         <h3>Failover Status</h3>
+         <dl>
+            <dt>Failover Enabled</dt><dd class="good">YES</dd>
+            <dt>Primary</dt><dd class="good">MC1</dd>
+            <dt>Standby</dt><dd class="warn">MC2</dd>
+            <dt>Last Failover</dt><dd>NEVER</dd>
+            <dt>Failover Count</dt><dd>0</dd>
+         </dl>
+      </section>
 
-         <table class="mc-schedule-table">
-            <thead>
-               <tr>
-                  <th>Bus</th>
-                  <th>Controller</th>
-                  <th>Remote Terminal</th>
-                  <th>SA</th>
-                  <th>Type</th>
-                  <th>Rate</th>
-               </tr>
-            </thead>
+      <section class="mc2-small-panel">
+         <h3>Failover Log (Last 5)</h3>
+         <table>
+            <thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
             <tbody>
-               <tr><td>BUS_A</td><td>MC1</td><td>AIR_DATA_RT</td><td>1</td><td>AIR_DATA</td><td>1 tick</td></tr>
-               <tr><td>BUS_A</td><td>MC1</td><td>NAV_RT</td><td>1</td><td>NAV_DATA</td><td>1 tick</td></tr>
-               <tr><td>BUS_A</td><td>MC1</td><td>ENGINE_RT</td><td>1</td><td>ENGINE_DATA</td><td>2 ticks</td></tr>
-               <tr><td>BUS_A</td><td>MC1</td><td>FUEL_RT</td><td>1</td><td>FUEL_DATA</td><td>2 ticks</td></tr>
-               <tr><td>BUS_B</td><td>MC2</td><td>AIR_DATA_RT</td><td>1</td><td>AIR_DATA</td><td>2 ticks</td></tr>
-               <tr><td>BUS_B</td><td>MC2</td><td>NAV_RT</td><td>1</td><td>NAV_DATA</td><td>2 ticks</td></tr>
-               <tr><td>BUS_A</td><td>MC1</td><td>WEATHER_RADAR_RT</td><td>1</td><td>WEATHER_RADAR</td><td>5 ticks</td></tr>
+               <tr><td>--</td><td>--</td><td>No failover events recorded</td></tr>
             </tbody>
          </table>
-      </article>
+      </section>
 
-      <article class="mc-console-card">
-         <div class="mc-card-header small">
-            <div>
-               <h2>Data Path</h2>
-               <span>What this page is proving</span>
-            </div>
-         </div>
+      <section class="mc2-small-panel">
+         <h3>Sync Status</h3>
+         <dl>
+            <dt>MC1 → MC2 Sync</dt><dd class="good">OK</dd>
+            <dt>MC2 → MC1 Sync</dt><dd class="good">OK</dd>
+            <dt>Last Sync Time</dt><dd>00:00:00.05</dd>
+            <dt>Sync Rate</dt><dd>10 Hz</dd>
+            <dt>Sync Quality</dt><dd class="good">100%</dd>
+         </dl>
+      </section>
 
-         <div class="mc-path-stack">
-            <div>Flight Data Source</div>
-            <div>Remote Terminals</div>
-            <div>1553 Bus Controller Scheduler</div>
-            <div>Bus Monitor Log</div>
-            <div>Mission Computer Display State</div>
-            <div>Web Monitor</div>
-         </div>
-      </article>
+      <section class="mc2-small-panel">
+         <h3>Data Consistency</h3>
+         <dl>
+            <dt>Sensor Data Match</dt><dd class="good">OK</dd>
+            <dt>Bus State Match</dt><dd class="good">OK</dd>
+            <dt>Config Match</dt><dd class="good">OK</dd>
+            <dt>Time Sync</dt><dd class="good">OK</dd>
+            <dt>Overall</dt><dd class="good">OK</dd>
+         </dl>
+      </section>
+
+      <section class="mc2-small-panel mc2-controls">
+         <h3>Mission Computer Controls</h3>
+         <button class="mc2-button green">Force MC1 Primary</button>
+         <button class="mc2-button yellow">Force MC2 Primary</button>
+         <button class="mc2-button blue">Restart MC1</button>
+         <button class="mc2-button blue">Restart MC2</button>
+         <button class="mc2-button red wide">Shutdown Both MCs</button>
+      </section>
    </div>
 </section>
-
 {% endblock %}

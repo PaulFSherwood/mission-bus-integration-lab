@@ -478,3 +478,72 @@ function updateMissionComputerHeartbeat(data) {
       mc2Heartbeat.textContent = formatted;
    }
 }
+
+function drawMcHeartbeat(canvasId, color) {
+   const canvas = document.getElementById(canvasId);
+
+   if (!canvas) {
+      return;
+   }
+
+   const rect = canvas.getBoundingClientRect();
+
+   if (rect.width < 10 || rect.height < 10) {
+      return;
+   }
+
+   canvas.width = Math.floor(rect.width);
+   canvas.height = Math.floor(rect.height);
+
+   const ctx = canvas.getContext("2d");
+   const width = canvas.width;
+   const height = canvas.height;
+   const midY = height / 2;
+
+   ctx.clearRect(0, 0, width, height);
+
+   ctx.strokeStyle = color;
+   ctx.lineWidth = 2;
+   ctx.beginPath();
+
+   for (let x = 0; x < width; x += 4) {
+      const t = (Date.now() / 120) + x;
+      let y = midY + Math.sin(t * 0.18) * 6;
+
+      if (x % 34 < 5) {
+         y -= 14;
+      }
+
+      if (x === 0) {
+         ctx.moveTo(x, y);
+         } else {
+            ctx.lineTo(x, y);
+         }
+      }
+
+      ctx.stroke();
+}
+
+function updateMissionComputersPage(data) {
+   if (!document.querySelector(".mc2-page-shell")) {
+      return;
+   }
+
+   const seconds = data.sim.tick / 10.0;
+   const formatted = "00:00:" + seconds.toFixed(2).padStart(5, "0");
+
+   const mc1Uptime = document.getElementById("mc1-uptime");
+   const mc2Uptime = document.getElementById("mc2-uptime");
+   const mc1Heartbeat = document.getElementById("mc1-heartbeat");
+   const mc2Heartbeat = document.getElementById("mc2-heartbeat");
+   const mc2HeartbeatCount = document.getElementById("mc2-heartbeat-count");
+
+   if (mc1Uptime) mc1Uptime.textContent = formatted;
+   if (mc2Uptime) mc2Uptime.textContent = formatted;
+   if (mc1Heartbeat) mc1Heartbeat.textContent = "00:00:00.12";
+   if (mc2Heartbeat) mc2Heartbeat.textContent = "00:00:00.14";
+   if (mc2HeartbeatCount) mc2HeartbeatCount.textContent = Math.max(0, data.sim.tick - 5);
+
+   drawMcHeartbeat("mc1-heartbeat-canvas", "#6dff7d");
+   drawMcHeartbeat("mc2-heartbeat-canvas", "#ffd84d");
+}
