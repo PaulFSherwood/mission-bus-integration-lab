@@ -97,3 +97,23 @@ class Bus1553:
 
       if rt:
          rt.stale = stale
+
+   def fault_status(self) -> dict:
+      terminals = {}
+
+      for name, rt in self.remote_terminals.items():
+         terminals[name] = {
+            "failed": rt.failed,
+            "stale": rt.stale,
+            "status": "NO_RESPONSE" if rt.failed else "STALE" if rt.stale else "OK",
+         }
+      return {
+         "remote_terminals": terminals,
+         "bus_a": "ONLINE",
+         "bus_b": "ONLINE",
+      }
+   
+   def clear_fault(self) -> None:
+      for rt in self.remote_terminals.values():
+         rt.failed = False
+         rt.stale = False

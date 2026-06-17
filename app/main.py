@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from app.sim.runtime import SimulatorRuntime
 from starlette.responses import RedirectResponse
+from pydantic import BaseModel
 
 app = FastAPI(title="MBIL")
 
@@ -80,6 +81,44 @@ DEMO_CONTEXT = {
     "tick_rate": "10 Hz",
     "sim_time": "00:12:34",
 }
+
+class FaultValue(BaseModel):
+    enable: bool
+
+@app.get("/api/faults")
+def api_faults():
+    return sim_runtime.bus.fault_status()
+
+@app.post("/api/faults/rt/{rt_name}/failed")
+def api_set_rt_failed(rt_name: str, value: FaultValue):
+    sim_runtime.bus.set_rt_failed(rt_name, value.enabled)
+
+    return {
+        "ok": True,
+        "rt": rt_name,
+        "failed": value.enabled,
+        "faults": sim_runtime.bus.fault_status(),
+    }
+
+@app.post("/api/faults/rt/{rt_name}/stale")
+def api_set_rt_stale(rt_name: str, value: FaultValue):
+    sim_runtime.bus.set_rt_stale(rt_name, value.enabled)
+
+    return {
+        "ok": True,
+        "rt": rt_name,
+        "stale": value.enabled,
+        "faults": sim_runtime.bus.fault_status(),
+    }
+
+@app.post("/api/faults/clear")
+def api_clear_faults():
+    sim_runtime.bus.clear_fault()
+
+    return {
+        "ok": True,
+        "faults": sim_runtime.bus.fault_status(),
+    }
 
 @app.get("/api/state")
 def api_state():

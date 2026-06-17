@@ -423,6 +423,7 @@ async function updateSensorsPage() {
         const busA = latestMessageByBus(messages, "BUS_A");
         const busB = latestMessageByBus(messages, "BUS_B");
 
+        updateSensorHealthHistory(messages);
         updateSensorStatusTable(messages);
         updateSensorEventTable(messages);
 
@@ -734,3 +735,222 @@ function updateMissionComputersPage(data) {
    drawMcHeartbeat("mc1-heartbeat-canvas", "#6dff7d");
    drawMcHeartbeat("mc2-heartbeat-canvas", "#ffd84d");
 }
+
+const SENSOR_HISTORY_LENGTH = 48;
+
+const sensorHistory = {
+   AIR_DATA_RT: [],
+   NAV_RT: [],
+   ENGINE_RT: [],
+   FUEL_RT: [],
+   OAT_SENSOR: [],
+   BUS_A: [],
+   BUS_B: [],
+};
+
+let lastSensorHistoryTick = null;
+
+function historyStatusFromMessage(msg) {
+   if (!msg) {
+      return "unknown";
+   }
+
+   if (msg.status === "OK") {
+      return "ok";
+   }
+
+   if (msg.status === "STALE" || msg.status === "WARN") {
+      return "warn";
+   }
+
+   if (msg.status === "NO_RESPONSE" || msg.status === "FAILED") {
+      return "fault";
+   }
+
+   return "unknown";
+}
+
+function pushSensorHistory(sensorName, status) {
+   if (!sensorHistory[sensorName]) {
+      sensorHistory[sensorName] = [];
+   }
+
+   sensorHistory[sensorName].push(status);
+
+   while (sensorHistory[sensorName].length > SENSOR_HISTORY_LENGTH) {
+      sensorHistory[sensorName].shift();
+   }
+}
+
+function renderSensorHistoryRows() {
+   document.querySelectorAll("[data-history-sensor]").forEach((row) =>  {
+      const sensorName = row.CDATA_SECTION_NODE.historySensor;
+      const values = sensorHistory[sensorName] || [];
+
+      const padded = [];
+
+      for (let i = values.length; i < SENSOR_HISTORY_LENGTH; i++) {
+         padded.push("unknown");
+      }
+
+      padded.push(...values);
+
+      row.innerHTML = padded.map((status) => {
+         return `<span class="history-tick ${status}"></span>`;
+      }).join("");
+   });
+}
+
+function updateSensorHealthHistory(message) {
+   if (!document.querySelector(".sensors-page-shell")) {
+      return;
+   }
+
+   if (!messages || messages.length === 0) {
+      renderSensorHistoryRows();
+      return;
+   }
+
+   const newestTick = Math.max(...messages.map((msg) => Number(msg.tick || 0)));
+
+   if (newestTick === lastSensorHistoryTick) {
+      return;
+   }
+
+   lastSensorHistoryTick = newestTick;
+
+   const latest = {
+      AIR_DATA_RT: latestMessageByType(message, "AIR_DATA"),
+      NAV_RT: latestMessageByType(message, "NAV_DATA"),
+      ENGINE_RT: latestMessageByType(message, "ENGINE_DATA"),
+      FUEL_RT: latestMessageByType(message, "FUEL_DATA"),
+      OAT_SENSOR: latestMessageByType(message, "AIR_DATA"),
+      STATIC_SENSOR: latestMessageByType(message, "AIR_DATA"),
+      BUS_A: latestMessageByType(message, "BUS_A"),
+      BUS_B: latestMessageByType(message, "BUS_B"),
+   }
+
+   Object.entries(latest).forEach(([sensorName, msg]) => {
+      let status = historyStatusFromMessage(msg);
+
+      if (msg && newestTick - Number(msg.tick || 0) > 5) {
+         status = "warn";
+      }
+
+      pushSensorHistory(sensorName, status);
+   });
+
+   renderSensorHistoryRows();
+}
+
+const faultButtonState = {};
+
+async function postFault(url, enabled) {
+   const response = await fetch(url, {
+      method: "POST",
+      headers: {
+         "Content-Type": "application/json",
+      }, 
+      body: JSON.stringify({ enabled }),
+   });
+
+   return await response.json();
+}
+
+function renderFaultStatus(faults) {
+   if (!faults || !faults.remote_terminals) {
+      return;
+   }
+
+   Object.entries(faults.remote_terminals).forEach(([rtName, info]) => {
+      const el = document.getElementById("fault-status-" + rtName);
+      
+      if (!el) {
+         return;
+      }
+
+      el.classList.remove("ok", "stale", "failed");
+
+      if (info.failed) {
+         el.textContent = "NO_RESPONSE";
+         el.classList.add("failed");
+      } else if (info.stale) {
+         el.textContent = "STALE";
+         el.classList.add("stale");
+      } else {
+         el.textContent = "OK";
+         el.classList.add("ok");
+      }
+   });
+
+   document.querySelectorAll("[data-fault-rt]").forEach((button) => {
+      const rt = button.dataset.faultRt;
+      const type = button.dataset.faultType;
+      const info = faults.remote_terminals[rt];
+      
+      button.classList.remove("active-stale", "active-failed");
+      
+      if (!info) {
+         return;
+      }
+
+      if (type === "stale" && info.stale) {
+         button.classList.add("active-stale");
+      }
+
+      if (type === "failed" && info.failed) {
+         button.classList.add("active-failed");
+      }
+   });
+}
+
+async function refreshFaultStatus() {
+   if (!document.querySelector(".fault-page-shell")) {
+      return;
+   }
+
+   const response = await fetch("/api/faults");
+   const data = await response.json();
+
+   renderFaultStatus(data);
+}
+
+function setupFaultInjectionPage() {
+   if (!document.querySelector(".fault-page-shell")) {
+      return;
+   }
+
+   document.querySelectorAll("[data-fault-rt]").forEach((button) => {
+      button.addEventListener("click", async () => {
+         const rt = button.dataset.faultRt;
+         const type = button.dataset.faultType;
+         const key = rt + ":" + type;
+         
+         faultButtonState[key] = !faultButtonState[key];
+         
+         const url = `/api/faults/rt/${rt}/${type}`;
+         const result = await postFault(url, faultButtonState[key]);
+         
+         renderFaultStatus(result.faults);
+      });
+   });
+
+   const clearButton = document.getElementById("clear-all-faults");
+
+   if (clearButton) {
+      clearButton.addEventListener("click", async () => {
+         await fetch("/api/faults/clear", { method: "POST" });
+         
+         Object.keys(faultButtonState).forEach((key) => {
+            faultButtonState[key] = false;
+         });
+
+         refreshFaultStatus();
+      });
+   }
+
+   refreshFaultStatus();
+}
+
+setupFaultInjectionPage();
+setInterval(refreshFaultStatus, 1000);

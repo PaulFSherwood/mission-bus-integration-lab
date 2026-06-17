@@ -1,43 +1,76 @@
 {% extends "base.html" %}
 
 {% block content %}
+<section class="fault-page-shell">
+   <div class="fault-page-header">
+      <div>
+         <h1>Fault Injection</h1>
+         <p>Inject 1553 remote terminal faults and watch the bus monitor, sensors, and mission computers react.</p>
+      </div>
 
-<section class="dashboard-grid">
-    <div class="panel">
-        <div class="panel-title">Mission Computer Faults</div>
-        <div class="fault-buttons">
-            <button class="control-button reset">Kill MC1</button>
-            <button class="control-button pause">Freeze MC1</button>
-            <button class="control-button step">Recover MC1</button>
-        </div>
-    </div>
+      <button class="fault-clear-button" id="clear-all-faults">Clear All Faults</button>
+   </div>
 
-    <div class="panel">
-        <div class="panel-title">Bus Faults</div>
-        <div class="fault-buttons">
-            <button class="control-button reset">Fail BUS A</button>
-            <button class="control-button pause">Drop Messages</button>
-            <button class="control-button step">Recover BUS A</button>
-        </div>
-    </div>
+   <div class="fault-grid">
+      <section class="fault-card">
+         <h2>AIR_DATA_RT</h2>
+         <p>Altitude, airspeed, vertical speed.</p>
+         <div class="fault-status-line">Status: <strong id="fault-status-AIR_DATA_RT"></strong></div>
+         <div class="fault-button-row">
+            <button data-fault-rt="AIR_DATA_RT" data-fault-type="stale">Toggle Stale</button>
+            <button data-fault-rt="AIR_DATA_RT" data-fault-type="failed">Toggle No Response</button>
+         </div>
+      </section>
 
-    <div class="panel">
-        <div class="panel-title">Sensor Faults</div>
-        <div class="fault-buttons">
-            <button class="control-button reset">Freeze ADS_1</button>
-            <button class="control-button pause">Add Noise</button>
-            <button class="control-button step">Recover Sensors</button>
-        </div>
-    </div>
+      <section class="fault-card">
+         <h2>NAV_RT</h2>
+         <p>Latitude, logitude, heading, waypoint data.</p>
+         <div class="fault-status-line">Status: <strong id="fault-status-NAV_RT">OK</strong></div>
+         <div class="fault-button-row">
+            <button data-fault-rt="NAV_RT" data-fault-type="stale">Toggle Stale</button>
+            <button data-fault-rt="NAV_RT" data-fault-type="failed">Toggle No Response</button>
+         </div>
+      </section>
 
-    <div class="panel">
-        <div class="panel-title">Active Faults</div>
-        <div class="empty-alerts small-empty">
-            <div class="checkmark">✓</div>
-            <h2>No Active Faults</h2>
-            <p>Fault injection buttons are display-only for now.</p>
-        </div>
-    </div>
+      <section class="fault-card">
+         <h2>ENGINE_RT</h2>
+         <p>Engine temperature and engine status.</p>
+         <div class="fault-status-line">Status: <strong id="fault-status-ENGINE_RT">OK</strong></div>
+         <div class="fault-button-row">
+            <button data-fault-rt="ENGINE_RT" data-fault-type="stale">Toggle Stale</button>
+            <button data-fault-rt="ENGINE_RT" data-fault-type="failed">Toggle No Response</button>
+         </div>
+      </section>
+
+      <section class="fault-card">
+         <h2>FUEL_RT</h2>
+         <p>Fuel quantity and fuel status.</p>
+         <div class="fault-status-line">Status: <strong id="fault-status-FUEL_RT">OK</strong></div>
+         <div class="fault-button-row">
+            <button data-fault-rt="FUEL_RT" data-fault-type="stale">Toggle Stale</button>
+            <button data-fault-rt="FUEL_RT" data-fault-type="failed">Toggle No Response</button>
+         </div>
+      </section>
+
+      <section class="fault-card">
+         <h2>WEATHER_RADAR_RT</h2>
+         <p>Weather radar returns and range mode.</p>
+         <div class="fault-status-line">Status: <strong id="fault-status-WEATHER_RADAR_RT">OK</strong></div>
+         <div class="fault-button-row">
+            <button data-fault-rt="WEATHER_RADAR_RT" data-fault-type="stale">Toggle Stale</button>
+            <button data-fault-rt="WEATHER_RADAR_RT" data-fault-type="failed">Toggle No Response</button>
+         </div>
+      </section>
+
+      <section class="fault-notes-panel">
+         <h2>Expected Behavior</h2>
+         <div class="fault-notes-grid">
+            <div><strong>STALE</strong><span>RT repeats old payload. History chicklets turn yellow.</span></div>
+            <div><strong>NO_RESPONSE</strong><span>RT returns no data. History chicklets turn red.</span></div>
+            <div><strong>CLEAR</strong><span>All RTs return OK.</span></div>
+         </div>
+      </section>
+   </div>
 </section>
 
 {% endblock %}
