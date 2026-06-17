@@ -448,6 +448,8 @@
     min-height: 230px;
 }
 
+/* Sensor Health History - uniform avionics ticklets */
+
 .health-history-time-row {
     display: grid;
     grid-template-columns: 72px repeat(7, 1fr);
@@ -475,10 +477,80 @@
 }
 
 .history-row {
+    --tick-good: #4fd162;
+    --tick-warn: #ffd84d;
+    --tick-fault: #ff5c5c;
+    --tick-dark: #12301b;
+    --tick-width: 7px;
+    --tick-gap: 4px;
+
+    position: relative;
     height: 16px;
+    overflow: hidden;
     border: 1px solid rgba(120, 180, 220, 0.14);
-    background-color: rgba(0, 0, 0, 0.28);
-    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.65);
+    background: rgba(0, 0, 0, 0.32);
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.70);
+}
+
+/* all rows use the same exact tick spacing */
+.history-row::before,
+.history-row::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background-repeat: repeat-x;
+    background-size: calc(var(--tick-width) + var(--tick-gap)) 100%;
+}
+
+/* healthy base layer */
+.history-row::before {
+    background-image:
+        linear-gradient(
+            90deg,
+            var(--tick-good) 0 var(--tick-width),
+            transparent var(--tick-width) calc(var(--tick-width) + var(--tick-gap))
+        );
+    filter: drop-shadow(0 0 3px rgba(79, 209, 98, 0.45));
+}
+
+/* default: no warning/fault overlay */
+.history-row::after {
+    display: none;
+}
+
+/* yellow warning section near NOW */
+.history-row.warning-tail::after {
+    display: block;
+    left: 68%;
+    background-image:
+        linear-gradient(
+            90deg,
+            var(--tick-warn) 0 var(--tick-width),
+            transparent var(--tick-width) calc(var(--tick-width) + var(--tick-gap))
+        );
+    filter: drop-shadow(0 0 3px rgba(255, 216, 77, 0.45));
+}
+
+/* red fault section near NOW, for later */
+.history-row.fault-tail::after {
+    display: block;
+    left: 68%;
+    background-image:
+        linear-gradient(
+            90deg,
+            var(--tick-fault) 0 var(--tick-width),
+            transparent var(--tick-width) calc(var(--tick-width) + var(--tick-gap))
+        );
+    filter: drop-shadow(0 0 3px rgba(255, 92, 108, 0.45));
+}
+
+/* keep these class names usable, but do not change spacing */
+.history-row.healthy,
+.history-row.rate-fast,
+.history-row.rate-med,
+.history-row.rate-slow,
+.history-row.rate-bus {
+    background-size: auto;
 }
 
 /* Dense tick marks: high-rate sensor/bus data */
@@ -496,44 +568,6 @@
 
 .history-row.rate-bus {
     background-size: 8px 16px;
-}
-
-/* Healthy glowing green ticks */
-.history-row.healthy {
-    background-image:
-        repeating-linear-gradient(
-            90deg,
-            rgba(89, 220, 98, 0.95) 0 6px,
-            rgba(28, 78, 35, 0.85) 6px 10px
-        );
-    box-shadow:
-        inset 0 0 8px rgba(0, 0, 0, 0.65),
-        0 0 6px rgba(89, 220, 98, 0.18);
-}
-
-/* Mostly green, warning near the current/right side */
-.history-row.warning-tail {
-    background-image:
-        linear-gradient(
-            90deg,
-            transparent 0%,
-            transparent 68%,
-            rgba(255, 216, 77, 0.22) 68%,
-            rgba(255, 216, 77, 0.22) 100%
-        ),
-        repeating-linear-gradient(
-            90deg,
-            rgba(89, 220, 98, 0.95) 0 6px,
-            rgba(28, 78, 35, 0.85) 6px 10px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            transparent 0 6px,
-            rgba(255, 216, 77, 0.95) 6px 10px
-        );
-    box-shadow:
-        inset 0 0 8px rgba(0, 0, 0, 0.65),
-        0 0 6px rgba(255, 216, 77, 0.16);
 }
 
 /* Bottom full-width row */
