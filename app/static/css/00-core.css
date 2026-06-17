@@ -1,0 +1,405 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #071018;
+    color: #e6edf3;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.topbar {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #263746;
+    background: #0a141e;
+    padding: 0 26px;
+    gap: 28px;
+}
+
+.brand-block {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-right: 24px;
+    border-right: 1px solid #263746;
+}
+
+.brand {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    font-size: 15px;
+    color: #d7dde5;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.tabs {
+    display: flex;
+    min-height: 72px;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tab {
+    color: #aeb8c4;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 26px 14px 22px;
+    border-bottom: 3px solid transparent;
+}
+
+.tab.active {
+    color: #ffffff;
+    border-bottom-color: #68e56f;
+}
+
+.sim-status {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.label {
+    font-size: 12px;
+    color: #aeb8c4;
+    margin-bottom: 4px;
+}
+
+.tick {
+    font-family: monospace;
+    font-size: 20px;
+    color: #68e56f;
+    letter-spacing: 2px;
+}
+
+.state-pill {
+    border: 1px solid #39b54a;
+    color: #68e56f;
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.top-button {
+    background: #182533;
+    color: #d9e2ec;
+    border: 1px solid #223446;
+    border-radius: 4px;
+    padding: 12px 22px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.page {
+    padding: 26px;
+}
+
+.page-heading {
+    margin-bottom: 16px;
+}
+
+.page-title {
+    margin: 0 0 4px 0;
+    font-size: 19px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.page-subtitle {
+    margin: 0;
+    color: #9aa6b2;
+    font-size: 14px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.summary-card {
+    background: linear-gradient(#111c27, #0d1720);
+    border: 1px solid #243545;
+    border-radius: 4px;
+    padding: 20px;
+    min-height: 130px;
+    text-align: center;
+}
+
+.summary-title {
+    color: #bac4cf;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+}
+
+.summary-number {
+    font-size: 30px;
+    margin-bottom: 14px;
+}
+
+.summary-detail {
+    color: #b7c1cc;
+    font-size: 14px;
+}
+
+.summary-detail span {
+    color: #68e56f;
+    margin-left: 28px;
+}
+
+.running-text {
+    color: #68e56f;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 18px;
+}
+
+.panel {
+    background: #0b141d;
+    border: 1px solid #243545;
+    border-radius: 5px;
+    padding: 14px;
+}
+
+.full-panel {
+    width: 100%;
+}
+
+.panel-title {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 6px 6px 14px;
+}
+
+.muted {
+    color: #9aa6b2;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #101b25;
+    border: 1px solid #1f3040;
+}
+
+th {
+    text-align: left;
+    color: #aeb8c4;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #233445;
+}
+
+td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #1b2a38;
+    font-size: 14px;
+}
+
+.linkish {
+    color: #2db7ff;
+    font-weight: 700;
+}
+
+.good {
+    color: #68e56f;
+    font-weight: 800;
+}
+
+.warn {
+    color: #ffd23f;
+    font-weight: 800;
+}
+
+.bad {
+    color: #ff5c5c;
+    font-weight: 800;
+}
+
+.state-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 10px;
+}
+
+.state-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #101b25;
+    border: 1px solid #1f3040;
+    padding: 15px 18px;
+    min-height: 52px;
+}
+
+.state-row span {
+    color: #b7c1cc;
+}
+
+.empty-alerts {
+    height: 222px;
+    background: #101b25;
+    border: 1px solid #1f3040;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.small-empty {
+    height: 170px;
+}
+
+.checkmark {
+    width: 48px;
+    height: 48px;
+    border: 2px solid #39b54a;
+    border-radius: 50%;
+    color: #68e56f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.empty-alerts h2 {
+    font-size: 17px;
+    margin: 0 0 8px 0;
+}
+
+.empty-alerts p {
+    margin: 0;
+    color: #aeb8c4;
+}
+
+.controls-panel {
+    margin-top: 12px;
+    background: #0b141d;
+    border: 1px solid #243545;
+    border-radius: 5px;
+    padding: 14px 20px 20px;
+}
+
+.controls-row {
+    display: flex;
+    align-items: end;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.control-button {
+    border: none;
+    color: white;
+    padding: 13px 25px;
+    border-radius: 4px;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.control-button.start {
+    background: #237a3b;
+}
+
+.control-button.pause {
+    background: #2c3a48;
+}
+
+.control-button.step {
+    background: #235b9f;
+}
+
+.control-button.reset {
+    background: #9c2e2e;
+}
+
+.control-button.load {
+    background: #235b9f;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-left: 12px;
+}
+
+.control-group label {
+    color: #aeb8c4;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.control-group select {
+    min-width: 170px;
+    background: #101b25;
+    border: 1px solid #2b4054;
+    color: #e6edf3;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+.wide-control select {
+    min-width: 260px;
+}
+
+.kv-list {
+    display: grid;
+    gap: 8px;
+}
+
+.kv-list div {
+    display: flex;
+    justify-content: space-between;
+    background: #101b25;
+    border: 1px solid #1f3040;
+    padding: 14px 16px;
+}
+
+.kv-list span {
+    color: #b7c1cc;
+}
+
+.fault-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.footer {
+    color: #7e8b98;
+    text-align: center;
+    padding: 14px;
+    border-top: 1px solid #162432;
+    font-size: 13px;
+}

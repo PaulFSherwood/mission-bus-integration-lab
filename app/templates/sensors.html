@@ -1,50 +1,315 @@
 {% extends "base.html" %}
 
 {% block content %}
+<section class="sensors-page-shell">
+    <div class="sensors-top-grid">
+        <section class="sensor-overview-card">
+            <h2>Sensors Overview</h2>
 
-<section class="panel full-panel">
-    <div class="panel-title">Sensor Status</div>
-    <table>
-        <thead>
-            <tr>
-                <th>Sensor ID</th>
-                <th>Type</th>
-                <th>State</th>
-                <th>Last Update</th>
-                <th>Value Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="linkish">ADS_1</td>
-                <td>AIR DATA</td>
-                <td class="good">ONLINE</td>
-                <td>Tick 1234</td>
-                <td>Alt: 10000 ft, IAS: 284 kts</td>
-            </tr>
-            <tr>
-                <td class="linkish">INS_1</td>
-                <td>INS</td>
-                <td class="good">ONLINE</td>
-                <td>Tick 1234</td>
-                <td>HDG: 123.4°, P: 2.1°, R: -0.4°</td>
-            </tr>
-            <tr>
-                <td class="linkish">ENG_1</td>
-                <td>ENGINE</td>
-                <td class="good">ONLINE</td>
-                <td>Tick 1234</td>
-                <td>T: 680 °C, N1: 92%</td>
-            </tr>
-            <tr>
-                <td class="linkish">FUEL_1</td>
-                <td>FUEL</td>
-                <td class="good">ONLINE</td>
-                <td>Tick 1234</td>
-                <td>Qty: 5120 lbs</td>
-            </tr>
-        </tbody>
-    </table>
+            <div class="sensor-overview-row">
+                <div class="sensor-overview-tile">
+                    <div class="sensor-icon-big">✈</div>
+                    <div>
+                        <strong>AIR DATA</strong>
+                        <span class="good" id="air-data-overview-status">HEALTHY</span>
+                    </div>
+                </div>
+
+                <div class="sensor-overview-tile">
+                    <div class="sensor-icon-big">◉</div>
+                    <div>
+                        <strong>INS / NAV</strong>
+                        <span class="good" id="nav-overview-status">HEALTHY</span>
+                    </div>
+                </div>
+
+                <div class="sensor-overview-tile">
+                    <div class="sensor-icon-big">⚙</div>
+                    <div>
+                        <strong>ENGINE</strong>
+                        <span class="warn" id="engine-overview-status">WARN</span>
+                    </div>
+                </div>
+
+                <div class="sensor-overview-tile">
+                    <div class="sensor-icon-big">⛽</div>
+                    <div>
+                        <strong>FUEL</strong>
+                        <span class="good" id="fuel-overview-status">HEALTHY</span>
+                    </div>
+                </div>
+
+                <div class="sensor-health-summary">
+                    <div><span class="dot good-dot"></span> HEALTHY <strong id="sensor-healthy-count">4</strong></div>
+                    <div><span class="dot warn-dot"></span> WARN <strong id="sensor-warn-count">1</strong></div>
+                    <div><span class="dot bad-dot"></span> FAULT <strong id="sensor-fault-count">0</strong></div>
+                    <div><span class="dot unknown-dot"></span> UNKNOWN <strong id="sensor-unknown-count">0</strong></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sensor-status-list-card">
+            <h2>Sensor Status List</h2>
+            <table class="sensor-status-table">
+                <thead>
+                    <tr>
+                        <th>Sensor</th>
+                        <th>Status</th>
+                        <th>Last Update</th>
+                        <th>Rate</th>
+                    </tr>
+                </thead>
+                <tbody id="sensor-status-body">
+                    <tr><td>AIR DATA RT</td><td class="good">HEALTHY</td><td>--</td><td>1 tick</td></tr>
+                    <tr><td>NAV RT</td><td class="good">HEALTHY</td><td>--</td><td>1 tick</td></tr>
+                    <tr><td>ENGINE RT</td><td class="warn">WARN</td><td>--</td><td>2 ticks</td></tr>
+                    <tr><td>FUEL RT</td><td class="good">HEALTHY</td><td>--</td><td>2 ticks</td></tr>
+                    <tr><td>WEATHER RADAR RT</td><td class="good">HEALTHY</td><td>--</td><td>5 ticks</td></tr>
+                    <tr><td>BUS A MONITOR</td><td class="good">HEALTHY</td><td>--</td><td>live</td></tr>
+                    <tr><td>BUS B MONITOR</td><td class="good">HEALTHY</td><td>--</td><td>live</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <div class="sensors-main-grid">
+        <section class="sensor-card sensor-air">
+            <div class="sensor-card-header">
+                <h2>Air Data Sensor</h2>
+                <div>Status <strong class="good" id="air-data-status">HEALTHY</strong></div>
+            </div>
+
+            <div class="sensor-card-body air-data-layout">
+                <div class="round-gauge airspeed-gauge">
+                    <div class="round-gauge-face">
+                        <div class="round-gauge-needle"></div>
+                        <span class="gauge-label">KTS</span>
+                    </div>
+                </div>
+
+                <div class="sensor-value-list">
+                    <div><span>Altitude</span><strong data-bind="aircraft.altitude">--</strong></div>
+                    <div><span>Airspeed</span><strong data-bind="aircraft.airspeed">--</strong></div>
+                    <div><span>Vert Speed</span><strong data-bind="aircraft.vertical_speed">--</strong></div>
+                    <div><span>Mach</span><strong>0.32</strong></div>
+                    <div><span>Dynamic Press</span><strong>56.2 PSF</strong></div>
+                    <div><span>Static Press</span><strong>14.2 PSI</strong></div>
+                    <div><span>Total Press</span><strong>15.1 PSI</strong></div>
+                    <div><span>Outside Air Temp</span><strong>15 °C</strong></div>
+                </div>
+            </div>
+
+            <div class="sensor-card-footer">
+                <span>Update Rate <strong>1 tick</strong></span>
+                <span>Last Update <strong id="air-data-last-update">--</strong></span>
+            </div>
+        </section>
+
+        <section class="sensor-card sensor-nav">
+            <div class="sensor-card-header">
+                <h2>INS / NAV Sensor</h2>
+                <div>Status <strong class="good" id="nav-status">HEALTHY</strong></div>
+            </div>
+
+            <div class="sensor-card-body nav-layout">
+                <div class="attitude-mini">
+                    <div class="sky"></div>
+                    <div class="ground"></div>
+                    <div class="horizon-line"></div>
+                    <div class="aircraft-marker">⌂</div>
+                </div>
+
+                <div class="sensor-value-list">
+                    <div><span>Heading</span><strong data-bind="aircraft.heading">--</strong></div>
+                    <div><span>Current WP</span><strong data-bind="aircraft.current_wp">--</strong></div>
+                    <div><span>Next WP</span><strong data-bind="aircraft.next_wp">--</strong></div>
+                    <div><span>Latitude</span><strong data-bind="aircraft.lat">--</strong></div>
+                    <div><span>Longitude</span><strong data-bind="aircraft.lon">--</strong></div>
+                    <div><span>Drift</span><strong>0.02 °/hr</strong></div>
+                </div>
+            </div>
+
+            <div class="sensor-card-footer">
+                <span>Update Rate <strong>1 tick</strong></span>
+                <span>Last Update <strong id="nav-last-update">--</strong></span>
+            </div>
+        </section>
+
+        <section class="sensor-card sensor-engine">
+            <div class="sensor-card-header">
+                <h2>Engine Sensor</h2>
+                <div>Status <strong class="warn" id="engine-status">WARN</strong></div>
+            </div>
+
+            <div class="engine-gauge-grid">
+                <div class="mini-gauge">
+                    <div class="mini-gauge-arc"></div>
+                    <strong data-bind="aircraft.engine_temp">--</strong>
+                    <span>EGT</span>
+                </div>
+                <div class="mini-gauge">
+                    <div class="mini-gauge-arc green"></div>
+                    <strong>78.3%</strong>
+                    <span>N1</span>
+                </div>
+                <div class="mini-gauge">
+                    <div class="mini-gauge-arc green"></div>
+                    <strong>82.1%</strong>
+                    <span>N2</span>
+                </div>
+                <div class="mini-gauge">
+                    <div class="mini-gauge-arc green"></div>
+                    <strong>480 PPH</strong>
+                    <span>Fuel Flow</span>
+                </div>
+            </div>
+
+            <div class="sensor-value-list engine-list">
+                <div><span>Oil Temp</span><strong>90 °C</strong></div>
+                <div><span>Oil Press</span><strong>68 PSI</strong></div>
+                <div><span>Vibration</span><strong>0.12 IPS</strong></div>
+            </div>
+
+            <div class="sensor-card-footer">
+                <span>Update Rate <strong>2 ticks</strong></span>
+                <span>Last Update <strong id="engine-last-update">--</strong></span>
+            </div>
+        </section>
+
+        <section class="sensor-card sensor-fuel">
+            <div class="sensor-card-header">
+                <h2>Fuel Sensor</h2>
+                <div>Status <strong class="good" id="fuel-status">HEALTHY</strong></div>
+            </div>
+
+            <div class="fuel-layout">
+                <div class="fuel-tape">
+                    <div class="fuel-fill"></div>
+                </div>
+
+                <div class="sensor-value-list">
+                    <div><span>Fuel Quantity</span><strong data-bind="aircraft.fuel">--</strong></div>
+                    <div><span>Fuel Flow</span><strong>480 PPH</strong></div>
+                    <div><span>Fuel Used</span><strong>1,240 LBS</strong></div>
+                    <div><span>Endurance</span><strong>01:06:12</strong></div>
+                </div>
+            </div>
+
+            <div class="sensor-card-footer">
+                <span>Update Rate <strong>2 ticks</strong></span>
+                <span>Last Update <strong id="fuel-last-update">--</strong></span>
+            </div>
+        </section>
+
+        <section class="sensor-card sensor-bus">
+            <div class="sensor-card-header">
+                <h2>Bus A Monitor</h2>
+                <div>Status <strong class="good">HEALTHY</strong></div>
+            </div>
+
+            <div class="sensor-value-list">
+                <div><span>Message Rate</span><strong id="bus-a-rate">--</strong></div>
+                <div><span>Error Rate</span><strong>0.0%</strong></div>
+                <div><span>Utilization</span><strong>42%</strong></div>
+                <div><span>Last Error</span><strong>NONE</strong></div>
+            </div>
+
+            <div class="sensor-card-footer">
+                <span>Update Rate <strong>live</strong></span>
+                <span>Last Update <strong id="bus-a-last-update">--</strong></span>
+            </div>
+        </section>
+
+        <section class="sensor-card sensor-bus">
+            <div class="sensor-card-header">
+                <h2>Bus B Monitor</h2>
+                <div>Status <strong class="good">HEALTHY</strong></div>
+            </div>
+
+            <div class="sensor-value-list">
+                <div><span>Message Rate</span><strong id="bus-b-rate">--</strong></div>
+                <div><span>Error Rate</span><strong>0.0%</strong></div>
+                <div><span>Utilization</span><strong>37%</strong></div>
+                <div><span>Last Error</span><strong>NONE</strong></div>
+            </div>
+
+            <div class="sensor-card-footer">
+                <span>Update Rate <strong>live</strong></span>
+                <span>Last Update <strong id="bus-b-last-update">--</strong></span>
+            </div>
+        </section>
+
+        <section class="sensor-card sensor-oat">
+            <div class="sensor-card-header">
+                <h2>OAT Sensor</h2>
+                <div>Status <strong class="good">HEALTHY</strong></div>
+            </div>
+
+            <div class="thermo-layout">
+                <div class="thermometer">
+                    <div class="thermo-fill"></div>
+                </div>
+                <div>
+                    <span>Outside Air Temp</span>
+                    <strong>15 °C</strong>
+                </div>
+            </div>
+
+            <div class="sensor-card-footer">
+                <span>Update Rate <strong>2 ticks</strong></span>
+                <span>Last Update <strong id="oat-last-update">--</strong></span>
+            </div>
+        </section>
+
+        <section class="sensor-history-card">
+            <h2>Sensor Health History <span>(Last 60 sec)</span></h2>
+            <div class="health-history-grid" id="sensor-health-history">
+                <div class="history-label">AIR DATA</div><div class="history-row healthy"></div>
+                <div class="history-label">NAV</div><div class="history-row healthy"></div>
+                <div class="history-label">ENGINE</div><div class="history-row warning"></div>
+                <div class="history-label">FUEL</div><div class="history-row healthy"></div>
+                <div class="history-label">BUS A</div><div class="history-row healthy"></div>
+                <div class="history-label">BUS B</div><div class="history-row healthy"></div>
+            </div>
+        </section>
+
+        <section class="sensor-events-card">
+            <h2>Sensor Events <span>(Last 10)</span></h2>
+            <table>
+                <thead>
+                    <tr><th>Time</th><th>Sensor</th><th>Event</th><th>Details</th></tr>
+                </thead>
+                <tbody id="sensor-events-body">
+                    <tr><td>--</td><td>ENGINE RT</td><td class="warn">WARN</td><td>Temp high</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <div class="sensors-bottom-grid">
+        <section class="sensor-bottom-panel">
+            <h2>Sensor Detail View</h2>
+            <p>Select any sensor above to see detailed raw data, calibration, and diagnostics.</p>
+        </section>
+
+        <section class="sensor-bottom-panel">
+            <h2>Sensor Fault Summary</h2>
+            <div class="fault-summary-row">
+                <div><span>Stuck</span><strong>0</strong></div>
+                <div><span>No Data</span><strong>0</strong></div>
+                <div><span>Out of Range</span><strong>0</strong></div>
+                <div><span>High Rate</span><strong>0</strong></div>
+            </div>
+        </section>
+
+        <section class="sensor-bottom-panel simulation-mode-panel">
+            <h2>Sensor Simulation Mode</h2>
+            <div class="mode-buttons">
+                <button class="active">LIVE</button>
+                <button>SIMULATED</button>
+                <span>SIM TIME OFFSET +0.000 SEC</span>
+            </div>
+        </section>
+    </div>
 </section>
-
 {% endblock %}

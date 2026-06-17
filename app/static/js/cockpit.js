@@ -356,6 +356,193 @@ function busClass(bus) {
     return "";
 }
 
+function latestMessageByType(messages, typeName) {
+    return messages.find((msg) => {
+        const type = msg.message_type ?? msg.type;
+        return type === typeName;
+    });
+}
+
+function latestMessageByBus(messages, busName) {
+    return messages.find((msg) => msg.bus === busName);
+}
+
+function messageStatusClass(status) {
+    if (status === "OK") {
+        return "good";
+    }
+
+    if (status === "STALE") {
+        return "warn";
+    }
+
+    if (status === "NO_RESPONSE" || status === "FAILED") {
+        return "bad";
+    }
+
+    return "warn";
+}
+
+function setSensorText(id, value) {
+    const el = document.getElementById(id);
+
+    if (el) {
+        el.textContent = value;
+    }
+}
+
+function setSensorStatus(id, status) {
+    const el = document.getElementById(id);
+
+    if (!el) {
+        return;
+    }
+
+    const displayStatus = status === "OK" ? "HEALTHY" : status;
+    el.textContent = displayStatus;
+
+    el.classList.remove("good", "warn", "bad");
+    el.classList.add(messageStatusClass(status));
+}
+
+async function updateSensorsPage() {
+    if (!document.querySelector(".sensors-page-shell")) {
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/messages");
+        const data = await response.json();
+        const messages = data.messages || [];
+
+        const airData = latestMessageByType(messages, "AIR_DATA");
+        const navData = latestMessageByType(messages, "NAV_DATA");
+        const engineData = latestMessageByType(messages, "ENGINE_DATA");
+        const fuelData = latestMessageByType(messages, "FUEL_DATA");
+        const weatherData = latestMessageByType(messages, "WEATHER_RADAR");
+        const busA = latestMessageByBus(messages, "BUS_A");
+        const busB = latestMessageByBus(messages, "BUS_B");
+
+        updateSensorStatusTable(messages);
+        updateSensorEventTable(messages);
+
+        setSensorStatus("air-data-status", airData?.status || "UNKNOWN");
+        setSensorStatus("nav-status", navData?.status || "UNKNOWN");
+        setSensorStatus("engine-status", engineData?.status || "WARN");
+        setSensorStatus("fuel-status", fuelData?.status || "UNKNOWN");
+
+        setSensorStatus("air-data-overview-status", airData?.status || "UNKNOWN");
+        setSensorStatus("nav-overview-status", navData?.status || "UNKNOWN");
+        setSensorStatus("engine-overview-status", engineData?.status || "WARN");
+        setSensorStatus("fuel-overview-status", fuelData?.status || "UNKNOWN");
+
+        setSensorText("air-data-last-update", airData ? airData.tick : "--");
+        setSensorText("nav-last-update", navData ? navData.tick : "--");
+        setSensorText("engine-last-update", engineData ? engineData.tick : "--");
+        setSensorText("fuel-last-update", fuelData ? fuelData.tick : "--");
+        setSensorText("bus-a-last-update", busA ? busA.tick : "--");
+        setSensorText("bus-b-last-update", busB ? busB.tick : "--");
+        setSensorText("oat-last-update", airData ? airData.tick : "--");
+
+        const busACount = messages.filter((msg) => msg.bus === "BUS_A").length;
+        const busBCount = messages.filter((msg) => msg.bus === "BUS_B").length;
+
+        setSensorText("bus-a-rate", busACount + " recent");
+        setSensorText("bus-b-rate", busBCount + " recent");
+
+        const healthy = [airData, navData, fuelData, busA, busB].filter((msg) => msg && msg.status === "OK").length;
+        const warn = engineData && engineData.status === "OK" ? 1 : 1;
+        const fault = messages.filter((msg) => msg.status === "NO_RESPONSE").length;
+
+        setSensorText("sensor-healthy-count", healthy);
+        setSensorText("sensor-warn-count", warn);
+        setSensorText("sensor-fault-count", fault);
+        setSensorText("sensor-unknown-count", 0);
+    } catch (error) {
+        console.error("Sensors update failed:", error);
+    }
+}
+
+function updateSensorStatusTable(messages) {
+    const body = document.getElementById("sensor-status-body");
+
+    if (!body) {
+        return;
+    }
+
+    const rows = [
+        ["AIR DATA RT", latestMessageByType(messages, "AIR_DATA"), "1 tick"],
+        ["NAV RT", latestMessageByType(messages, "NAV_DATA"), "1 tick"],
+        ["ENGINE RT", latestMessageByType(messages, "ENGINE_DATA"), "2 ticks"],
+        ["FUEL RT", latestMessageByType(messages, "FUEL_DATA"), "2 ticks"],
+        ["WEATHER RADAR RT", latestMessageByType(messages, "WEATHER_RADAR"), "5 ticks"],
+        ["BUS A MONITOR", latestMessageByBus(messages, "BUS_A"), "live"],
+        ["BUS B MONITOR", latestMessageByBus(messages, "BUS_B"), "live"],
+    ];
+
+    body.innerHTML = rows.map(([name, msg, rate]) => {
+        const status = msg?.status || "UNKNOWN";
+        const displayStatus = status === "OK" ? "HEALTHY" : status;
+        const css = messageStatusClass(status);
+        const tick = msg?.tick ?? "--";
+
+        return `
+            <tr>
+                <td>${name}</td>
+                <td class="${css}">${displayStatus}</td>
+                <td>${tick}</td>
+                <td>${rate}</td>
+            </tr>
+        `;
+    }).join("");
+}
+
+function updateSensorEventTable(messages) {
+    const body = document.getElementById("sensor-events-body");
+
+    if (!body) {
+        return;
+    }
+
+    const interesting = messages
+        .filter((msg) => msg.status !== "OK" || msg.message_type === "ENGINE_DATA" || msg.message_type === "WEATHER_RADAR")
+        .slice(0, 10);
+
+    if (interesting.length === 0) {
+        body.innerHTML = '<tr><td>--</td><td>All Sensors</td><td class="good">OK</td><td>No sensor events</td></tr>';
+        return;
+    }
+
+    body.innerHTML = interesting.map((msg) => {
+        const type = msg.message_type ?? msg.type ?? "UNKNOWN";
+        const rt = msg.rt ?? msg.source ?? "UNKNOWN";
+        const status = msg.status ?? "OK";
+        const css = messageStatusClass(status);
+
+        let details = "Nominal";
+
+        if (type === "ENGINE_DATA") {
+            details = "Engine temp " + (msg.payload?.engine_temp_c ?? "--") + " °C";
+        } else if (type === "WEATHER_RADAR") {
+            details = "Returns " + (msg.payload?.returns?.length ?? 0);
+        } else if (status !== "OK") {
+            details = "Status " + status;
+        }
+
+        return `
+            <tr>
+                <td>${msg.tick}</td>
+                <td>${rt}</td>
+                <td class="${css}">${status}</td>
+                <td>${details}</td>
+            </tr>
+        `;
+    }).join("");
+}
+
+setInterval(updateSensorsPage, 500);
+updateSensorsPage();
+
 async function updateBusMessages() {
     const tableBody = document.getElementById("bus-message-body");
 

@@ -1,0 +1,595 @@
+.sensors-page-shell {
+    padding: 10px 12px 28px;
+    color: #d8e8f5;
+}
+
+.sensors-top-grid {
+    display: grid;
+    grid-template-columns: 1fr 435px;
+    gap: 12px;
+}
+
+.sensor-overview-card,
+.sensor-status-list-card,
+.sensor-card,
+.sensor-history-card,
+.sensor-events-card,
+.sensor-bottom-panel {
+    border: 1px solid rgba(120, 180, 220, 0.23);
+    background:
+        radial-gradient(circle at top left, rgba(80, 160, 210, 0.10), transparent 40%),
+        linear-gradient(180deg, rgba(15, 23, 29, 0.96), rgba(6, 10, 14, 0.96));
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.35);
+}
+
+.sensor-overview-card,
+.sensor-status-list-card {
+    padding: 10px;
+}
+
+.sensors-page-shell h2 {
+    margin: 0 0 8px;
+    color: #31b7ff;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.sensors-page-shell h2 span {
+    color: #d8e8f5;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.sensor-overview-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) 220px;
+    gap: 10px;
+}
+
+.sensor-overview-tile {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid rgba(120, 180, 220, 0.24);
+    background: rgba(0, 0, 0, 0.23);
+    padding: 12px;
+    min-height: 70px;
+}
+
+.sensor-icon-big {
+    font-size: 34px;
+    opacity: 0.75;
+    text-align: center;
+}
+
+.sensor-overview-tile strong {
+    display: block;
+    color: #ffffff;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.sensor-overview-tile span {
+    display: block;
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.sensor-health-summary {
+    border: 1px solid rgba(120, 180, 220, 0.24);
+    background: rgba(0, 0, 0, 0.23);
+    padding: 10px 14px;
+    display: grid;
+    gap: 5px;
+    font-size: 13px;
+}
+
+.sensor-health-summary div {
+    display: grid;
+    grid-template-columns: 18px 1fr 30px;
+    align-items: center;
+}
+
+.sensor-health-summary strong {
+    text-align: right;
+}
+
+.dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    display: inline-block;
+}
+
+.good-dot { background: #55d66b; }
+.warn-dot { background: #ffd84d; }
+.bad-dot { background: #ff4c4c; }
+.unknown-dot { background: #9aa7b0; }
+
+.good { color: #6dff7d !important; }
+.warn { color: #ffd84d !important; }
+.bad { color: #ff5c6c !important; }
+
+.sensor-status-table,
+.sensor-events-card table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.sensor-status-table th,
+.sensor-status-table td,
+.sensor-events-card th,
+.sensor-events-card td {
+    padding: 7px 8px;
+    border-bottom: 1px solid rgba(120, 180, 220, 0.12);
+    text-align: left;
+}
+
+.sensor-status-table th,
+.sensor-events-card th {
+    color: #bcd4e8;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.sensors-main-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1.35fr 1.35fr 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.sensor-card {
+    padding: 10px;
+    min-height: 205px;
+}
+
+.sensor-air {
+    grid-column: span 2;
+}
+
+.sensor-nav {
+    grid-column: span 2;
+}
+
+.sensor-engine {
+    grid-column: span 2;
+}
+
+.sensor-fuel,
+.sensor-bus,
+.sensor-oat {
+    min-height: 175px;
+}
+
+.sensor-history-card,
+.sensor-events-card {
+    grid-column: span 2;
+    padding: 10px;
+}
+
+.sensor-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(120, 180, 220, 0.14);
+    padding-bottom: 7px;
+    margin-bottom: 9px;
+}
+
+.sensor-card-header h2 {
+    margin: 0;
+}
+
+.sensor-card-header div {
+    color: #c5d6e5;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.sensor-card-header strong {
+    border: 1px solid currentColor;
+    padding: 4px 10px;
+    margin-left: 8px;
+    background: rgba(0, 0, 0, 0.20);
+}
+
+.sensor-card-body {
+    min-height: 130px;
+}
+
+.air-data-layout,
+.nav-layout {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 12px;
+}
+
+.round-gauge-face {
+    width: 136px;
+    height: 136px;
+    border: 1px solid rgba(210, 230, 240, 0.7);
+    border-radius: 999px;
+    position: relative;
+    background:
+        radial-gradient(circle, rgba(70, 180, 120, 0.08), transparent 58%),
+        repeating-conic-gradient(from 0deg, rgba(255,255,255,0.35) 0deg 1deg, transparent 1deg 10deg);
+}
+
+.round-gauge-needle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 2px;
+    height: 48px;
+    background: #6dff7d;
+    transform-origin: bottom center;
+    transform: translate(-50%, -100%) rotate(-20deg);
+    box-shadow: 0 0 8px #6dff7d;
+}
+
+.gauge-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 20px);
+    color: #d8e8f5;
+    font-size: 10px;
+}
+
+.sensor-value-list {
+    display: grid;
+    gap: 6px;
+}
+
+.sensor-value-list div {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    border-bottom: 1px solid rgba(120, 180, 220, 0.10);
+    padding-bottom: 4px;
+}
+
+.sensor-value-list span {
+    color: #c5d6e5;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.sensor-value-list strong {
+    color: #ffffff;
+    font-size: 12px;
+    text-align: right;
+}
+
+.attitude-mini {
+    height: 140px;
+    border: 1px solid rgba(120, 180, 220, 0.18);
+    position: relative;
+    overflow: hidden;
+    background: #000;
+}
+
+.attitude-mini .sky {
+    position: absolute;
+    inset: 0 0 50% 0;
+    background: linear-gradient(#0c63a7, #1b7dc6);
+}
+
+.attitude-mini .ground {
+    position: absolute;
+    inset: 50% 0 0 0;
+    background: linear-gradient(#6c3b18, #2f1b0f);
+}
+
+.attitude-mini .horizon-line {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 50%;
+    height: 2px;
+    background: #ffffff;
+}
+
+.attitude-mini .aircraft-marker {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    color: #ff66ff;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+}
+
+.engine-gauge-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 6px 0 10px;
+}
+
+.mini-gauge {
+    text-align: center;
+}
+
+.mini-gauge-arc {
+    width: 76px;
+    height: 44px;
+    border: 2px solid #ffd84d;
+    border-bottom: none;
+    border-radius: 76px 76px 0 0;
+    margin: 0 auto 5px;
+}
+
+.mini-gauge-arc.green {
+    border-color: #6dff7d;
+}
+
+.mini-gauge strong {
+    display: block;
+    color: #ffd84d;
+    font-size: 13px;
+}
+
+.mini-gauge span {
+    color: #c5d6e5;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.fuel-layout {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 12px;
+    align-items: center;
+}
+
+.fuel-tape {
+    width: 28px;
+    height: 125px;
+    margin: 0 auto;
+    border: 1px solid rgba(210, 230, 240, 0.7);
+    background: linear-gradient(to top, rgba(255,255,255,0.05), rgba(255,255,255,0.13));
+    position: relative;
+}
+
+.fuel-fill {
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    right: 4px;
+    height: 62%;
+    background: linear-gradient(#6dff7d, #2f9f42);
+}
+
+.thermo-layout {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    align-items: center;
+    gap: 14px;
+}
+
+.thermometer {
+    width: 18px;
+    height: 130px;
+    border: 1px solid #d8e8f5;
+    border-radius: 12px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.thermo-fill {
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    right: 4px;
+    height: 48%;
+    border-radius: 8px;
+    background: #31b7ff;
+}
+
+.sensor-card-footer {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(120, 180, 220, 0.14);
+    padding-top: 7px;
+    margin-top: 10px;
+    color: #c5d6e5;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.sensor-card-footer strong {
+    color: #ffffff;
+    margin-left: 8px;
+}
+
+.health-history-grid {
+    display: grid;
+    grid-template-columns: 75px 1fr;
+    gap: 7px 10px;
+    align-items: center;
+}
+
+.history-label {
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.history-row {
+    height: 14px;
+    background-size: 12px 14px;
+    border: 1px solid rgba(120, 180, 220, 0.14);
+}
+
+.history-row.healthy {
+    background-image: repeating-linear-gradient(90deg, #45b750 0 7px, #214d29 7px 12px);
+}
+
+.history-row.warning {
+    background-image: repeating-linear-gradient(90deg, #45b750 0 7px, #214d29 7px 9px, #ffd84d 9px 12px);
+}
+
+.sensors-bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr 1.6fr;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.sensor-bottom-panel {
+    padding: 12px;
+    min-height: 74px;
+}
+
+.sensor-bottom-panel p {
+    margin: 0;
+    color: #c5d6e5;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.fault-summary-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.fault-summary-row div {
+    border: 1px solid rgba(120, 180, 220, 0.16);
+    background: rgba(0, 0, 0, 0.18);
+    padding: 10px;
+    text-align: center;
+}
+
+.fault-summary-row span {
+    display: block;
+    color: #c5d6e5;
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+.fault-summary-row strong {
+    color: #ffffff;
+    font-size: 22px;
+}
+
+.mode-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.mode-buttons button {
+    border: 1px solid rgba(120, 180, 220, 0.25);
+    background: rgba(0,0,0,0.25);
+    color: #d8e8f5;
+    padding: 10px 18px;
+    font-weight: 800;
+}
+
+.mode-buttons button.active {
+    color: #6dff7d;
+    border-color: rgba(109, 255, 125, 0.5);
+    background: rgba(50, 120, 45, 0.35);
+}
+
+.mode-buttons span {
+    margin-left: auto;
+    border: 1px solid rgba(120, 180, 220, 0.16);
+    padding: 10px 22px;
+    color: #ffffff;
+    font-size: 12px;
+}
+
+/* Sensors page layout correction
+   Row 1: AIR DATA | INS/NAV | ENGINE
+   Row 2: FUEL | BUS A | BUS B | OAT
+   Row 3: HEALTH HISTORY | SENSOR EVENTS
+*/
+.sensors-top-grid {
+    grid-template-columns: minmax(0, 1fr) 430px;
+    align-items: start;
+}
+
+.sensor-overview-row {
+    grid-template-columns: repeat(4, minmax(150px, 1fr)) 190px;
+}
+
+.sensors-main-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+    align-items: stretch;
+}
+
+.sensor-air {
+    grid-column: span 4;
+}
+
+.sensor-nav {
+    grid-column: span 4;
+}
+
+.sensor-engine {
+    grid-column: span 4;
+}
+
+.sensor-fuel {
+    grid-column: span 3;
+}
+
+.sensor-bus {
+    grid-column: span 3;
+}
+
+.sensor-oat {
+    grid-column: span 3;
+}
+
+.sensor-history-card {
+    grid-column: span 7;
+}
+
+.sensor-events-card {
+    grid-column: span 5;
+}
+
+.sensor-card {
+    min-height: 210px;
+}
+
+.sensor-air,
+.sensor-nav,
+.sensor-engine {
+    min-height: 245px;
+}
+
+.air-data-layout,
+.nav-layout {
+    grid-template-columns: 125px 1fr;
+    gap: 10px;
+}
+
+.round-gauge-face {
+    width: 116px;
+    height: 116px;
+}
+
+.attitude-mini {
+    height: 118px;
+}
+
+.engine-gauge-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.mini-gauge-arc {
+    width: 62px;
+    height: 36px;
+}
