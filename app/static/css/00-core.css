@@ -10,13 +10,22 @@ body {
 }
 
 .topbar {
-    min-height: 72px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #263746;
-    background: #0a141e;
-    padding: 0 26px;
-    gap: 28px;
+   position: relative;
+   z-index: 1000;
+   min-height: 72px;
+   display: flex;
+   align-items: center;
+   border-bottom: 1px solid #263746;
+   background: #0a141e;
+   padding: 0 26px;
+   gap: 28px;
+}
+
+.tabs,
+.tab,
+.sim-status {
+   position: relative;
+   z-index: 1001;
 }
 
 .brand-block {

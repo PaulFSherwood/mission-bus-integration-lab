@@ -6,6 +6,8 @@
 */
 
 .sensors-page-shell {
+   position: relative;
+   z-index: 1;
     padding: 10px 12px 28px;
     color: #d8e8f5;
 }
@@ -704,4 +706,27 @@
     .sensor-oat {
         grid-column: auto;
     }
+}
+
+.sensors-page-shell {
+   position: relative;
+   z-index: 1;
+}
+
+.sensors-layout,
+.sensors-left-column,
+.sensors-right-column,
+.sensors-main-grid,
+.sensors-bottom-grid {
+   position: relative;
+   z-index: 1;
+}
+
+.history-row,
+.history-tick,
+.round-gauge-face,
+.attitude-mini,
+.fuel-tape,
+.thermometer {
+   pointer-events: none;
 }

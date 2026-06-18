@@ -264,7 +264,6 @@ function setText(id, value) {
   const el = document.getElementById(id);
 
   if(!el) {
-    console.warn("Missing element id:", id);
     return;
   }
   el.textContent = value;
@@ -755,15 +754,17 @@ function historyStatusFromMessage(msg) {
       return "unknown";
    }
 
-   if (msg.status === "OK") {
+   const status = msg.status || "UNKNOWN";
+
+   if (status === "OK" || status === "HEALTHY") {
       return "ok";
    }
 
-   if (msg.status === "STALE" || msg.status === "WARN") {
+   if (msg.status === "STALE" || msg.status === "WARN" || status === "WARNING") {
       return "warn";
    }
 
-   if (msg.status === "NO_RESPONSE" || msg.status === "FAILED") {
+   if (msg.status === "NO_RESPONSE" || msg.status === "FAILED" || status === "FAULT") {
       return "fault";
    }
 
@@ -784,8 +785,14 @@ function pushSensorHistory(sensorName, status) {
 
 function renderSensorHistoryRows() {
    document.querySelectorAll("[data-history-sensor]").forEach((row) =>  {
-      const sensorName = row.CDATA_SECTION_NODE.historySensor;
+      const sensorName = row.dataset.historySensor;
       const values = sensorHistory[sensorName] || [];
+
+      let fillValue = "unknown";
+
+      if (values.length > 0) {
+         fillValue = values[values.length - 1];
+      }
 
       const padded = [];
 
@@ -801,7 +808,7 @@ function renderSensorHistoryRows() {
    });
 }
 
-function updateSensorHealthHistory(message) {
+function updateSensorHealthHistory(messages) {
    if (!document.querySelector(".sensors-page-shell")) {
       return;
    }
@@ -820,14 +827,14 @@ function updateSensorHealthHistory(message) {
    lastSensorHistoryTick = newestTick;
 
    const latest = {
-      AIR_DATA_RT: latestMessageByType(message, "AIR_DATA"),
-      NAV_RT: latestMessageByType(message, "NAV_DATA"),
-      ENGINE_RT: latestMessageByType(message, "ENGINE_DATA"),
-      FUEL_RT: latestMessageByType(message, "FUEL_DATA"),
-      OAT_SENSOR: latestMessageByType(message, "AIR_DATA"),
-      STATIC_SENSOR: latestMessageByType(message, "AIR_DATA"),
-      BUS_A: latestMessageByType(message, "BUS_A"),
-      BUS_B: latestMessageByType(message, "BUS_B"),
+      AIR_DATA_RT: latestMessageByType(messages, "AIR_DATA"),
+      NAV_RT: latestMessageByType(messages, "NAV_DATA"),
+      ENGINE_RT: latestMessageByType(messages, "ENGINE_DATA"),
+      FUEL_RT: latestMessageByType(messages, "FUEL_DATA"),
+      OAT_SENSOR: latestMessageByType(messages, "AIR_DATA"),
+      STATIC_SENSOR: latestMessageByType(messages, "AIR_DATA"),
+      BUS_A: latestMessageByBus(messages, "BUS_A"),
+      BUS_B: latestMessageByBus(messages, "BUS_B"),
    }
 
    Object.entries(latest).forEach(([sensorName, msg]) => {
