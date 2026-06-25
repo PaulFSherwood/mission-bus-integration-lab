@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="taws-page-shell">
+  <div class="taws-page-header">
+    <div>
+      <h1>TAWS / Weather</h1>
+      <p>Simulation-only terrain awareness and local generated storm overlay.  Not for real aviation use.</p>
+    </div>
+    <div class="taws-alert-box" id="taws-alert-box">
+      <span>TAWS</span>
+      <strong id="taws-alert-state">CLEAR</strong>
+    </div>
+  </div>
+
+  <div class="taws-main-grid">
+    <section class="taws-display-card">
+      <div class="taws-display-header">
+        <h2>Garin-Style TAWS / Weather Map</h2>
+        <div class="taws-mode-buttons">
+          <button id="taws-layer-terrain" class="active">TAWS</button>
+          <button id="taws-layer-weather" class="active">WX</button>
+          <button id="taws-layer-route" class="active">ROUTE</button>
+        </div>
+      </div>
+
+      <div class="taws-map-frame">
+        <canvas id="taws-weather-canvas"></canvas>
+        
+        <div class="taws-map-overlay top-left">
+          <div>HDG <strong data-bind="aircraft.heading">---</strong></div>
+          <div>ALT <strong data-bind="aircraft.altitude">---</strong></div>
+          <div>GS <strong data-bind="aircraft.airspeed">---</strong></div>
+        </div>
+
+        <div class="taws-map-overlay bottom-right">
+          <div>RANGE <strong id="taws-range-label">40 NM<strong></div>
+          <div>TERRAIN <strong id="taws-terrain-under">---<strong></div>
+          <div>CLRNC <strong id="taws-clearance">---<strong></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="taws-side-panel">
+      <section>
+        <h2>TAWS Status</h2>
+        <dl>
+          <dt>Alert</dt><dd id="taws-side-alert">CLEAR</dd>
+          <dt>Aircraft Alt</dt><dd data-bind="aircraft.altitude">---</dd>
+          <dt>Terrain Below</dt><dd id="taws-side-terrain">---</dd>
+          <dt>Clearance</dt><dd id="taws-side-clearance">---</dd>
+          <dt>Mode</dt><dd>SIM ONLY</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>Legend</h2>
+        <div class="taws-legend-row"><span class="legend-terrain-green"></span>Terrain safely below</div>
+        <div class="taws-legend-row"><span class="legend-terrain-yellow"></span>Caution terrain</div>
+        <div class="taws-legend-row"><span class="legend-terrain-red"></span>Near / above aircraft</div>
+        <div class="taws-legend-row"><span class="legend-wx-green"></span>Light precipitation</div>
+        <div class="taws-legend-row"><span class="legend-wx-yellow"></span>Moderate precipitation</div>
+        <div class="taws-legend-row"><span class="legend-wx-red"></span>Heavy precipitation</div>
+        <div class="taws-legend-row"><span class="legend-wx-purple"></span>Severe storm core</div>
+      </section>
+    </aside>
+  </div>
+</section>
+{% endblock %}

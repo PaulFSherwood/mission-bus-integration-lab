@@ -617,6 +617,9 @@ async function updateCockpit() {
       const data = await response.json();
 
       bindText(data);
+      if (typeof drawTawsWeatherPage === "function") {
+        drawTawsWeatherPage(data);
+      }
       updateBusMessages(data);
       drawMovingMap(data);
    } catch (error) {

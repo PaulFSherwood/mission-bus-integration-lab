@@ -16,6 +16,7 @@ sim_runtime = SimulatorRuntime("data/routes/kpns_kabq_points.txt")
 
 NAV_ITEMS = [
     {"label": "Cockpit", "endpoint": "/overview", "icon": "cockpit"},
+    {"label": "TAWS / Weather", "endpoint": "/taws-weather", "icon": "display"},
     {"label": "Mission Computers", "endpoint": "/mission-computers", "icon": "computer"},
     {"label": "Bus Messages", "endpoint": "/bus-messages", "icon": "bus"},
     {"label": "Sensors", "endpoint": "/sensors", "icon": "sensor"},
@@ -32,6 +33,11 @@ PAGE_DATA = {
         "subtitle": "Primary operator cockpit view for the simulated mission bus lab.",
         "template": "dashboard.html",
         "hide_heading": True,
+    },
+    "/taws-weather": {
+        "title": "TAWS / Weather",
+        "subtitle": "Simulation-only terrain awareness and local weather radar.",
+        "template": "taws_weather.html"
     },
     "/mission-computers": {
         "title": "Mission Computers",

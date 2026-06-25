@@ -44,19 +44,16 @@
                     <span>Radar</span>
                     <strong class="good">GAIN 73%</strong>
                 </div>
-                <div class="radar-screen">
-                    <div class="radar-data top-left">RNG 40 NM<br>TILT 0.0°</div>
-                    <div class="radar-data top-right">BRG <span data-bind="aircraft.heading">142°</span><br>HDG UP</div>
-                    <div class="radar-scope">
-                        <span class="ring r1"></span>
-                        <span class="ring r2"></span>
-                        <span class="ring r3"></span>
-                        <span class="sweep"></span>
-                        <span class="contact c1">TGT01<br>12.4NM</span>
-                        <span class="contact c2">TGT02<br>18.7NM</span>
-                        <span class="contact c3">TGT03<br>9.3NM</span>
-                        <span class="center-plane">✈</span>
-                    </div>
+                <div class="radar-screen cockpit-wx-radar-screen">
+                  <canvas id="cockpit-weather-radar-canvas"></canvas>
+
+                  <div class="cockpit-radar-overlay radar-top-left">
+                    <div>RNG <strong>40 NM</strong></div>
+                    <div>TILT <strong>0.0</strong></div>
+                  </div>
+                  <div class="cockpit-radar-overlay radar-bottom-right">
+                    <div>BRG <strong id="cockpit-radar-brg">---</strong></div>
+                    <div>HDG UP</div>
                 </div>
                 <div class="display-buttons"><span>BRT</span><span>DIM</span><span>RADAR</span><span>CNTL</span><span>MENU</span></div>
             </div>
