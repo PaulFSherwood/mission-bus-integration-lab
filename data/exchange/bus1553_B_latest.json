@@ -7,18 +7,18 @@
       "direction": "RT_TO_BC",
       "message_type": "AIR_DATA",
       "payload": {
-        "airspeed_kts": 251.5,
-        "altitude_ft": 9699.6,
-        "oat_c": 16.9,
-        "vertical_speed_fpm": 185.4
+        "airspeed_kts": 243.9,
+        "altitude_ft": 9949.8,
+        "oat_c": 15.6,
+        "vertical_speed_fpm": 408.3
       },
       "rt": "AIR_DATA_RT",
       "rt_address": 1,
       "schema": "MBIL-1553-MESSAGE-1",
       "status": "OK",
       "subaddress": 1,
-      "tick": 833,
-      "timestamp": 1782413136.7877128,
+      "tick": 320,
+      "timestamp": 1782413419.7126164,
       "word_count": 8
     },
     {
@@ -27,35 +27,35 @@
       "direction": "RT_TO_BC",
       "message_type": "TAWS_DATA",
       "payload": {
-        "aircraft_altitude_ft": 9699.6,
+        "aircraft_altitude_ft": 9949.8,
         "alert_state": "CLEAR",
-        "clearance_ft": 8408.0,
+        "clearance_ft": 8628.1,
         "mode": "SIM_ONLY",
         "range_nm": 40.0,
         "schema": "MBIL-TAWS-DATA-1",
         "terrain_source": "SYNTHETIC_LOCAL_TERRAIN",
-        "terrain_under_aircraft_ft": 1291.6,
-        "terrain_under_ft": 1291.6,
+        "terrain_under_aircraft_ft": 1321.7,
+        "terrain_under_ft": 1321.7,
         "valid": true,
-        "worst_clearance_ft": 6450.4,
+        "worst_clearance_ft": 6706.6,
         "worst_point": {
-          "east_nm": 25.0,
-          "lat": 31.26252816612927,
-          "lon": -87.33913797177851,
-          "north_nm": 30.0
+          "east_nm": 10.0,
+          "lat": 31.174558757048846,
+          "lon": -87.2356766334065,
+          "north_nm": 35.0
         },
-        "worst_terrain_ft": 3249.2
+        "worst_terrain_ft": 3243.2
       },
       "rt": "TERRAIN_RT",
       "rt_address": 7,
       "schema": "MBIL-1553-MESSAGE-1",
       "status": "OK",
       "subaddress": 1,
-      "tick": 833,
-      "timestamp": 1782413136.7879577,
+      "tick": 320,
+      "timestamp": 1782413419.7128315,
       "word_count": 16
     }
   ],
   "schema": "MBIL-1553-LATEST-1",
-  "timestamp": 1782413136.7892401
+  "timestamp": 1782413419.7140162
 }

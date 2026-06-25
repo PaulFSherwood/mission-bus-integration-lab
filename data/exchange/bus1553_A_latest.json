@@ -7,18 +7,18 @@
       "direction": "RT_TO_BC",
       "message_type": "AIR_DATA",
       "payload": {
-        "airspeed_kts": 251.5,
-        "altitude_ft": 9699.6,
-        "oat_c": 16.9,
-        "vertical_speed_fpm": 185.4
+        "airspeed_kts": 243.9,
+        "altitude_ft": 9949.8,
+        "oat_c": 15.6,
+        "vertical_speed_fpm": 408.3
       },
       "rt": "AIR_DATA_RT",
       "rt_address": 1,
       "schema": "MBIL-1553-MESSAGE-1",
       "status": "OK",
       "subaddress": 1,
-      "tick": 833,
-      "timestamp": 1782413136.787432,
+      "tick": 320,
+      "timestamp": 1782413419.712371,
       "word_count": 8
     },
     {
@@ -27,11 +27,11 @@
       "direction": "RT_TO_BC",
       "message_type": "NAV_DATA",
       "payload": {
-        "current_wp": "LOXLY",
-        "heading_deg": 265.8,
-        "lat": 30.76252816612927,
-        "lon": -87.8240318256162,
-        "next_wp": "SJI",
+        "current_wp": "KPNS",
+        "heading_deg": 298.7,
+        "lat": 30.591225423715514,
+        "lon": -87.42929048027945,
+        "next_wp": "LOXLY",
         "route": "KPNS-KABQ",
         "source": "SYNTHETIC:normal"
       },
@@ -40,8 +40,8 @@
       "schema": "MBIL-1553-MESSAGE-1",
       "status": "OK",
       "subaddress": 1,
-      "tick": 833,
-      "timestamp": 1782413136.787435,
+      "tick": 320,
+      "timestamp": 1782413419.712374,
       "word_count": 8
     },
     {
@@ -50,17 +50,17 @@
       "direction": "RT_TO_BC",
       "message_type": "ATTITUDE_DATA",
       "payload": {
-        "pitch_deg": 1.86,
-        "roll_deg": -7.26,
-        "yaw_deg": 265.82
+        "pitch_deg": 1.55,
+        "roll_deg": 5.37,
+        "yaw_deg": 298.69
       },
       "rt": "ATTITUDE_RT",
       "rt_address": 6,
       "schema": "MBIL-1553-MESSAGE-1",
       "status": "OK",
       "subaddress": 1,
-      "tick": 833,
-      "timestamp": 1782413136.787438,
+      "tick": 320,
+      "timestamp": 1782413419.712376,
       "word_count": 8
     },
     {
@@ -70,15 +70,15 @@
       "message_type": "ENGINE_DATA",
       "payload": {
         "engine_status": "NORMAL",
-        "engine_temp_c": 608.2
+        "engine_temp_c": 643.7
       },
       "rt": "ENGINE_RT",
       "rt_address": 3,
       "schema": "MBIL-1553-MESSAGE-1",
       "status": "OK",
       "subaddress": 1,
-      "tick": 833,
-      "timestamp": 1782413136.7874396,
+      "tick": 320,
+      "timestamp": 1782413419.7123775,
       "word_count": 8
     },
     {
@@ -87,7 +87,7 @@
       "direction": "RT_TO_BC",
       "message_type": "FUEL_DATA",
       "payload": {
-        "fuel_lbs": 5111.8,
+        "fuel_lbs": 5240.0,
         "fuel_status": "NORMAL"
       },
       "rt": "FUEL_RT",
@@ -95,8 +95,8 @@
       "schema": "MBIL-1553-MESSAGE-1",
       "status": "OK",
       "subaddress": 1,
-      "tick": 833,
-      "timestamp": 1782413136.7874424,
+      "tick": 320,
+      "timestamp": 1782413419.7123795,
       "word_count": 8
     },
     {
@@ -105,32 +105,32 @@
       "direction": "RT_TO_BC",
       "message_type": "TAWS_DATA",
       "payload": {
-        "aircraft_altitude_ft": 9699.6,
+        "aircraft_altitude_ft": 9949.8,
         "alert_state": "CLEAR",
-        "clearance_ft": 8408.0,
+        "clearance_ft": 8628.1,
         "mode": "SIM_ONLY",
         "range_nm": 40.0,
         "schema": "MBIL-TAWS-DATA-1",
         "terrain_source": "SYNTHETIC_LOCAL_TERRAIN",
-        "terrain_under_aircraft_ft": 1291.6,
-        "terrain_under_ft": 1291.6,
+        "terrain_under_aircraft_ft": 1321.7,
+        "terrain_under_ft": 1321.7,
         "valid": true,
-        "worst_clearance_ft": 6450.4,
+        "worst_clearance_ft": 6706.6,
         "worst_point": {
-          "east_nm": 25.0,
-          "lat": 31.26252816612927,
-          "lon": -87.33913797177851,
-          "north_nm": 30.0
+          "east_nm": 10.0,
+          "lat": 31.174558757048846,
+          "lon": -87.2356766334065,
+          "north_nm": 35.0
         },
-        "worst_terrain_ft": 3249.2
+        "worst_terrain_ft": 3243.2
       },
       "rt": "TERRAIN_RT",
       "rt_address": 7,
       "schema": "MBIL-1553-MESSAGE-1",
       "status": "OK",
       "subaddress": 1,
-      "tick": 833,
-      "timestamp": 1782413136.7877004,
+      "tick": 320,
+      "timestamp": 1782413419.7126067,
       "word_count": 16
     },
     {
@@ -142,27 +142,27 @@
         "cell_count": 3,
         "cells": [
           {
-            "east_nm": 13.691417900692555,
+            "east_nm": 15.78049716558774,
             "id": "WX01",
             "intensity": 0.55,
             "lightning": true,
-            "north_nm": 9.049781462487235,
+            "north_nm": 11.499967705342943,
             "radius_nm": 12.0
           },
           {
-            "east_nm": -18.258952680756607,
+            "east_nm": -19.243736098290064,
             "id": "WX02",
             "intensity": 0.85,
             "lightning": true,
-            "north_nm": -9.499861246076865,
+            "north_nm": -6.746677596476212,
             "radius_nm": 9.0
           },
           {
-            "east_nm": 5.856815640365913,
+            "east_nm": 4.299887400117859,
             "id": "WX03",
             "intensity": 0.35,
             "lightning": false,
-            "north_nm": -23.815943302280353,
+            "north_nm": -23.171734015853023,
             "radius_nm": 7.0
           }
         ],
@@ -179,11 +179,11 @@
       "schema": "MBIL-1553-MESSAGE-1",
       "status": "OK",
       "subaddress": 1,
-      "tick": 833,
-      "timestamp": 1782413136.787712,
+      "tick": 320,
+      "timestamp": 1782413419.7126157,
       "word_count": 20
     }
   ],
   "schema": "MBIL-1553-LATEST-1",
-  "timestamp": 1782413136.788253
+  "timestamp": 1782413419.7130768
 }

@@ -36,9 +36,9 @@
     "raw_packets_seen": 0
   },
   "message": "Replay loaded, but no decoded aircraft state yet. Raw DIS replay decode is phase 2.",
-  "recording_dis": true,
-  "recording_path": "data/dis_captures/dis_capture_1782413156.jsonl",
+  "recording_dis": false,
+  "recording_path": null,
   "schema": "MBIL-ADAPTER-STATUS-1",
   "synthetic_profile": "normal",
-  "timestamp": 1782413214.1923134
+  "timestamp": 1782413422.6767979
 }
