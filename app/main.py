@@ -5,6 +5,7 @@ from fastapi.templating import Jinja2Templates
 from app.sim.runtime import SimulatorRuntime
 from starlette.responses import RedirectResponse
 from pydantic import BaseModel
+from app.sim.exchange_reader import read_adapter_status, read_exchange_latest
 
 app = FastAPI(title="MBIL")
 
@@ -139,6 +140,15 @@ def api_messages():
     return {
         "messages": sim_runtime.bus.recent_messages()
     }
+
+
+@app.get("/api/adapter/status")
+def api_adapter_status():
+    return read_adapter_status()
+
+@app.get("/api/exchange/latest")
+def api_exchange_latest():
+    return read_exchange_latest()
 
 @app.get("/{page_path:path}")
 def render_page(request: Request, page_path: str):

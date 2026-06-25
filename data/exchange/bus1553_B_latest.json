@@ -1,0 +1,27 @@
+{
+  "bus": "BUS_B",
+  "messages": [
+    {
+      "bus": "BUS_B",
+      "controller": "MC2",
+      "direction": "RT_TO_BC",
+      "message_type": "AIR_DATA",
+      "payload": {
+        "airspeed_kts": 247.6,
+        "altitude_ft": 9671.9,
+        "oat_c": 12.0,
+        "vertical_speed_fpm": -123.1
+      },
+      "rt": "AIR_DATA_RT",
+      "rt_address": 1,
+      "schema": "MBIL-1553-MESSAGE-1",
+      "status": "OK",
+      "subaddress": 1,
+      "tick": 17,
+      "timestamp": 1782410318.3740733,
+      "word_count": 8
+    }
+  ],
+  "schema": "MBIL-1553-LATEST-1",
+  "timestamp": 1782410318.375032
+}

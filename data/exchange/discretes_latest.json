@@ -1,0 +1,9 @@
+{
+  "schema": "MBIL-DISCRETES-LATEST-1",
+  "signals": {
+    "gear_down": false,
+    "master_caution": false,
+    "weight_on_wheels": false
+  },
+  "stub": true
+}

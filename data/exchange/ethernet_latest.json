@@ -1,0 +1,6 @@
+{
+  "note": "Reserved for AFDX/ethernet-style avionics data later.",
+  "packets": [],
+  "schema": "MBIL-ETHERNET-LATEST-1",
+  "stub": true
+}

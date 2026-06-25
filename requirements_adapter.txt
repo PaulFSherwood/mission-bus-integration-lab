@@ -1,0 +1,3 @@
+# Optional adapter GUI dependency
+# Install only if you want the PyQt switchboard UI.
+PyQt6>=6.6

@@ -1,0 +1,43 @@
+{
+  "active_source": "Synthetic Aircraft Source",
+  "adapter_online": false,
+  "available_sources": [
+    {
+      "name": "Synthetic Aircraft Source",
+      "online": true
+    },
+    {
+      "name": "DIS UDP Source",
+      "online": false
+    },
+    {
+      "name": "DIS Capture Replay",
+      "online": false
+    },
+    {
+      "name": "X-Plane Stub",
+      "online": false
+    },
+    {
+      "name": "MSFS Stub",
+      "online": false
+    },
+    {
+      "name": "DCS Stub",
+      "online": false
+    }
+  ],
+  "dis_udp": {
+    "decoded_packets_seen": 0,
+    "host": "0.0.0.0",
+    "last_error": "",
+    "last_packet_age_sec": null,
+    "port": 3000,
+    "raw_packets_seen": 0
+  },
+  "message": "Wrote 6 1553-style messages from SYNTHETIC.",
+  "recording_dis": false,
+  "recording_path": null,
+  "schema": "MBIL-ADAPTER-STATUS-1",
+  "timestamp": 1782410318.5361922
+}

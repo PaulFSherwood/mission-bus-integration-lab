@@ -1,0 +1,9 @@
+{
+  "channels": {
+    "aoa_vdc": null,
+    "fuel_quantity_vdc": null,
+    "trim_position_vdc": null
+  },
+  "schema": "MBIL-ANALOG-LATEST-1",
+  "stub": true
+}
