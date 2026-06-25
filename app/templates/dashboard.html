@@ -44,18 +44,29 @@
                     <span>Radar</span>
                     <strong class="good">GAIN 73%</strong>
                 </div>
-                <div class="radar-screen cockpit-wx-radar-screen">
-                  <canvas id="cockpit-weather-radar-canvas"></canvas>
 
-                  <div class="cockpit-radar-overlay radar-top-left">
-                    <div>RNG <strong>40 NM</strong></div>
-                    <div>TILT <strong>0.0</strong></div>
-                  </div>
-                  <div class="cockpit-radar-overlay radar-bottom-right">
-                    <div>BRG <strong id="cockpit-radar-brg">---</strong></div>
-                    <div>HDG UP</div>
+                <div class="radar-screen cockpit-wx-radar-screen">
+                    <canvas
+                        id="cockpit-weather-radar-canvas"
+                        class="mbil-display-canvas"
+                        data-mbil-display="weather-radar"
+                        data-display-range-nm="40"
+                        data-display-orientation="heading-up"></canvas>
+
+                    <div class="cockpit-radar-overlay radar-top-left">
+                        <div>RNG <strong>40 NM</strong></div>
+                        <div>TILT <strong>0.0°</strong></div>
+                    </div>
+
+                    <div class="cockpit-radar-overlay radar-bottom-right">
+                        <div>BRG <strong id="cockpit-radar-brg">---</strong></div>
+                        <div>HDG UP</div>
+                    </div>
                 </div>
-                <div class="display-buttons"><span>BRT</span><span>DIM</span><span>RADAR</span><span>CNTL</span><span>MENU</span></div>
+
+                <div class="display-buttons">
+                    <span>BRT</span><span>DIM</span><span>RADAR</span><span>CNTL</span><span>MENU</span>
+                </div>
             </div>
         </article>
 
@@ -70,7 +81,7 @@
 
                   <div class="map-data">
                      TRK <span data-bind="aircraft.heading">142</span><br>
-                     GS <span data-bind="aircraft-airspeed">205 KTS</span><br>
+                     GS <span data-bind="aircraft.airspeed">205 KTS</span><br>
                      FROM <span data-bind="sim.current_wp">KPNS</span><br>
                      TO <span data-bind="sim.next_wp">LOXLY</span>
                   </div>
@@ -156,12 +167,12 @@
         <section class="status-card aircraft-state-card">
             <h3>Aircraft State</h3>
             <div class="mini-state-grid">
-                <div><span>Altitude</span><strong id="aircraft-altitude">9,601 FT</strong></strong></div>
-                <div><span>Airspeed</span><strong id="aircraft-airspeed">210 KTS</strong></strong></div>
-                <div><span>Heading</span><strong id="aircraft-heading">142</strong>°</strong></div>
-                <div><span>Vert Speed</span><strong id="aircraft-vertical-speed">+500 FPM</strong></strong></div>
-                <div><span>Fuel</span><strong id="aircraft-fuel">5,320 LBS</strong></strong></div>
-                <div><span>Eng Temp</span><strong id="aircraft-engine-temp">625 °C</strong></strong></div>
+                <div><span>Altitude</span><strong id="aircraft-altitude">9,601 FT</strong></div>
+                <div><span>Airspeed</span><strong id="aircraft-airspeed">210 KTS</strong></div>
+                <div><span>Heading</span><strong><span id="aircraft-heading">142</span>°</strong></div>
+                <div><span>Vert Speed</span><strong id="aircraft-vertical-speed">+500 FPM</strong></div>
+                <div><span>Fuel</span><strong id="aircraft-fuel">5,320 LBS</strong></div>
+                <div><span>Eng Temp</span><strong id="aircraft-engine-temp">625 °C</strong></div>
             </div>
         </section>
 

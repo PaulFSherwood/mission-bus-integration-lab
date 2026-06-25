@@ -617,11 +617,12 @@ async function updateCockpit() {
       const data = await response.json();
 
       bindText(data);
-      if (typeof drawTawsWeatherPage === "function") {
-        drawTawsWeatherPage(data);
-      }
       updateBusMessages(data);
       drawMovingMap(data);
+
+      if (window.MbilDisplays && typeof window.MbilDisplays.updateAll === "function") {
+         window.MbilDisplays.updateAll(data);
+      }
    } catch (error) {
       console.error("Cockpit update failed:", error);
    }

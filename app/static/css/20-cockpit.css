@@ -644,3 +644,31 @@
         grid-template-columns: 1fr 1fr;
     }
 }
+
+/* Shared MBIL display canvas support */
+.mbil-display-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.cockpit-wx-radar-screen {
+    position: relative;
+    overflow: hidden;
+    background: #02070b;
+}
+
+#cockpit-weather-radar-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.display-buttons {
+    position: relative;
+    z-index: 5;
+}

@@ -89,7 +89,7 @@ DEMO_CONTEXT = {
 }
 
 class FaultValue(BaseModel):
-    enable: bool
+    enabled: bool
 
 @app.get("/api/faults")
 def api_faults():
@@ -119,7 +119,7 @@ def api_set_rt_stale(rt_name: str, value: FaultValue):
 
 @app.post("/api/faults/clear")
 def api_clear_faults():
-    sim_runtime.bus.clear_fault()
+    sim_runtime.bus.clear_faults()
 
     return {
         "ok": True,
