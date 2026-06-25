@@ -1,11 +1,18 @@
-from time import time
+import os
+
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from app.sim.runtime import SimulatorRuntime
 from starlette.responses import RedirectResponse
 from pydantic import BaseModel
-from app.sim.exchange_reader import read_adapter_status, read_exchange_latest
+from app.sim.exchange_reader import (
+    build_api_state_from_exchange,
+    exchange_input_status,
+    messages_for_api,
+    read_adapter_status,
+    read_exchange_latest,
+)
 
 app = FastAPI(title="MBIL")
 
@@ -14,6 +21,13 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 
 sim_runtime = SimulatorRuntime("data/routes/kpns_kabq_points.txt")
+
+# MBIL_INPUT_MODE:
+#   auto     = use adapter exchange files when fresh, otherwise fallback to built-in sim
+#   exchange = prefer adapter exchange files; report stale/missing if adapter is not writing
+#   internal = ignore adapter exchange files and use built-in sim only
+INPUT_MODE = os.getenv("MBIL_INPUT_MODE", "auto").lower().strip()
+EXCHANGE_STALE_SEC = float(os.getenv("MBIL_EXCHANGE_STALE_SEC", "3.0"))
 
 NAV_ITEMS = [
     {"label": "Cockpit", "endpoint": "/overview", "icon": "cockpit"},
@@ -89,12 +103,15 @@ DEMO_CONTEXT = {
     "sim_time": "00:12:34",
 }
 
+
 class FaultValue(BaseModel):
     enabled: bool
+
 
 @app.get("/api/faults")
 def api_faults():
     return sim_runtime.bus.fault_status()
+
 
 @app.post("/api/faults/rt/{rt_name}/failed")
 def api_set_rt_failed(rt_name: str, value: FaultValue):
@@ -107,6 +124,7 @@ def api_set_rt_failed(rt_name: str, value: FaultValue):
         "faults": sim_runtime.bus.fault_status(),
     }
 
+
 @app.post("/api/faults/rt/{rt_name}/stale")
 def api_set_rt_stale(rt_name: str, value: FaultValue):
     sim_runtime.bus.set_rt_stale(rt_name, value.enabled)
@@ -118,6 +136,7 @@ def api_set_rt_stale(rt_name: str, value: FaultValue):
         "faults": sim_runtime.bus.fault_status(),
     }
 
+
 @app.post("/api/faults/clear")
 def api_clear_faults():
     sim_runtime.bus.clear_faults()
@@ -127,28 +146,47 @@ def api_clear_faults():
         "faults": sim_runtime.bus.fault_status(),
     }
 
+
 @app.get("/api/state")
 def api_state():
-    return sim_runtime.to_api_state()
+    fallback_state = sim_runtime.to_api_state()
+    return build_api_state_from_exchange(
+        fallback_state,
+        input_mode=INPUT_MODE,
+        stale_after_sec=EXCHANGE_STALE_SEC,
+    )
+
 
 @app.get("/", include_in_schema=False)
 def root():
     return RedirectResponse("/overview")
 
+
 @app.get("/api/messages")
 def api_messages():
-    return {
-        "messages": sim_runtime.bus.recent_messages()
-    }
+    return messages_for_api(
+        sim_runtime.bus.recent_messages(),
+        input_mode=INPUT_MODE,
+        stale_after_sec=EXCHANGE_STALE_SEC,
+    )
 
 
 @app.get("/api/adapter/status")
 def api_adapter_status():
     return read_adapter_status()
 
+
 @app.get("/api/exchange/latest")
 def api_exchange_latest():
     return read_exchange_latest()
+
+
+@app.get("/api/input/status")
+def api_input_status():
+    status = exchange_input_status(EXCHANGE_STALE_SEC)
+    status["input_mode"] = INPUT_MODE
+    return status
+
 
 @app.get("/{page_path:path}")
 def render_page(request: Request, page_path: str):

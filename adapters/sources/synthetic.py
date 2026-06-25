@@ -1,15 +1,10 @@
 from __future__ import annotations
 
-from math import atan2, cos, radians, sin, sqrt
+from math import atan2, cos, radians, sin
 from pathlib import Path
 from time import time
 
 from adapters.common.aircraft_truth import AircraftTruth
-
-
-def _parse_latlon_token(ns_token: str, ew_token: str) -> tuple[float, float]:
-    # Input route lines look like: KPNS GPS N30 28.60 W87 11.07
-    raise NotImplementedError
 
 
 def load_route_points(route_path: str = "data/routes/kpns_kabq_points.txt") -> list[tuple[str, float, float]]:
@@ -23,7 +18,7 @@ def load_route_points(route_path: str = "data/routes/kpns_kabq_points.txt") -> l
     points: list[tuple[str, float, float]] = []
     for line in path.read_text().splitlines():
         parts = line.split()
-        if len(parts) < 7:
+        if len(parts) < 6:
             continue
         ident = parts[0]
         try:
@@ -53,14 +48,27 @@ def _bearing_deg(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
 class SyntheticAircraftSource:
     name = "Synthetic Aircraft Source"
 
-    def __init__(self, route_path: str = "data/routes/kpns_kabq_points.txt"):
+    def __init__(self, route_path: str = "data/routes/kpns_kabq_points.txt", profile: str = "normal"):
         self.route = load_route_points(route_path)
         self.leg = 0
         self.leg_fraction = 0.0
         self.airspeed_kts = 240.0
-        self.altitude_ft = 9600.0
+        self.profile = profile
+        self.altitude_ft = self._altitude_for_profile(profile)
         self.last_time = time()
         self.tick = 0
+        self.route_name = "KPNS-KABQ"
+
+    @staticmethod
+    def _altitude_for_profile(profile: str) -> float:
+        profile = (profile or "normal").strip().lower()
+        if profile in {"terrain-caution", "caution"}:
+            return 4000.0
+        if profile in {"terrain-pull-up", "pull-up", "pullup"}:
+            return 3000.0
+        if profile in {"low-level", "low"}:
+            return 5000.0
+        return 9600.0
 
     def online(self) -> bool:
         return True
@@ -85,28 +93,31 @@ class SyntheticAircraftSource:
         f = self.leg_fraction
         lat = a[1] + (b[1] - a[1]) * f
         lon = a[2] + (b[2] - a[2]) * f
-        hdg = _bearing_deg(a[1], a[2], b[1], b[2])
+        heading = _bearing_deg(a[1], a[2], b[1], b[2])
 
-        # Small motion values so the cockpit is alive.
-        roll = sin(now * 0.35) * 4.0
-        pitch = 1.5 + sin(now * 0.20) * 1.0
-        vs = sin(now * 0.15) * 250.0
-        fuel = max(700.0, 5320.0 - self.tick * 0.7)
+        # Gentle values so cockpit instruments visibly move.
+        alt = self.altitude_ft + sin(now * 0.04) * 350.0
+        speed = self.airspeed_kts + sin(now * 0.07) * 12.0
+        vs = sin(now * 0.05) * 450.0
+        fuel = max(500.0, 5320.0 - self.tick * 0.25)
 
         return AircraftTruth(
-            source="SYNTHETIC",
+            source=f"SYNTHETIC:{self.profile}",
             timestamp=now,
+            route=self.route_name,
+            current_wp=a[0],
+            next_wp=b[0],
             lat=lat,
             lon=lon,
-            altitude_ft=self.altitude_ft + sin(now * 0.08) * 500.0,
-            airspeed_kts=self.airspeed_kts + sin(now * 0.18) * 8.0,
-            heading_deg=hdg,
+            altitude_ft=alt,
+            airspeed_kts=speed,
+            heading_deg=heading,
             vertical_speed_fpm=vs,
-            pitch_deg=pitch,
-            roll_deg=roll,
-            yaw_deg=hdg,
+            pitch_deg=2.0 + sin(now * 0.09),
+            roll_deg=sin(now * 0.06) * 8.0,
+            yaw_deg=heading,
             fuel_lbs=fuel,
-            engine_temp_c=625.0 + sin(now * 0.11) * 18.0,
-            oat_c=12.0,
+            engine_temp_c=625.0 + sin(now * 0.03) * 20.0,
+            oat_c=12.0 + sin(now * 0.02) * 5.0,
             valid=True,
         )

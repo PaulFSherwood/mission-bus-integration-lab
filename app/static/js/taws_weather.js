@@ -122,6 +122,24 @@
         return "rgba(0, 190, 80, 0.70)";
     }
 
+    function weatherCellsFromData(data) {
+        const externalCells = data?.weather_radar?.cells;
+
+        if (Array.isArray(externalCells) && externalCells.length > 0) {
+            return externalCells.map((cell, index) => ({
+                id: cell.id || `WX${String(index + 1).padStart(2, "0")}`,
+                eastNm: number(cell.east_nm, number(cell.eastNm, 0)),
+                northNm: number(cell.north_nm, number(cell.northNm, 0)),
+                radiusNm: number(cell.radius_nm, number(cell.radiusNm, 5)),
+                intensity: number(cell.intensity, 0.25),
+                lightning: Boolean(cell.lightning),
+            }));
+        }
+
+        updateStorms();
+        return state.storms;
+    }
+
     function drawStorm(ctx, x, y, radiusPx, intensity, lightning, id) {
         [
             { scale: 1.00, intensity: intensity * 0.45 },
@@ -284,25 +302,33 @@
         ctx.restore();
     }
 
-    function drawWeatherNorthUp(ctx, aircraft, cx, cy, pixelsPerNm) {
-        updateStorms();
-        let severe = 0;
-        let lightning = 0;
+    function drawWeatherNorthUp(ctx, data, aircraft, cx, cy, pixelsPerNm) {
+        const cells = weatherCellsFromData(data);
+        let severe = number(data?.weather_radar?.severe_count, 0);
+        let lightning = number(data?.weather_radar?.lightning_count, 0);
 
-        state.storms.forEach((storm) => {
-            if (storm.intensity >= 0.90) severe += 1;
-            if (storm.lightning && storm.intensity > 0.50) lightning += 1;
+        if (!data?.weather_radar?.cells) {
+            severe = 0;
+            lightning = 0;
+        }
+
+        cells.forEach((storm) => {
+            if (!data?.weather_radar?.cells) {
+                if (storm.intensity >= 0.90) severe += 1;
+                if (storm.lightning && storm.intensity > 0.50) lightning += 1;
+            }
             drawStorm(ctx, cx + storm.eastNm * pixelsPerNm, cy - storm.northNm * pixelsPerNm, storm.radiusNm * pixelsPerNm, storm.intensity, storm.lightning, storm.id);
         });
 
-        setText("wx-cell-count", String(state.storms.length));
+        setText("wx-cell-count", String(number(data?.weather_radar?.cell_count, cells.length)));
         setText("wx-severe-count", String(severe));
         setText("wx-lightning-count", String(lightning));
+        setText("wx-motion", data?.weather_radar?.motion || "LOCAL SIM");
     }
 
-    function drawWeatherHeadingUp(ctx, aircraft, cx, cy, pixelsPerNm, radiusPx) {
-        updateStorms();
-        state.storms.forEach((storm) => {
+    function drawWeatherHeadingUp(ctx, data, aircraft, cx, cy, pixelsPerNm, radiusPx) {
+        const cells = weatherCellsFromData(data);
+        cells.forEach((storm) => {
             const p = projectHeadingUp({ eastNm: storm.eastNm, northNm: storm.northNm }, aircraft, cx, cy, pixelsPerNm);
             const distPx = Math.hypot(p.x - cx, p.y - cy);
             if (distPx > radiusPx + storm.radiusNm * pixelsPerNm) return;
@@ -333,10 +359,12 @@
         return { terrainUnder, worstClearance };
     }
 
-    function updateTawsStatus(aircraft, terrainInfo) {
-        const terrainUnder = Math.round(terrainInfo.terrainUnder);
-        const clearance = Math.round(aircraft.altitudeFt - terrainInfo.terrainUnder);
-        const alertState = alertFromClearance(Math.min(clearance, terrainInfo.worstClearance));
+    function updateTawsStatus(data, aircraft, terrainInfo) {
+        const busTaws = data?.taws || {};
+        const terrainUnder = Math.round(number(busTaws.terrain_under_ft, terrainInfo.terrainUnder));
+        const clearance = Math.round(number(busTaws.clearance_ft, aircraft.altitudeFt - terrainInfo.terrainUnder));
+        const worstClearance = number(busTaws.worst_clearance_ft, terrainInfo.worstClearance);
+        const alertState = busTaws.alert_state || alertFromClearance(Math.min(clearance, worstClearance));
 
         const box = document.getElementById("taws-alert-box");
         if (box) {
@@ -351,6 +379,9 @@
         setText("taws-side-terrain", terrainUnder.toLocaleString() + " FT");
         setText("taws-clearance", clearance.toLocaleString() + " FT");
         setText("taws-side-clearance", clearance.toLocaleString() + " FT");
+        setText("taws-worst-clearance", Math.round(worstClearance).toLocaleString() + " FT");
+        setText("taws-side-mode", busTaws.mode || "SIM ONLY");
+        setText("taws-source", busTaws.source || "LOCAL DISPLAY FALLBACK");
     }
 
     function renderWeatherRadar(canvas, data, ctx, size, aircraft, rangeNm) {
@@ -371,7 +402,7 @@
         ctx.fillStyle = sweep;
         ctx.fillRect(size.centerX - radiusPx, size.centerY - radiusPx, radiusPx * 2, radiusPx * 2);
 
-        drawWeatherHeadingUp(ctx, aircraft, size.centerX, size.centerY, pixelsPerNm, radiusPx);
+        drawWeatherHeadingUp(ctx, data, aircraft, size.centerX, size.centerY, pixelsPerNm, radiusPx);
         ctx.restore();
 
         drawRangeRings(ctx, size.centerX, size.centerY, radiusPx);
@@ -402,10 +433,10 @@
         drawRangeRings(ctx, size.centerX, size.centerY, ringRadiusPx);
 
         if (layerEnabled("route")) drawRoute(ctx, data, aircraft, size.centerX, size.centerY, pixelsPerNm);
-        if (layerEnabled("weather")) drawWeatherNorthUp(ctx, aircraft, size.centerX, size.centerY, pixelsPerNm);
+        if (layerEnabled("weather")) drawWeatherNorthUp(ctx, data, aircraft, size.centerX, size.centerY, pixelsPerNm);
 
         drawOwnship(ctx, size.centerX, size.centerY, aircraft.headingDeg);
-        updateTawsStatus(aircraft, terrainInfo);
+        updateTawsStatus(data, aircraft, terrainInfo);
     }
 
     const renderers = {

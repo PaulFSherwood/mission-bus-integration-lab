@@ -15,6 +15,9 @@ class AircraftTruth:
 
     source: str = "SYNTHETIC"
     timestamp: float = 0.0
+    route: str = "KPNS-KABQ"
+    current_wp: str = "KPNS"
+    next_wp: str = "LOXLY"
     lat: float = 30.47667
     lon: float = -87.18450
     altitude_ft: float = 9600.0
@@ -44,9 +47,18 @@ class AircraftTruth:
             except Exception:
                 return default
 
+        def text(name: str, default: str) -> str:
+            value = data.get(name, default)
+            if value is None:
+                return default
+            return str(value)
+
         return cls(
-            source=str(data.get("source", source)),
+            source=text("source", source),
             timestamp=num("timestamp", time()),
+            route=text("route", cls.route),
+            current_wp=text("current_wp", data.get("from_wp", cls.current_wp)),
+            next_wp=text("next_wp", data.get("to_wp", cls.next_wp)),
             lat=num("lat", cls.lat),
             lon=num("lon", cls.lon),
             altitude_ft=num("altitude_ft", data.get("altitude", cls.altitude_ft)),

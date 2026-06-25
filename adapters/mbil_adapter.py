@@ -27,11 +27,39 @@ ALL_SOURCES = [
     SOURCE_DCS,
 ]
 
+SOURCE_ALIASES = {
+    "synthetic": SOURCE_SYNTHETIC,
+    "self": SOURCE_SYNTHETIC,
+    "self-created": SOURCE_SYNTHETIC,
+    "self_created": SOURCE_SYNTHETIC,
+    "dis": SOURCE_DIS_UDP,
+    "dis-udp": SOURCE_DIS_UDP,
+    "dis_udp": SOURCE_DIS_UDP,
+    "udp": SOURCE_DIS_UDP,
+    "replay": SOURCE_DIS_REPLAY,
+    "dis-replay": SOURCE_DIS_REPLAY,
+    "xplane": SOURCE_XPLANE,
+    "x-plane": SOURCE_XPLANE,
+    "msfs": SOURCE_MSFS,
+    "dcs": SOURCE_DCS,
+}
+
+
+def normalize_source(value: str) -> str:
+    if value in ALL_SOURCES:
+        return value
+    key = value.strip().lower()
+    if key in SOURCE_ALIASES:
+        return SOURCE_ALIASES[key]
+    valid = ", ".join(sorted(SOURCE_ALIASES))
+    raise argparse.ArgumentTypeError(f"Unknown source '{value}'. Try one of: {valid}")
+
 
 class AdapterCore:
-    def __init__(self, dis_port: int = 3000):
+    def __init__(self, dis_port: int = 3000, synthetic_profile: str = "normal"):
         ensure_exchange_dirs()
-        self.synthetic = SyntheticAircraftSource()
+        self.synthetic_profile = synthetic_profile
+        self.synthetic = SyntheticAircraftSource(profile=synthetic_profile)
         self.dis_udp = DisUdpSource(port=dis_port)
         self.dis_replay = DisReplaySource()
         self.recorder = DisCaptureRecorder()
@@ -41,9 +69,9 @@ class AdapterCore:
         self.last_message = "Adapter initialized."
 
     def set_source(self, source: str) -> None:
-        self.active_source = source
-        self.last_message = f"Selected {source}."
-        if source == SOURCE_DIS_UDP:
+        self.active_source = normalize_source(source)
+        self.last_message = f"Selected {self.active_source}."
+        if self.active_source == SOURCE_DIS_UDP:
             self.dis_udp.start()
 
     def load_replay(self, path: str) -> None:
@@ -77,6 +105,7 @@ class AdapterCore:
             "available_sources": [
                 {"name": source, "online": self.source_online(source)} for source in ALL_SOURCES
             ],
+            "synthetic_profile": self.synthetic_profile,
             "recording_dis": self.recorder.enabled,
             "recording_path": str(self.recorder.path) if self.recorder.path else None,
             "dis_udp": {
@@ -233,16 +262,31 @@ def run_gui(core: AdapterCore) -> int:
     return app.exec()
 
 
-def run_headless(core: AdapterCore) -> int:
-    print("MBIL adapter running headless. Ctrl+C to stop.")
+def run_headless(core: AdapterCore, record_dis: bool = False) -> int:
+    print(f"MBIL adapter running headless. Active source: {core.active_source}. Ctrl+C to stop.")
+    if record_dis:
+        path = core.start_recording()
+        print(f"Recording DIS capture to {path}")
     core.running = True
+    last_print = 0.0
     try:
         while True:
             core.step()
+            now = time()
+            if now - last_print >= 2.0:
+                last_print = now
+                status = core.status()
+                dis = status["dis_udp"]
+                print(
+                    f"{status['active_source']} | {status['message']} | "
+                    f"DIS raw={dis['raw_packets_seen']} decoded={dis['decoded_packets_seen']}"
+                )
             from time import sleep
             sleep(0.2)
     except KeyboardInterrupt:
         core.running = False
+        if record_dis:
+            core.stop_recording()
         write_adapter_status(core.status())
         print("Stopped.")
         return 0
@@ -251,19 +295,31 @@ def run_headless(core: AdapterCore) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description="MBIL source adapter switchboard")
     parser.add_argument("--headless", action="store_true", help="Run without PyQt GUI")
-    parser.add_argument("--source", default=SOURCE_SYNTHETIC, choices=ALL_SOURCES, help="Initial source")
+    parser.add_argument(
+        "--source",
+        default="synthetic",
+        type=normalize_source,
+        help="Initial source. Easy values: synthetic, dis, replay, xplane, msfs, dcs",
+    )
     parser.add_argument("--dis-port", type=int, default=3000, help="DIS UDP listen port")
     parser.add_argument("--replay", help="DIS capture JSONL replay file")
+    parser.add_argument("--record-dis", action="store_true", help="Record DIS UDP packets while running headless")
+    parser.add_argument(
+        "--profile",
+        default="normal",
+        choices=["normal", "low-level", "terrain-caution", "terrain-pull-up"],
+        help="Synthetic source profile for testing normal, low-level, caution, or pull-up TAWS cases.",
+    )
     args = parser.parse_args()
 
-    core = AdapterCore(dis_port=args.dis_port)
+    core = AdapterCore(dis_port=args.dis_port, synthetic_profile=args.profile)
     if args.replay:
         core.load_replay(args.replay)
     else:
         core.set_source(args.source)
 
     if args.headless:
-        return run_headless(core)
+        return run_headless(core, record_dis=args.record_dis)
     return run_gui(core)
 
 

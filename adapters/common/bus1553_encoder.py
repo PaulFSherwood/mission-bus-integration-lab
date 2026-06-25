@@ -4,6 +4,8 @@ from time import time
 from typing import Any
 
 from .aircraft_truth import AircraftTruth
+from .terrain_model import taws_payload_for
+from .weather_model import weather_radar_payload_for
 
 
 def _message(
@@ -46,23 +48,25 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
 
     source_status = "OK" if truth.valid else "STALE"
 
+    bus_a_air_data = _message(
+        tick=tick,
+        bus="BUS_A",
+        controller="MC1",
+        rt="AIR_DATA_RT",
+        rt_address=1,
+        subaddress=1,
+        message_type="AIR_DATA",
+        status=source_status,
+        payload={
+            "altitude_ft": round(truth.altitude_ft, 1),
+            "airspeed_kts": round(truth.airspeed_kts, 1),
+            "vertical_speed_fpm": round(truth.vertical_speed_fpm, 1),
+            "oat_c": round(truth.oat_c, 1),
+        },
+    )
+
     return [
-        _message(
-            tick=tick,
-            bus="BUS_A",
-            controller="MC1",
-            rt="AIR_DATA_RT",
-            rt_address=1,
-            subaddress=1,
-            message_type="AIR_DATA",
-            status=source_status,
-            payload={
-                "altitude_ft": round(truth.altitude_ft, 1),
-                "airspeed_kts": round(truth.airspeed_kts, 1),
-                "vertical_speed_fpm": round(truth.vertical_speed_fpm, 1),
-                "oat_c": round(truth.oat_c, 1),
-            },
-        ),
+        bus_a_air_data,
         _message(
             tick=tick,
             bus="BUS_A",
@@ -76,6 +80,9 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
                 "lat": truth.lat,
                 "lon": truth.lon,
                 "heading_deg": round(truth.heading_deg % 360.0, 1),
+                "route": truth.route,
+                "current_wp": truth.current_wp,
+                "next_wp": truth.next_wp,
                 "source": truth.source,
             },
         ),
@@ -124,6 +131,30 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
         ),
         _message(
             tick=tick,
+            bus="BUS_A",
+            controller="MC1",
+            rt="TERRAIN_RT",
+            rt_address=7,
+            subaddress=1,
+            message_type="TAWS_DATA",
+            status=source_status,
+            word_count=16,
+            payload=taws_payload_for(truth),
+        ),
+        _message(
+            tick=tick,
+            bus="BUS_A",
+            controller="MC1",
+            rt="WEATHER_RADAR_RT",
+            rt_address=5,
+            subaddress=1,
+            message_type="WEATHER_RADAR",
+            status=source_status,
+            word_count=20,
+            payload=weather_radar_payload_for(truth),
+        ),
+        _message(
+            tick=tick,
             bus="BUS_B",
             controller="MC2",
             rt="AIR_DATA_RT",
@@ -131,11 +162,18 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
             subaddress=1,
             message_type="AIR_DATA",
             status=source_status,
-            payload={
-                "altitude_ft": round(truth.altitude_ft, 1),
-                "airspeed_kts": round(truth.airspeed_kts, 1),
-                "vertical_speed_fpm": round(truth.vertical_speed_fpm, 1),
-                "oat_c": round(truth.oat_c, 1),
-            },
+            payload=bus_a_air_data["payload"],
+        ),
+        _message(
+            tick=tick,
+            bus="BUS_B",
+            controller="MC2",
+            rt="TERRAIN_RT",
+            rt_address=7,
+            subaddress=1,
+            message_type="TAWS_DATA",
+            status=source_status,
+            word_count=16,
+            payload=taws_payload_for(truth),
         ),
     ]

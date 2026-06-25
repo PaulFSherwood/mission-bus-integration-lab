@@ -17,6 +17,9 @@ try:
         msg = {
             "source": "DIS_JSON_TEST",
             "timestamp": now,
+            "route": "DIS-LOCAL-TEST",
+            "current_wp": "DIS01",
+            "next_wp": "DIS02",
             "lat": 35.04 + sin(now * 0.02) * 0.05,
             "lon": -106.60 + sin(now * 0.017) * 0.05,
             "altitude_ft": 9600 + sin(now * 0.05) * 400,
@@ -27,6 +30,7 @@ try:
             "roll_deg": sin(now * 0.06) * 8,
             "fuel_lbs": 5200,
             "engine_temp_c": 630,
+            "oat_c": 18,
         }
         sock.sendto(json.dumps(msg).encode("utf-8"), (HOST, PORT))
         sleep(0.2)
