@@ -2,14 +2,15 @@
 
 Local-only FastAPI/Jinja2 web simulator. No npm, no hardware.
 
-## ##ScreenShot
-
-![img](mockup/01-Cockpit.png)
+## ScreenShot
 ![Cockpit](mockup/MBIL-Cockpit.png)
 ![Cockpit](mockup/MBIL-Taws.png)
 ![Cockpit](mockup/MBIL-Mission_Computer.png)
 ![Cockpit](mockup/MBIL-messages.png)
 ![Cockpit](mockup/MBIL-sensors.png)
+
+## Mockup
+![img](mockup/01-Cockpit.png)
 
 ## Install
 
