@@ -12,6 +12,7 @@ EXCHANGE_DIR = Path("data/exchange")
 def ensure_exchange_dirs() -> None:
     EXCHANGE_DIR.mkdir(parents=True, exist_ok=True)
     Path("data/dis_captures").mkdir(parents=True, exist_ok=True)
+    Path("data/xplane_route").mkdir(parents=True, exist_ok=True)
 
 
 def atomic_write_json(path: Path, data: Any) -> None:
@@ -34,13 +35,46 @@ def write_adapter_status(status: dict[str, Any]) -> None:
     atomic_write_json(EXCHANGE_DIR / "adapter_status.json", status)
 
 
-def write_stub_input_files() -> None:
+def write_arinc429_exchange(labels: list[dict[str, Any]], source_status: dict[str, Any]) -> None:
     atomic_write_json(EXCHANGE_DIR / "arinc429_latest.json", {
         "schema": "MBIL-ARINC429-LATEST-1",
-        "stub": True,
-        "labels": [],
-        "note": "Stub only. Add ARINC 429 labels later.",
+        "timestamp": time(),
+        "stub": False,
+        "source": source_status.get("active_source", "UNKNOWN"),
+        "label_count": len(labels),
+        "labels": labels,
     })
+    for label in labels:
+        append_jsonl(EXCHANGE_DIR / "arinc429_labels.jsonl", label)
+
+
+def write_route_exchange(truth: Any, source_status: dict[str, Any]) -> None:
+    route_points = getattr(truth, "route_points", []) or []
+    atomic_write_json(EXCHANGE_DIR / "route_latest.json", {
+        "schema": "MBIL-ROUTE-LATEST-1",
+        "timestamp": time(),
+        "source": getattr(truth, "source", source_status.get("active_source", "UNKNOWN")),
+        "route": getattr(truth, "route", "EXTERNAL"),
+        "route_source": getattr(truth, "route_source", "UNKNOWN"),
+        "current_wp": getattr(truth, "current_wp", ""),
+        "next_wp": getattr(truth, "next_wp", ""),
+        "desired_track_deg": getattr(truth, "desired_track_deg", None),
+        "gps_bearing_deg": getattr(truth, "gps_bearing_deg", None),
+        "gps_distance_nm": getattr(truth, "gps_distance_nm", None),
+        "gps_nav_id": getattr(truth, "gps_nav_id", ""),
+        "route_points": route_points,
+        "point_count": len(route_points),
+    })
+
+
+def write_stub_input_files() -> None:
+    if not (EXCHANGE_DIR / "arinc429_latest.json").exists():
+        atomic_write_json(EXCHANGE_DIR / "arinc429_latest.json", {
+            "schema": "MBIL-ARINC429-LATEST-1",
+            "stub": True,
+            "labels": [],
+            "note": "No ARINC labels have been written yet.",
+        })
     atomic_write_json(EXCHANGE_DIR / "discretes_latest.json", {
         "schema": "MBIL-DISCRETES-LATEST-1",
         "stub": True,

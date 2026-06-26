@@ -52,6 +52,7 @@ def read_exchange_latest() -> dict[str, Any]:
         "bus1553_a": _read_json(EXCHANGE_DIR / "bus1553_A_latest.json", {"messages": []}),
         "bus1553_b": _read_json(EXCHANGE_DIR / "bus1553_B_latest.json", {"messages": []}),
         "arinc429": _read_json(EXCHANGE_DIR / "arinc429_latest.json", {"labels": [], "stub": True}),
+        "route": _read_json(EXCHANGE_DIR / "route_latest.json", {"route_points": [], "stub": True}),
         "discretes": _read_json(EXCHANGE_DIR / "discretes_latest.json", {"signals": {}, "stub": True}),
         "analog": _read_json(EXCHANGE_DIR / "analog_latest.json", {"channels": {}, "stub": True}),
         "ethernet": _read_json(EXCHANGE_DIR / "ethernet_latest.json", {"packets": [], "stub": True}),
@@ -181,6 +182,9 @@ def build_api_state_from_exchange(
     fuel = payload_for(messages, "FUEL_DATA")
     taws = payload_for(messages, "TAWS_DATA")
     weather_radar = payload_for(messages, "WEATHER_RADAR")
+    latest_exchange = read_exchange_latest()
+    route_block = latest_exchange.get("route", {}) if isinstance(latest_exchange.get("route", {}), dict) else {}
+    arinc_block = latest_exchange.get("arinc429", {}) if isinstance(latest_exchange.get("arinc429", {}), dict) else {}
 
     fallback_aircraft = state.get("aircraft", {}) or {}
     fallback_sim = state.get("sim", {}) or {}
@@ -196,9 +200,9 @@ def build_api_state_from_exchange(
 
     latest_tick = max(int(m.get("tick", 0) or 0) for m in messages)
     source = str(nav.get("source") or status.get("adapter", {}).get("active_source") or "EXCHANGE")
-    route = str(nav.get("route") or fallback_sim.get("route") or "EXTERNAL")
-    current_wp = str(nav.get("current_wp") or fallback_sim.get("current_wp") or "EXT")
-    next_wp = str(nav.get("next_wp") or fallback_sim.get("next_wp") or "EXT")
+    route = str(route_block.get("route") or nav.get("route") or fallback_sim.get("route") or "EXTERNAL")
+    current_wp = str(route_block.get("current_wp") or nav.get("current_wp") or fallback_sim.get("current_wp") or "EXT")
+    next_wp = str(route_block.get("next_wp") or nav.get("next_wp") or fallback_sim.get("next_wp") or "EXT")
 
     state["input"]["active"] = "exchange" if fresh else "exchange_stale"
     state["input"]["source"] = source
@@ -210,12 +214,20 @@ def build_api_state_from_exchange(
         "route": route,
         "current_wp": current_wp,
         "next_wp": next_wp,
+        "route_source": route_block.get("route_source") or nav.get("route_source"),
+        "desired_track_deg": route_block.get("desired_track_deg") or nav.get("desired_track_deg"),
+        "gps_bearing_deg": route_block.get("gps_bearing_deg") or nav.get("gps_bearing_deg"),
+        "gps_distance_nm": route_block.get("gps_distance_nm") or nav.get("gps_distance_nm"),
+        "gps_nav_id": route_block.get("gps_nav_id") or nav.get("gps_nav_id"),
     }
 
     state["aircraft"] = {
         **fallback_aircraft,
         "altitude": _fmt_int(altitude_ft, "FT"),
         "airspeed": _fmt_int(airspeed_kts, "KTS"),
+        "ground_speed": _fmt_int(_num(air.get("ground_speed_kts"), airspeed_kts), "KTS"),
+        "true_airspeed": _fmt_int(_num(air.get("true_airspeed_kts"), airspeed_kts), "KTS"),
+        "agl": _fmt_int(_num(air.get("agl_ft"), 0), "FT"),
         "heading": f"{round(heading_deg):03d}",
         "vertical_speed": f"{vertical_speed_fpm:+.0f} FPM",
         "fuel": _fmt_int(fuel_lbs, "LBS"),
@@ -238,6 +250,29 @@ def build_api_state_from_exchange(
         "source": source,
     }
 
+    route_points = route_block.get("route_points") or nav.get("route_points") or []
+    if isinstance(route_points, list) and route_points:
+        state["route_points"] = route_points
+        state["xplane_route"] = {
+            "source": route_block.get("source") or nav.get("source"),
+            "route_source": route_block.get("route_source") or nav.get("route_source"),
+            "route": route,
+            "current_wp": current_wp,
+            "next_wp": next_wp,
+            "point_count": len(route_points),
+            "gps_bearing_deg": route_block.get("gps_bearing_deg") or nav.get("gps_bearing_deg"),
+            "gps_distance_nm": route_block.get("gps_distance_nm") or nav.get("gps_distance_nm"),
+        }
+
+    labels = arinc_block.get("labels", []) if isinstance(arinc_block.get("labels", []), list) else []
+    state["arinc429"] = {
+        "source": arinc_block.get("source", source),
+        "label_count": len(labels),
+        "labels": labels[:40],
+        "fresh": fresh,
+        "stub": bool(arinc_block.get("stub", False)),
+    }
+
     if taws:
         state["taws"] = {
             "source": "1553:TAWS_DATA",
@@ -250,7 +285,8 @@ def build_api_state_from_exchange(
             "worst_clearance_ft": _num(taws.get("worst_clearance_ft"), 0),
             "worst_terrain_ft": _num(taws.get("worst_terrain_ft"), 0),
             "worst_point": taws.get("worst_point", {}),
-            "terrain_returns": taws.get("terrain_returns", []),
+            "terrain_return_count": len(taws.get("terrain_returns", [])) if isinstance(taws.get("terrain_returns", []), list) else 0,
+            "terrain_returns": taws.get("terrain_returns", []) if isinstance(taws.get("terrain_returns", []), list) else [],
             "valid": bool(taws.get("valid", True)),
         }
 

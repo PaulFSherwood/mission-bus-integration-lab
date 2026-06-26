@@ -1,0 +1,12 @@
+{
+  "north": 36.114,
+  "south": 29.476666666666667,
+  "west": -110.4949,
+  "east": -83.29943333333334,
+  "min_ft": 0.0,
+  "max_ft": 10254.1,
+  "width": 96,
+  "height": 64,
+  "format": "P2 PGM grayscale elevation",
+  "simulation_only": true
+}

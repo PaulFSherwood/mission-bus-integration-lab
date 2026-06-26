@@ -2,12 +2,10 @@ from __future__ import annotations
 
 from time import time
 from typing import Any
-import math
 
 from .aircraft_truth import AircraftTruth
 from .terrain_model import taws_payload_for
 from .weather_model import weather_radar_payload_for
-from adapters.common.taws_model import build_taws_payload
 
 
 def _message(
@@ -49,6 +47,8 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
     """
 
     source_status = "OK" if truth.valid else "STALE"
+    ground_speed = truth.ground_speed_kts if truth.ground_speed_kts is not None else truth.airspeed_kts
+    true_airspeed = truth.true_airspeed_kts if truth.true_airspeed_kts is not None else truth.airspeed_kts
 
     bus_a_air_data = _message(
         tick=tick,
@@ -61,11 +61,31 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
         status=source_status,
         payload={
             "altitude_ft": round(truth.altitude_ft, 1),
+            "agl_ft": round(truth.agl_ft, 1) if truth.agl_ft is not None else None,
             "airspeed_kts": round(truth.airspeed_kts, 1),
+            "true_airspeed_kts": round(true_airspeed, 1),
+            "ground_speed_kts": round(ground_speed, 1),
             "vertical_speed_fpm": round(truth.vertical_speed_fpm, 1),
             "oat_c": round(truth.oat_c, 1),
         },
+        word_count=12,
     )
+
+    nav_payload = {
+        "lat": truth.lat,
+        "lon": truth.lon,
+        "heading_deg": round(truth.heading_deg % 360.0, 1),
+        "route": truth.route,
+        "current_wp": truth.current_wp,
+        "next_wp": truth.next_wp,
+        "route_source": truth.route_source,
+        "route_points": truth.route_points,
+        "desired_track_deg": round(truth.desired_track_deg % 360.0, 1) if truth.desired_track_deg is not None else None,
+        "gps_bearing_deg": round(truth.gps_bearing_deg % 360.0, 1) if truth.gps_bearing_deg is not None else None,
+        "gps_distance_nm": round(truth.gps_distance_nm, 2) if truth.gps_distance_nm is not None else None,
+        "gps_nav_id": truth.gps_nav_id,
+        "source": truth.source,
+    }
 
     return [
         bus_a_air_data,
@@ -78,15 +98,8 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
             subaddress=1,
             message_type="NAV_DATA",
             status=source_status,
-            payload={
-                "lat": truth.lat,
-                "lon": truth.lon,
-                "heading_deg": round(truth.heading_deg % 360.0, 1),
-                "route": truth.route,
-                "current_wp": truth.current_wp,
-                "next_wp": truth.next_wp,
-                "source": truth.source,
-            },
+            payload=nav_payload,
+            word_count=20,
         ),
         _message(
             tick=tick,
@@ -114,8 +127,12 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
             status=source_status,
             payload={
                 "engine_temp_c": round(truth.engine_temp_c, 1),
+                "engine_rpm": round(truth.engine_rpm, 1) if truth.engine_rpm is not None else None,
+                "engine_egt_c": round(truth.engine_egt_c, 1) if truth.engine_egt_c is not None else None,
+                "engine_itt_c": round(truth.engine_itt_c, 1) if truth.engine_itt_c is not None else None,
                 "engine_status": "NORMAL" if truth.engine_temp_c < 760 else "HOT",
             },
+            word_count=12,
         ),
         _message(
             tick=tick,
@@ -140,7 +157,7 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
             subaddress=1,
             message_type="TAWS_DATA",
             status=source_status,
-            word_count=16,
+            word_count=32,
             payload=taws_payload_for(truth),
         ),
         _message(
@@ -165,6 +182,19 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
             message_type="AIR_DATA",
             status=source_status,
             payload=bus_a_air_data["payload"],
+            word_count=12,
+        ),
+        _message(
+            tick=tick,
+            bus="BUS_B",
+            controller="MC2",
+            rt="NAV_RT",
+            rt_address=2,
+            subaddress=1,
+            message_type="NAV_DATA",
+            status=source_status,
+            payload=nav_payload,
+            word_count=20,
         ),
         _message(
             tick=tick,
@@ -175,7 +205,7 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
             subaddress=1,
             message_type="TAWS_DATA",
             status=source_status,
-            word_count=16,
+            word_count=32,
             payload=taws_payload_for(truth),
         ),
     ]

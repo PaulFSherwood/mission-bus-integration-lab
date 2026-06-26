@@ -1,0 +1,722 @@
+[
+  {
+    "id": 251399536,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/flasher",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251399696,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/pulse",
+    "value": {
+      "data": [
+        0.7284888029098511,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251399856,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/strobe_v7",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251400016,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/traffic_light",
+    "value": {
+      "data": [
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251400176,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/normal",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251400336,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/vasi_papi",
+    "value": {
+      "data": [
+        1.2699999809265137,
+        0.9599999785423279,
+        0.6399999856948853,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251400496,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/vasi3",
+    "value": {
+      "data": [
+        1.0,
+        0.699999988079071,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251400656,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/rabbit",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251400816,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/rabbit_sp",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251400976,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/strobe",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251401136,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/strobe_sp",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251401296,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/wigwag",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.7956771850585938,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251401456,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/wigwag2",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251401616,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/wigwag_sp",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.7433692216873169,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251401776,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/wigwag2_sp",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251401936,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/carrier_waveoff",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251402096,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/carrier_mast_strobe",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251402256,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/carrier_centerline_pulse",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251402416,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/fresnel_vertical",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.3499999940395355,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251402576,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/fresnel_horizontal",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251402736,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_landing_light",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251402896,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_landing_light_flash",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251403056,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_landing_light_spill",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251403216,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_generic_light",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251403376,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_generic_light_flash",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251403536,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_generic_light_spill",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251403696,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_taxi_light",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251403856,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_taxi_light_flash",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251404016,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_taxi_light_spill",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251404176,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_spot_light",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251404336,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_spot_light_flash",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251404496,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_spot_light_spill",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251404656,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_beacon_light",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        7.152557373046875e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251404816,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_navigation_light",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251404976,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_strobe_light",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251405136,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_beacon_light_dir",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        0.008382529020309448,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251405296,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_navigation_light_dir",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251405456,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_strobe_light_dir",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251405616,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_beacon_light_spill",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        0.03479447960853577,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251405776,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_navigation_light_spill",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  }
+]

@@ -26,3 +26,5 @@ venv/
 Thumbs.db
 .vscode/
 .idea/
+data/exchange/*.jsonl
+data/exchange/*.json

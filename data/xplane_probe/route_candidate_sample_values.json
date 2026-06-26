@@ -1,0 +1,355 @@
+[
+  {
+    "id": 251404816,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_navigation_light",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251405296,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_navigation_light_dir",
+    "value": {
+      "data": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251405776,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_navigation_light_spill",
+    "value": {
+      "data": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "id": 251407056,
+    "is_writable": true,
+    "name": "sim/aircraft/autopilot/vvi_step_ft",
+    "value": {
+      "data": 100.0
+    }
+  },
+  {
+    "id": 251407216,
+    "is_writable": true,
+    "name": "sim/aircraft/autopilot/alt_step_ft",
+    "value": {
+      "data": 100.0
+    }
+  },
+  {
+    "id": 251407376,
+    "is_writable": true,
+    "name": "sim/aircraft/autopilot/radio_altimeter_step_ft",
+    "value": {
+      "data": 10.0
+    }
+  },
+  {
+    "id": 251407536,
+    "is_writable": false,
+    "name": "sim/aircraft/autopilot/preconfigured_ap_type",
+    "value": {
+      "data": 2
+    }
+  },
+  {
+    "id": 251407696,
+    "is_writable": false,
+    "name": "sim/aircraft/autopilot/single_axis_autopilot",
+    "value": {
+      "data": 0
+    }
+  },
+  {
+    "id": 251407856,
+    "is_writable": false,
+    "name": "sim/aircraft/autopilot/ah_source",
+    "value": {
+      "data": 10
+    }
+  },
+  {
+    "id": 251408016,
+    "is_writable": false,
+    "name": "sim/aircraft/autopilot/dg_source",
+    "value": {
+      "data": 10
+    }
+  },
+  {
+    "id": 251408176,
+    "is_writable": true,
+    "name": "sim/aircraft/autopilot/ap_crs_src",
+    "value": {
+      "data": 0
+    }
+  },
+  {
+    "id": 251626112,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/autopilot_mode",
+    "value": {
+      "data": 0
+    }
+  },
+  {
+    "id": 251626272,
+    "is_writable": false,
+    "name": "sim/cockpit/autopilot/airspeed_mode",
+    "value": {
+      "data": 9
+    }
+  },
+  {
+    "id": 251626432,
+    "is_writable": false,
+    "name": "sim/cockpit/autopilot/heading_mode",
+    "value": {
+      "data": 12
+    }
+  },
+  {
+    "id": 251626592,
+    "is_writable": false,
+    "name": "sim/cockpit/autopilot/altitude_mode",
+    "value": {
+      "data": 20
+    }
+  },
+  {
+    "id": 251626752,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/backcourse_on",
+    "value": {
+      "data": 0
+    }
+  },
+  {
+    "id": 251626912,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/altitude",
+    "value": {
+      "data": 0.0
+    }
+  },
+  {
+    "id": 251627072,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/current_altitude",
+    "value": {
+      "data": 0.0
+    }
+  },
+  {
+    "id": 251627232,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/vertical_velocity",
+    "value": {
+      "data": 0.0
+    }
+  },
+  {
+    "id": 251627392,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/airspeed",
+    "value": {
+      "data": 0.0
+    }
+  },
+  {
+    "id": 251627552,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/heading",
+    "value": {
+      "data": 157.05621337890625
+    }
+  },
+  {
+    "id": 251627712,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/heading_mag",
+    "value": {
+      "data": 152.47999572753906
+    }
+  },
+  {
+    "id": 251627872,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/heading_mag2",
+    "value": {
+      "data": 0.0
+    }
+  },
+  {
+    "id": 251628032,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/airspeed_is_mach",
+    "value": {
+      "data": 0
+    }
+  },
+  {
+    "id": 251628192,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/flight_director_pitch",
+    "value": {
+      "data": -0.4535357356071472
+    }
+  },
+  {
+    "id": 251628352,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/flight_director_roll",
+    "value": {
+      "data": -2.2846739292144775
+    }
+  },
+  {
+    "id": 251628512,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/autopilot_state",
+    "value": {
+      "data": 132
+    }
+  },
+  {
+    "id": 251628672,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/heading_roll_mode",
+    "value": {
+      "data": 6
+    }
+  },
+  {
+    "id": 251628832,
+    "is_writable": false,
+    "name": "sim/cockpit/autopilot/mode_hnav",
+    "value": {
+      "data": 9
+    }
+  },
+  {
+    "id": 251628992,
+    "is_writable": false,
+    "name": "sim/cockpit/autopilot/mode_gls",
+    "value": {
+      "data": 9
+    }
+  },
+  {
+    "id": 251629152,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/syn_hold_deg",
+    "value": {
+      "data": -0.4424636662006378
+    }
+  },
+  {
+    "id": 251629312,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/nav_steer_deg_mag",
+    "value": {
+      "data": 0.0
+    }
+  },
+  {
+    "id": 251632832,
+    "is_writable": true,
+    "name": "sim/cockpit/electrical/nav_lights_on",
+    "value": {
+      "data": 1
+    }
+  },
+  {
+    "id": 251636832,
+    "is_writable": true,
+    "name": "sim/cockpit/g430/g430_nav_com_sel",
+    "value": {
+      "data": [
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": 251636992,
+    "is_writable": true,
+    "name": "sim/cockpit/g1000/gcu478_input_sel",
+    "value": {
+      "data": 2
+    }
+  },
+  {
+    "id": 251637152,
+    "is_writable": false,
+    "name": "sim/cockpit/g1000/g1000_n1_page",
+    "value": {
+      "data": "UEZEIC0gUEZEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+    }
+  },
+  {
+    "id": 251637312,
+    "is_writable": false,
+    "name": "sim/cockpit/g1000/g1000_n2_page",
+    "value": {
+      "data": "TkFWIC0gREVGQVVMVCBOQVYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+    }
+  },
+  {
+    "id": 251637472,
+    "is_writable": false,
+    "name": "sim/cockpit/g1000/g1000_n1_overlay",
+    "value": {
+      "data": 0
+    }
+  },
+  {
+    "id": 251637632,
+    "is_writable": false,
+    "name": "sim/cockpit/g1000/g1000_n2_overlay",
+    "value": {
+      "data": 0
+    }
+  },
+  {
+    "id": 251637792,
+    "is_writable": false,
+    "name": "sim/cockpit/g1000/g1000_n2_eis",
+    "value": {
+      "data": 0
+    }
+  }
+]

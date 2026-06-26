@@ -211,7 +211,7 @@ class MbilControlCenter(QMainWindow):
         box = QGroupBox("MBIL Web")
         grid = QGridLayout(box)
 
-        self.host = QLineEdit("0.0.0.0")
+        self.host = QLineEdit("127.0.0.1")
         self.port = QSpinBox()
         self.port.setRange(1, 65535)
         self.port.setValue(8000)

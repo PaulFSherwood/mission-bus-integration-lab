@@ -1,0 +1,211 @@
+{
+  "sim/cockpit2/engine/indicators/EGT_deg_C": {
+    "found": true,
+    "id": 252972112,
+    "is_writable": false,
+    "value": {
+      "data": [
+        919.2459716796875,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "sim/cockpit2/engine/indicators/ITT_deg_C": {
+    "found": true,
+    "id": 252971792,
+    "is_writable": true,
+    "value": {
+      "data": [
+        919.2520141601562,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "sim/cockpit2/engine/indicators/engine_speed_rpm": {
+    "found": true,
+    "id": 252974672,
+    "is_writable": false,
+    "value": {
+      "data": [
+        2630.429931640625,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "sim/cockpit2/radios/indicators/gps_bearing_deg_mag": {
+    "found": true,
+    "id": 253135456,
+    "is_writable": true,
+    "value": {
+      "data": 355.4237365722656
+    }
+  },
+  "sim/cockpit2/radios/indicators/gps_dme_distance_nm": {
+    "found": true,
+    "id": 253168736,
+    "is_writable": true,
+    "value": {
+      "data": 0.0
+    }
+  },
+  "sim/cockpit2/radios/indicators/gps_nav_id": {
+    "found": true,
+    "id": 253172416,
+    "is_writable": true,
+    "value": {
+      "data": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    }
+  },
+  "sim/cockpit2/radios/indicators/gps_nav_type": {
+    "found": false
+  },
+  "sim/cockpit2/radios/indicators/gps_relative_bearing_deg": {
+    "found": true,
+    "id": 253136576,
+    "is_writable": true,
+    "value": {
+      "data": 144.4994354248047
+    }
+  },
+  "sim/cockpit2/radios/indicators/gps_to_from": {
+    "found": false
+  },
+  "sim/flightmodel/position/elevation": {
+    "found": true,
+    "id": 252038048,
+    "is_writable": false,
+    "value": {
+      "data": 1109.0650185156112
+    }
+  },
+  "sim/flightmodel/position/groundspeed": {
+    "found": true,
+    "id": 252041088,
+    "is_writable": false,
+    "value": {
+      "data": 62.36908721923828
+    }
+  },
+  "sim/flightmodel/position/indicated_airspeed": {
+    "found": true,
+    "id": 252041248,
+    "is_writable": true,
+    "value": {
+      "data": 114.82859802246094
+    }
+  },
+  "sim/flightmodel/position/latitude": {
+    "found": true,
+    "id": 252037728,
+    "is_writable": false,
+    "value": {
+      "data": 47.754065884892555
+    }
+  },
+  "sim/flightmodel/position/longitude": {
+    "found": true,
+    "id": 252037888,
+    "is_writable": false,
+    "value": {
+      "data": 12.916580796872115
+    }
+  },
+  "sim/flightmodel/position/phi": {
+    "found": true,
+    "id": 252038368,
+    "is_writable": true,
+    "value": {
+      "data": -2.135530948638916
+    }
+  },
+  "sim/flightmodel/position/psi": {
+    "found": true,
+    "id": 252038528,
+    "is_writable": true,
+    "value": {
+      "data": 215.6448974609375
+    }
+  },
+  "sim/flightmodel/position/theta": {
+    "found": true,
+    "id": 252038208,
+    "is_writable": true,
+    "value": {
+      "data": -0.273531049489975
+    }
+  },
+  "sim/flightmodel/position/true_airspeed": {
+    "found": true,
+    "id": 252041728,
+    "is_writable": true,
+    "value": {
+      "data": 62.71318817138672
+    }
+  },
+  "sim/flightmodel/position/vh_ind_fpm": {
+    "found": true,
+    "id": 252044768,
+    "is_writable": true,
+    "value": {
+      "data": 729.9129028320312
+    }
+  },
+  "sim/flightmodel/position/y_agl": {
+    "found": true,
+    "id": 252045088,
+    "is_writable": false,
+    "value": {
+      "data": 649.6090698242188
+    }
+  },
+  "sim/flightmodel/weight/m_fuel_total": {
+    "found": true,
+    "id": 252047008,
+    "is_writable": false,
+    "value": {
+      "data": 61.97625732421875
+    }
+  }
+}

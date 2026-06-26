@@ -1,5 +1,5 @@
 {
-  "active_source": "Synthetic Aircraft Source",
+  "active_source": "X-Plane Web API Source",
   "adapter_online": true,
   "available_sources": [
     {
@@ -15,8 +15,8 @@
       "online": false
     },
     {
-      "name": "X-Plane Stub",
-      "online": false
+      "name": "X-Plane Web API Source",
+      "online": true
     },
     {
       "name": "MSFS Stub",
@@ -35,10 +35,18 @@
     "port": 3000,
     "raw_packets_seen": 0
   },
-  "message": "Wrote 9 1553-style messages from SYNTHETIC:normal.",
+  "message": "Wrote 10 1553 messages and 15 ARINC labels from XPLANE_WEB_API.",
   "recording_dis": false,
   "recording_path": null,
   "schema": "MBIL-ADAPTER-STATUS-1",
   "synthetic_profile": "normal",
-  "timestamp": 1782429917.4360516
+  "timestamp": 1782458224.520735,
+  "xplane": {
+    "base_url": "http://127.0.0.1:8086/api/v3",
+    "dataref_count": 7583,
+    "last_error": "",
+    "last_ok_age_sec": 0.0,
+    "last_route_file": null,
+    "online": true
+  }
 }

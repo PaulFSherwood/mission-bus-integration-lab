@@ -1,0 +1,3956 @@
+[
+  {
+    "id": 251404816,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_navigation_light",
+    "value_type": "float_array"
+  },
+  {
+    "id": 251405296,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_navigation_light_dir",
+    "value_type": "float_array"
+  },
+  {
+    "id": 251405776,
+    "is_writable": false,
+    "name": "sim/graphics/animation/lights/airplane_navigation_light_spill",
+    "value_type": "float_array"
+  },
+  {
+    "id": 251407056,
+    "is_writable": true,
+    "name": "sim/aircraft/autopilot/vvi_step_ft",
+    "value_type": "float"
+  },
+  {
+    "id": 251407216,
+    "is_writable": true,
+    "name": "sim/aircraft/autopilot/alt_step_ft",
+    "value_type": "float"
+  },
+  {
+    "id": 251407376,
+    "is_writable": true,
+    "name": "sim/aircraft/autopilot/radio_altimeter_step_ft",
+    "value_type": "float"
+  },
+  {
+    "id": 251407536,
+    "is_writable": false,
+    "name": "sim/aircraft/autopilot/preconfigured_ap_type",
+    "value_type": "int"
+  },
+  {
+    "id": 251407696,
+    "is_writable": false,
+    "name": "sim/aircraft/autopilot/single_axis_autopilot",
+    "value_type": "int"
+  },
+  {
+    "id": 251407856,
+    "is_writable": false,
+    "name": "sim/aircraft/autopilot/ah_source",
+    "value_type": "int"
+  },
+  {
+    "id": 251408016,
+    "is_writable": false,
+    "name": "sim/aircraft/autopilot/dg_source",
+    "value_type": "int"
+  },
+  {
+    "id": 251408176,
+    "is_writable": true,
+    "name": "sim/aircraft/autopilot/ap_crs_src",
+    "value_type": "int"
+  },
+  {
+    "id": 251626112,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/autopilot_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 251626272,
+    "is_writable": false,
+    "name": "sim/cockpit/autopilot/airspeed_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 251626432,
+    "is_writable": false,
+    "name": "sim/cockpit/autopilot/heading_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 251626592,
+    "is_writable": false,
+    "name": "sim/cockpit/autopilot/altitude_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 251626752,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/backcourse_on",
+    "value_type": "int"
+  },
+  {
+    "id": 251626912,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/altitude",
+    "value_type": "float"
+  },
+  {
+    "id": 251627072,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/current_altitude",
+    "value_type": "float"
+  },
+  {
+    "id": 251627232,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/vertical_velocity",
+    "value_type": "float"
+  },
+  {
+    "id": 251627392,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/airspeed",
+    "value_type": "float"
+  },
+  {
+    "id": 251627552,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/heading",
+    "value_type": "float"
+  },
+  {
+    "id": 251627712,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/heading_mag",
+    "value_type": "float"
+  },
+  {
+    "id": 251627872,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/heading_mag2",
+    "value_type": "float"
+  },
+  {
+    "id": 251628032,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/airspeed_is_mach",
+    "value_type": "int"
+  },
+  {
+    "id": 251628192,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/flight_director_pitch",
+    "value_type": "float"
+  },
+  {
+    "id": 251628352,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/flight_director_roll",
+    "value_type": "float"
+  },
+  {
+    "id": 251628512,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/autopilot_state",
+    "value_type": "int"
+  },
+  {
+    "id": 251628672,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/heading_roll_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 251628832,
+    "is_writable": false,
+    "name": "sim/cockpit/autopilot/mode_hnav",
+    "value_type": "int"
+  },
+  {
+    "id": 251628992,
+    "is_writable": false,
+    "name": "sim/cockpit/autopilot/mode_gls",
+    "value_type": "int"
+  },
+  {
+    "id": 251629152,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/syn_hold_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 251629312,
+    "is_writable": true,
+    "name": "sim/cockpit/autopilot/nav_steer_deg_mag",
+    "value_type": "float"
+  },
+  {
+    "id": 251632832,
+    "is_writable": true,
+    "name": "sim/cockpit/electrical/nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 251636832,
+    "is_writable": true,
+    "name": "sim/cockpit/g430/g430_nav_com_sel",
+    "value_type": "int_array"
+  },
+  {
+    "id": 251636992,
+    "is_writable": true,
+    "name": "sim/cockpit/g1000/gcu478_input_sel",
+    "value_type": "int"
+  },
+  {
+    "id": 251637152,
+    "is_writable": false,
+    "name": "sim/cockpit/g1000/g1000_n1_page",
+    "value_type": "data"
+  },
+  {
+    "id": 251637312,
+    "is_writable": false,
+    "name": "sim/cockpit/g1000/g1000_n2_page",
+    "value_type": "data"
+  },
+  {
+    "id": 251637472,
+    "is_writable": false,
+    "name": "sim/cockpit/g1000/g1000_n1_overlay",
+    "value_type": "int"
+  },
+  {
+    "id": 251637632,
+    "is_writable": false,
+    "name": "sim/cockpit/g1000/g1000_n2_overlay",
+    "value_type": "int"
+  },
+  {
+    "id": 251637792,
+    "is_writable": false,
+    "name": "sim/cockpit/g1000/g1000_n2_eis",
+    "value_type": "int"
+  },
+  {
+    "id": 251637952,
+    "is_writable": true,
+    "name": "sim/cockpit/g1000/g1000_startup_time",
+    "value_type": "float_array"
+  },
+  {
+    "id": 251638112,
+    "is_writable": false,
+    "name": "sim/cockpit/gps/course",
+    "value_type": "float"
+  },
+  {
+    "id": 251638272,
+    "is_writable": false,
+    "name": "sim/cockpit/gps/destination_type",
+    "value_type": "int"
+  },
+  {
+    "id": 251638432,
+    "is_writable": false,
+    "name": "sim/cockpit/gps/destination_index",
+    "value_type": "int"
+  },
+  {
+    "id": 251671056,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_freq_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 251671216,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_freq_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 251672176,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_stdby_freq_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 251672336,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_stdby_freq_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 251673296,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_obs_degt",
+    "value_type": "float"
+  },
+  {
+    "id": 251673456,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_obs_degt",
+    "value_type": "float"
+  },
+  {
+    "id": 251673616,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_obs_degm",
+    "value_type": "float"
+  },
+  {
+    "id": 251673776,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_obs_degm2",
+    "value_type": "float"
+  },
+  {
+    "id": 251673936,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_obs_degm",
+    "value_type": "float"
+  },
+  {
+    "id": 251674096,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_obs_degm2",
+    "value_type": "float"
+  },
+  {
+    "id": 251674256,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_dir_degt",
+    "value_type": "float"
+  },
+  {
+    "id": 251674416,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_dir_degt",
+    "value_type": "float"
+  },
+  {
+    "id": 251674896,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_dir_degt",
+    "value_type": "float"
+  },
+  {
+    "id": 251675056,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_dir_degt",
+    "value_type": "float"
+  },
+  {
+    "id": 251675376,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_hdef_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251675536,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_hdef_dot2",
+    "value_type": "float"
+  },
+  {
+    "id": 251675696,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_hdef_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251696800,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_hdef_dot2",
+    "value_type": "float"
+  },
+  {
+    "id": 251696960,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_hdef_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251697120,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_hdef_dot2",
+    "value_type": "float"
+  },
+  {
+    "id": 251697280,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_hdef_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251697440,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_hdef_dot2",
+    "value_type": "float"
+  },
+  {
+    "id": 251697600,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_vdef_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251697760,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_vdef_dot2",
+    "value_type": "float"
+  },
+  {
+    "id": 251697920,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_vdef_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251698080,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_vdef_dot2",
+    "value_type": "float"
+  },
+  {
+    "id": 251698240,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_vdef_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251698400,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_vdef_dot2",
+    "value_type": "float"
+  },
+  {
+    "id": 251698560,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_vdef_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251698720,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_vdef_dot2",
+    "value_type": "float"
+  },
+  {
+    "id": 251698880,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_fromto",
+    "value_type": "int"
+  },
+  {
+    "id": 251699040,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_fromto2",
+    "value_type": "int"
+  },
+  {
+    "id": 251699200,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_fromto",
+    "value_type": "int"
+  },
+  {
+    "id": 251699360,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_fromto2",
+    "value_type": "int"
+  },
+  {
+    "id": 251699520,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_fromto",
+    "value_type": "int"
+  },
+  {
+    "id": 251699680,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_fromto2",
+    "value_type": "int"
+  },
+  {
+    "id": 251699840,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_fromto",
+    "value_type": "int"
+  },
+  {
+    "id": 251700000,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_fromto2",
+    "value_type": "int"
+  },
+  {
+    "id": 251700160,
+    "is_writable": false,
+    "name": "sim/cockpit/radios/nav1_CDI",
+    "value_type": "int"
+  },
+  {
+    "id": 251700320,
+    "is_writable": false,
+    "name": "sim/cockpit/radios/nav2_CDI",
+    "value_type": "int"
+  },
+  {
+    "id": 251700480,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_dme_dist_m",
+    "value_type": "float"
+  },
+  {
+    "id": 251700640,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_dme_dist_m",
+    "value_type": "float"
+  },
+  {
+    "id": 251701120,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_dme_dist_m",
+    "value_type": "float"
+  },
+  {
+    "id": 251701280,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_dme_dist_m",
+    "value_type": "float"
+  },
+  {
+    "id": 251701600,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_dme_speed_kts",
+    "value_type": "float"
+  },
+  {
+    "id": 251701760,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_dme_speed_kts",
+    "value_type": "float"
+  },
+  {
+    "id": 251702240,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_dme_speed_kts",
+    "value_type": "float"
+  },
+  {
+    "id": 251702400,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_dme_speed_kts",
+    "value_type": "float"
+  },
+  {
+    "id": 251702720,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_dme_time_secs",
+    "value_type": "float"
+  },
+  {
+    "id": 251702880,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_dme_time_secs",
+    "value_type": "float"
+  },
+  {
+    "id": 251703360,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_dme_time_secs",
+    "value_type": "float"
+  },
+  {
+    "id": 251703520,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_dme_time_secs",
+    "value_type": "float"
+  },
+  {
+    "id": 251703840,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_course_degm",
+    "value_type": "float"
+  },
+  {
+    "id": 251704000,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_course_degm2",
+    "value_type": "float"
+  },
+  {
+    "id": 251704160,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_course_degm",
+    "value_type": "float"
+  },
+  {
+    "id": 251704320,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_course_degm2",
+    "value_type": "float"
+  },
+  {
+    "id": 251704480,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_course_degtm",
+    "value_type": "float"
+  },
+  {
+    "id": 251704640,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_course_degtm2",
+    "value_type": "float"
+  },
+  {
+    "id": 251704800,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_course_degtm",
+    "value_type": "float"
+  },
+  {
+    "id": 251704960,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_course_degtm2",
+    "value_type": "float"
+  },
+  {
+    "id": 251705120,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_slope_degt",
+    "value_type": "float"
+  },
+  {
+    "id": 251705280,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_slope_degt",
+    "value_type": "float"
+  },
+  {
+    "id": 251705440,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_slope_degt",
+    "value_type": "float"
+  },
+  {
+    "id": 251705600,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_slope_degt",
+    "value_type": "float"
+  },
+  {
+    "id": 251705760,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_gp_mtr_per_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251705920,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_gp_mtr_per_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251706080,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_hdef_nm_per_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251706240,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_hdef_nm_per_dot",
+    "value_type": "float"
+  },
+  {
+    "id": 251706400,
+    "is_writable": false,
+    "name": "sim/cockpit/radios/gps_cdi_sensitivity",
+    "value_type": "int"
+  },
+  {
+    "id": 251706560,
+    "is_writable": false,
+    "name": "sim/cockpit/radios/gps2_cdi_sensitivity",
+    "value_type": "int"
+  },
+  {
+    "id": 251706720,
+    "is_writable": false,
+    "name": "sim/cockpit/radios/gps_sequencing",
+    "value_type": "int"
+  },
+  {
+    "id": 251706880,
+    "is_writable": false,
+    "name": "sim/cockpit/radios/gps2_sequencing",
+    "value_type": "int"
+  },
+  {
+    "id": 251707840,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_cardinal_dir",
+    "value_type": "float"
+  },
+  {
+    "id": 251708000,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_cardinal_dir2",
+    "value_type": "float"
+  },
+  {
+    "id": 251708160,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_cardinal_dir",
+    "value_type": "float"
+  },
+  {
+    "id": 251708320,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_cardinal_dir2",
+    "value_type": "float"
+  },
+  {
+    "id": 251709120,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav1_has_dme",
+    "value_type": "int"
+  },
+  {
+    "id": 251709280,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav2_has_dme",
+    "value_type": "int"
+  },
+  {
+    "id": 251710400,
+    "is_writable": false,
+    "name": "sim/cockpit/radios/nav_type",
+    "value_type": "int_array"
+  },
+  {
+    "id": 251710720,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/nav_com_adf_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 251710880,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_has_glideslope",
+    "value_type": "int"
+  },
+  {
+    "id": 251711040,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_has_glideslope",
+    "value_type": "int"
+  },
+  {
+    "id": 251711360,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_obs_degm",
+    "value_type": "float"
+  },
+  {
+    "id": 251711520,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_obs_degm2",
+    "value_type": "float"
+  },
+  {
+    "id": 251711680,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_obs_degm",
+    "value_type": "float"
+  },
+  {
+    "id": 251711840,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_obs_degm2",
+    "value_type": "float"
+  },
+  {
+    "id": 251712000,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps_has_dme",
+    "value_type": "int"
+  },
+  {
+    "id": 251712160,
+    "is_writable": true,
+    "name": "sim/cockpit/radios/gps2_has_dme",
+    "value_type": "int"
+  },
+  {
+    "id": 251742384,
+    "is_writable": true,
+    "name": "sim/cockpit/switches/EFIS_shows_waypoints",
+    "value_type": "int"
+  },
+  {
+    "id": 251744304,
+    "is_writable": false,
+    "name": "sim/cockpit/warnings/autopilot_test_beeping",
+    "value_type": "int"
+  },
+  {
+    "id": 251744464,
+    "is_writable": false,
+    "name": "sim/cockpit/warnings/autopilot_test_modes_lit",
+    "value_type": "int"
+  },
+  {
+    "id": 251744624,
+    "is_writable": false,
+    "name": "sim/cockpit/warnings/autopilot_test_trim_lit",
+    "value_type": "int"
+  },
+  {
+    "id": 251744784,
+    "is_writable": false,
+    "name": "sim/cockpit/warnings/autopilot_test_ap_lit",
+    "value_type": "int"
+  },
+  {
+    "id": 251745424,
+    "is_writable": true,
+    "name": "sim/cockpit/warnings/annunciators/autopilot_disconnect",
+    "value_type": "int"
+  },
+  {
+    "id": 251747664,
+    "is_writable": true,
+    "name": "sim/cockpit/warnings/annunciators/autopilot",
+    "value_type": "int"
+  },
+  {
+    "id": 251773152,
+    "is_writable": true,
+    "name": "sim/cockpit/warnings/annunciators/autopilot_trim_fail",
+    "value_type": "int"
+  },
+  {
+    "id": 251774432,
+    "is_writable": true,
+    "name": "sim/cockpit/warnings/annunciators/autopilot_trim_down",
+    "value_type": "int"
+  },
+  {
+    "id": 251774592,
+    "is_writable": true,
+    "name": "sim/cockpit/warnings/annunciators/autopilot_trim_up",
+    "value_type": "int"
+  },
+  {
+    "id": 251774752,
+    "is_writable": true,
+    "name": "sim/cockpit/warnings/annunciators/autopilot_bank_limit",
+    "value_type": "int"
+  },
+  {
+    "id": 251774912,
+    "is_writable": true,
+    "name": "sim/cockpit/warnings/annunciators/autopilot_soft_ride",
+    "value_type": "int"
+  },
+  {
+    "id": 252038688,
+    "is_writable": false,
+    "name": "sim/flightmodel/position/magpsi",
+    "value_type": "float"
+  },
+  {
+    "id": 252080864,
+    "is_writable": true,
+    "name": "sim/graphics/misc/kill_map_fms_line",
+    "value_type": "int"
+  },
+  {
+    "id": 252081024,
+    "is_writable": true,
+    "name": "sim/graphics/misc/kill_g1000_ah",
+    "value_type": "int"
+  },
+  {
+    "id": 252081184,
+    "is_writable": true,
+    "name": "sim/graphics/misc/kill_g1000_engine",
+    "value_type": "int"
+  },
+  {
+    "id": 252081344,
+    "is_writable": true,
+    "name": "sim/graphics/misc/g1000_vfov_px",
+    "value_type": "int"
+  },
+  {
+    "id": 252231872,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane1_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252232672,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane2_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252233472,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane3_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252234272,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane4_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252235072,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane5_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252235872,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane6_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252236672,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane7_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252259552,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane8_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252260352,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane9_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252261152,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane10_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252261952,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane11_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252262752,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane12_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252263552,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane13_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252264352,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane14_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252265152,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane15_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252265952,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane16_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252266752,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane17_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252267552,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane18_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252268352,
+    "is_writable": true,
+    "name": "sim/multiplayer/position/plane19_nav_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252386016,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_lites_nav",
+    "value_type": "int"
+  },
+  {
+    "id": 252459616,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_navcom1",
+    "value_type": "int"
+  },
+  {
+    "id": 252459776,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_navcom2",
+    "value_type": "int"
+  },
+  {
+    "id": 252459936,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_nav1",
+    "value_type": "int"
+  },
+  {
+    "id": 252460096,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_nav2",
+    "value_type": "int"
+  },
+  {
+    "id": 252460896,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_gps",
+    "value_type": "int"
+  },
+  {
+    "id": 252461056,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_gps2",
+    "value_type": "int"
+  },
+  {
+    "id": 252487616,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_g430_gps1",
+    "value_type": "int"
+  },
+  {
+    "id": 252487776,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_g430_gps2",
+    "value_type": "int"
+  },
+  {
+    "id": 252487936,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_g430_rad1_tune",
+    "value_type": "int"
+  },
+  {
+    "id": 252488096,
+    "is_writable": true,
+    "name": "sim/operation/failures/rel_g430_rad2_tune",
+    "value_type": "int"
+  },
+  {
+    "id": 252650144,
+    "is_writable": false,
+    "name": "sim/operation/g430/G430_is_vloc",
+    "value_type": "int_array"
+  },
+  {
+    "id": 252673408,
+    "is_writable": true,
+    "name": "sim/operation/override/override_plane_ai_autopilot",
+    "value_type": "int_array"
+  },
+  {
+    "id": 252673568,
+    "is_writable": true,
+    "name": "sim/operation/override/override_navneedles",
+    "value_type": "int"
+  },
+  {
+    "id": 252673728,
+    "is_writable": true,
+    "name": "sim/operation/override/override_nav1_needles",
+    "value_type": "int"
+  },
+  {
+    "id": 252673888,
+    "is_writable": true,
+    "name": "sim/operation/override/override_nav2_needles",
+    "value_type": "int"
+  },
+  {
+    "id": 252674368,
+    "is_writable": true,
+    "name": "sim/operation/override/override_gps",
+    "value_type": "int"
+  },
+  {
+    "id": 252674528,
+    "is_writable": true,
+    "name": "sim/operation/override/override_nav_heading",
+    "value_type": "int"
+  },
+  {
+    "id": 252674688,
+    "is_writable": true,
+    "name": "sim/operation/override/override_flightdir",
+    "value_type": "int"
+  },
+  {
+    "id": 252674848,
+    "is_writable": true,
+    "name": "sim/operation/override/override_flightdir_ptch",
+    "value_type": "int"
+  },
+  {
+    "id": 252675008,
+    "is_writable": true,
+    "name": "sim/operation/override/override_flightdir_roll",
+    "value_type": "int"
+  },
+  {
+    "id": 252675488,
+    "is_writable": true,
+    "name": "sim/operation/override/override_autopilot",
+    "value_type": "int"
+  },
+  {
+    "id": 252677728,
+    "is_writable": true,
+    "name": "sim/operation/override/override_fms_advance",
+    "value_type": "int"
+  },
+  {
+    "id": 252814544,
+    "is_writable": false,
+    "name": "sim/cockpit2/annunciators/autopilot_disconnect",
+    "value_type": "int"
+  },
+  {
+    "id": 252816784,
+    "is_writable": false,
+    "name": "sim/cockpit2/annunciators/autopilot",
+    "value_type": "int"
+  },
+  {
+    "id": 252820784,
+    "is_writable": false,
+    "name": "sim/cockpit2/annunciators/autopilot_trim_fail",
+    "value_type": "int"
+  },
+  {
+    "id": 252822064,
+    "is_writable": false,
+    "name": "sim/cockpit2/annunciators/autopilot_trim_down",
+    "value_type": "int"
+  },
+  {
+    "id": 252822224,
+    "is_writable": false,
+    "name": "sim/cockpit2/annunciators/autopilot_trim_up",
+    "value_type": "int"
+  },
+  {
+    "id": 252822384,
+    "is_writable": false,
+    "name": "sim/cockpit2/annunciators/autopilot_bank_limit",
+    "value_type": "int"
+  },
+  {
+    "id": 252822544,
+    "is_writable": false,
+    "name": "sim/cockpit2/annunciators/autopilot_soft_ride",
+    "value_type": "int"
+  },
+  {
+    "id": 252826064,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autopilot2_avail",
+    "value_type": "int"
+  },
+  {
+    "id": 252826224,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/master_flight_director",
+    "value_type": "int"
+  },
+  {
+    "id": 252826384,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/flight_director_command_bars_pilot",
+    "value_type": "int"
+  },
+  {
+    "id": 252826544,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/flight_director_command_bars_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 252826704,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/flight_director_master_pilot",
+    "value_type": "int"
+  },
+  {
+    "id": 252826864,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/flight_director_master_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 252827024,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/autopilot_electric_master",
+    "value_type": "int"
+  },
+  {
+    "id": 252827184,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/autopilot_source",
+    "value_type": "int"
+  },
+  {
+    "id": 252827344,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/autothrottle_enabled",
+    "value_type": "int"
+  },
+  {
+    "id": 252827504,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autothrottle_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252827664,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autothrottle_arm",
+    "value_type": "int"
+  },
+  {
+    "id": 252827824,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/electric_trim_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252827984,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/pitch_mistrim",
+    "value_type": "int"
+  },
+  {
+    "id": 252828144,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/otto_fail_warn",
+    "value_type": "int"
+  },
+  {
+    "id": 252828304,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/otto_ready",
+    "value_type": "int"
+  },
+  {
+    "id": 252828464,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/downgrade",
+    "value_type": "int"
+  },
+  {
+    "id": 252828624,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autopilot_disconnect",
+    "value_type": "int"
+  },
+  {
+    "id": 252828784,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autopilot_trim_fail",
+    "value_type": "int"
+  },
+  {
+    "id": 252828944,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/heading_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 252829104,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/altitude_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 252829264,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/bank_angle_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 252829424,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/bank_angles_values",
+    "value_type": "float_array"
+  },
+  {
+    "id": 252829584,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/flight_director_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 252829744,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/flight_director2_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 252829904,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/flight_director3_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 252851408,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autopilot_has_power",
+    "value_type": "int"
+  },
+  {
+    "id": 252851568,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autopilot_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252851728,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autopilot2_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252851888,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autopilot3_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252852048,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autopilot_on_or_cws",
+    "value_type": "int"
+  },
+  {
+    "id": 252852208,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autopilot2_on_or_cws",
+    "value_type": "int"
+  },
+  {
+    "id": 252852368,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/autopilot3_on_or_cws",
+    "value_type": "int"
+  },
+  {
+    "id": 252852528,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/servos_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252852688,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/servos2_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252852848,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/servos3_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252853008,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/airspeed_is_mach",
+    "value_type": "int"
+  },
+  {
+    "id": 252853168,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/alt_vvi_is_showing_vvi",
+    "value_type": "int"
+  },
+  {
+    "id": 252853328,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/vnav_armed",
+    "value_type": "int"
+  },
+  {
+    "id": 252853488,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/vnav_spd_armed",
+    "value_type": "int"
+  },
+  {
+    "id": 252853648,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/altitude_hold_armed",
+    "value_type": "int"
+  },
+  {
+    "id": 252853808,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/hnav_armed",
+    "value_type": "int"
+  },
+  {
+    "id": 252853968,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/glideslope_armed",
+    "value_type": "int"
+  },
+  {
+    "id": 252854128,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/backcourse_on",
+    "value_type": "int"
+  },
+  {
+    "id": 252854288,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/airspeed_dial_kts_mach",
+    "value_type": "float"
+  },
+  {
+    "id": 252854448,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/airspeed_dial_kts",
+    "value_type": "float"
+  },
+  {
+    "id": 252854608,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/hover_vector",
+    "value_type": "float_array"
+  },
+  {
+    "id": 252854768,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/hover_height",
+    "value_type": "float"
+  },
+  {
+    "id": 252854928,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/heading_dial_deg_mag_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 252855088,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/heading_dial_deg_mag_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 252855248,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/heading_is_gpss",
+    "value_type": "int"
+  },
+  {
+    "id": 252855408,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/trk_fpa",
+    "value_type": "int"
+  },
+  {
+    "id": 252855568,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/vvi_dial_fpm",
+    "value_type": "float"
+  },
+  {
+    "id": 252855728,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/fpa",
+    "value_type": "float"
+  },
+  {
+    "id": 252855888,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/altitude_dial_ft",
+    "value_type": "float"
+  },
+  {
+    "id": 252856048,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/altitude_hold_ft",
+    "value_type": "float"
+  },
+  {
+    "id": 252856208,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/altitude_vnav_ft",
+    "value_type": "float"
+  },
+  {
+    "id": 252856368,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/barometer_setting_in_hg_alt_preselector",
+    "value_type": "float"
+  },
+  {
+    "id": 252856528,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/altitude_readout_preselector",
+    "value_type": "float"
+  },
+  {
+    "id": 252856688,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/climb_adjust",
+    "value_type": "float"
+  },
+  {
+    "id": 252856848,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/des_adjust",
+    "value_type": "float"
+  },
+  {
+    "id": 252857008,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/sync_hold_pitch_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 252857168,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/sync_hold_roll_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 252857328,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/set_roll_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 252857488,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/turn_rate_deg_sec",
+    "value_type": "float"
+  },
+  {
+    "id": 252857648,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/flight_director_pitch_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 252857808,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/flight_director_roll_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 252857968,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/flight_director2_pitch_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 252858128,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/flight_director2_roll_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 252858288,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/TOGA_pitch_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 252858448,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/roll_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252858608,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/attitude_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252858768,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/hover_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252858928,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/rate_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252859088,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/heading_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252859248,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/heading_hold_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252859408,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/track_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252859568,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/runway_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252859728,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/runway_track_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252859888,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/nav_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252860048,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/gpss_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252860208,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/rollout_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252860368,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/flare_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252860528,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/backcourse_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252860688,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/TOGA_lateral_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252860848,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/pitch_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252861008,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/vvi_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252861168,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/fpa_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252861328,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/speed_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252861488,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/altitude_hold_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252861648,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/glideslope_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252861808,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/vnav_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252861968,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/vnav_speed_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252862128,
+    "is_writable": true,
+    "name": "sim/cockpit2/autopilot/fms_vnav",
+    "value_type": "int"
+  },
+  {
+    "id": 252862288,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/TOGA_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252862448,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/approach_status",
+    "value_type": "int"
+  },
+  {
+    "id": 252862608,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/dead_reckoning",
+    "value_type": "int"
+  },
+  {
+    "id": 252862768,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/alt_hold_is_alt_sel_any",
+    "value_type": "int"
+  },
+  {
+    "id": 252862928,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/alts_armed",
+    "value_type": "int"
+  },
+  {
+    "id": 252863088,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/altv_armed",
+    "value_type": "int"
+  },
+  {
+    "id": 252863248,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/alts_captured",
+    "value_type": "int"
+  },
+  {
+    "id": 252863408,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/altv_captured",
+    "value_type": "int"
+  },
+  {
+    "id": 252863568,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/vnav_speed_window_open",
+    "value_type": "int"
+  },
+  {
+    "id": 252863728,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/vnav_speed_armed",
+    "value_type": "int"
+  },
+  {
+    "id": 252863888,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/ap_ref_waiting",
+    "value_type": "int"
+  },
+  {
+    "id": 252864048,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/vnav_descent_speed_range",
+    "value_type": "int"
+  },
+  {
+    "id": 252864208,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_hdg",
+    "value_type": "int"
+  },
+  {
+    "id": 252864368,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_rdy",
+    "value_type": "int"
+  },
+  {
+    "id": 252864528,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_nav",
+    "value_type": "int"
+  },
+  {
+    "id": 252864688,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_cws",
+    "value_type": "int"
+  },
+  {
+    "id": 252864848,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_apr",
+    "value_type": "int"
+  },
+  {
+    "id": 252865008,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_fail",
+    "value_type": "int"
+  },
+  {
+    "id": 252865168,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_gpss",
+    "value_type": "int"
+  },
+  {
+    "id": 252865328,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_rev",
+    "value_type": "int"
+  },
+  {
+    "id": 252865488,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_trim",
+    "value_type": "int"
+  },
+  {
+    "id": 252865648,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_alt",
+    "value_type": "int"
+  },
+  {
+    "id": 252865808,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_gs",
+    "value_type": "int"
+  },
+  {
+    "id": 252865968,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st55_vs",
+    "value_type": "int"
+  },
+  {
+    "id": 252866128,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st360_display",
+    "value_type": "data"
+  },
+  {
+    "id": 252866288,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st360_tenths",
+    "value_type": "int"
+  },
+  {
+    "id": 252866448,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st360_ent",
+    "value_type": "int"
+  },
+  {
+    "id": 252866608,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st360_alt",
+    "value_type": "int"
+  },
+  {
+    "id": 252866768,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st360_sel",
+    "value_type": "int"
+  },
+  {
+    "id": 252866928,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st360_alr",
+    "value_type": "int"
+  },
+  {
+    "id": 252867088,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st360_dh",
+    "value_type": "int"
+  },
+  {
+    "id": 252867248,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st360_vs",
+    "value_type": "int"
+  },
+  {
+    "id": 252867408,
+    "is_writable": false,
+    "name": "sim/cockpit2/autopilot/st360_baro",
+    "value_type": "int"
+  },
+  {
+    "id": 252928816,
+    "is_writable": true,
+    "name": "sim/cockpit2/EFIS/G1000_reversionary_mode",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253083040,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_power",
+    "value_type": "int"
+  },
+  {
+    "id": 253083200,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_power",
+    "value_type": "int"
+  },
+  {
+    "id": 253083360,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/actuators/nav1_tuning_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 253083520,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/actuators/nav2_tuning_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 253083680,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_power",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253084480,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/gps_power",
+    "value_type": "int"
+  },
+  {
+    "id": 253084640,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/gps2_power",
+    "value_type": "int"
+  },
+  {
+    "id": 253084960,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_frequency_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 253085120,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_frequency_Mhz",
+    "value_type": "int"
+  },
+  {
+    "id": 253085280,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_frequency_khz",
+    "value_type": "int"
+  },
+  {
+    "id": 253085440,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_frequency_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 253085600,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_frequency_Mhz",
+    "value_type": "int"
+  },
+  {
+    "id": 253085760,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_frequency_khz",
+    "value_type": "int"
+  },
+  {
+    "id": 253085920,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_frequency_hz",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253086080,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_frequency_Mhz",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253086240,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_frequency_khz",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253087360,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_receiver_glideslope_off",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253087520,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_dme_hold",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253087680,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_dme_frequency_hz",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253087840,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_dme_frequency_Mhz",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253088000,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_dme_frequency_khz",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253089920,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_standby_frequency_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 253090080,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_standby_frequency_Mhz",
+    "value_type": "int"
+  },
+  {
+    "id": 253090240,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_standby_frequency_khz",
+    "value_type": "int"
+  },
+  {
+    "id": 253090400,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_standby_frequency_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 253090560,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_standby_frequency_Mhz",
+    "value_type": "int"
+  },
+  {
+    "id": 253090720,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_standby_frequency_khz",
+    "value_type": "int"
+  },
+  {
+    "id": 253090880,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_standby_frequency_hz",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253091040,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_standby_frequency_Mhz",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253091200,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_standby_frequency_khz",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253093120,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_obs_deg_mag_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253093280,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_obs_deg_mag_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253093440,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_obs_deg_mag_pilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253093600,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_obs_deg_mag_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253093760,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_obs_deg_mag_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253093920,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_obs_deg_mag_copilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253094720,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_course_deg_mag_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253094880,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_course_deg_mag_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253095040,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_course_deg_mag_pilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253095200,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_course_deg_mag_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253095360,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_course_deg_mag_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253095520,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_course_deg_mag_copilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253097600,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav_com_adf_mode",
+    "value_type": "int"
+  },
+  {
+    "id": 253122016,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_nav_selection",
+    "value_type": "int"
+  },
+  {
+    "id": 253122816,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_selection_nav1",
+    "value_type": "int"
+  },
+  {
+    "id": 253122976,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_selection_nav2",
+    "value_type": "int"
+  },
+  {
+    "id": 253124096,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_selection_nav3",
+    "value_type": "int"
+  },
+  {
+    "id": 253124256,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_selection_nav4",
+    "value_type": "int"
+  },
+  {
+    "id": 253124736,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_volume_nav1",
+    "value_type": "float"
+  },
+  {
+    "id": 253124896,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_volume_nav2",
+    "value_type": "float"
+  },
+  {
+    "id": 253126016,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_volume_nav3",
+    "value_type": "float"
+  },
+  {
+    "id": 253126176,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_volume_nav4",
+    "value_type": "float"
+  },
+  {
+    "id": 253126976,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_selection_nav1_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253127136,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_selection_nav2_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253128256,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_selection_nav3_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253128416,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_selection_nav4_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253128896,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_volume_nav1_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253129056,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_volume_nav2_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253130176,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_volume_nav3_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253130336,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/audio_volume_nav4_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253130816,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_left_frequency_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 253130976,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_left_frequency_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 253132256,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_right_frequency_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 253132416,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_right_frequency_hz",
+    "value_type": "int"
+  },
+  {
+    "id": 253133376,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav1_right_is_selected",
+    "value_type": "int"
+  },
+  {
+    "id": 253133536,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/actuators/nav2_right_is_selected",
+    "value_type": "int"
+  },
+  {
+    "id": 253134656,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_bearing_deg_mag",
+    "value_type": "float"
+  },
+  {
+    "id": 253134816,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_bearing_deg_mag",
+    "value_type": "float"
+  },
+  {
+    "id": 253134976,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_bearing_deg_mag",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253135456,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_bearing_deg_mag",
+    "value_type": "float"
+  },
+  {
+    "id": 253135616,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_bearing_deg_mag",
+    "value_type": "float"
+  },
+  {
+    "id": 253135776,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_relative_bearing_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 253135936,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_relative_bearing_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 253136096,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_relative_bearing_deg",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253136576,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_relative_bearing_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 253136736,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_relative_bearing_deg",
+    "value_type": "float"
+  },
+  {
+    "id": 253136896,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_flag_from_to_pilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253137056,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_flag_from_to_pilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253137216,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_flag_from_to_pilot",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253137376,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_flag_from_to_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253161536,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_flag_from_to_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253161696,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_flag_from_to_copilot",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253161856,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_flag_glideslope",
+    "value_type": "int"
+  },
+  {
+    "id": 253162016,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_flag_glideslope",
+    "value_type": "int"
+  },
+  {
+    "id": 253162176,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_flag_glideslope",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253162336,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_flag_glideslope_mech",
+    "value_type": "int"
+  },
+  {
+    "id": 253162496,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_flag_glideslope_mech",
+    "value_type": "int"
+  },
+  {
+    "id": 253162656,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_flag_glideslope_mech",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253162816,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_display_horizontal",
+    "value_type": "int"
+  },
+  {
+    "id": 253162976,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_display_horizontal",
+    "value_type": "int"
+  },
+  {
+    "id": 253163136,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_display_horizontal",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253163296,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_display_vertical",
+    "value_type": "int"
+  },
+  {
+    "id": 253163456,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_display_vertical",
+    "value_type": "int"
+  },
+  {
+    "id": 253163616,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_display_vertical",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253163776,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_hdef_dots_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253163936,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_hdef_dots_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253164096,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_hdef_dots_pilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253164256,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_hdef_dots_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253164416,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_hdef_dots_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253164576,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_xtk",
+    "value_type": "float"
+  },
+  {
+    "id": 253164736,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_xtk",
+    "value_type": "float"
+  },
+  {
+    "id": 253164896,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_hdef_dots_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253165056,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_hdef_dots_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253165216,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_hdef_dots_copilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253165376,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_hdef_dots_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253165536,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_hdef_dots_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253165696,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_vdef_dots_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253165856,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_vdef_dots_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253166016,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_vdef_dots_pilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253166176,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_vdef_dots_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253166336,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_vdef_dots_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253166496,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_vdef_dots_copilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253166656,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_has_dme",
+    "value_type": "int"
+  },
+  {
+    "id": 253166816,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_has_dme",
+    "value_type": "int"
+  },
+  {
+    "id": 253166976,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_has_dme",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253167456,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_has_dme",
+    "value_type": "int"
+  },
+  {
+    "id": 253167616,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_has_dme",
+    "value_type": "int"
+  },
+  {
+    "id": 253167936,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_dme_distance_nm",
+    "value_type": "float"
+  },
+  {
+    "id": 253168096,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_dme_distance_nm",
+    "value_type": "float"
+  },
+  {
+    "id": 253168256,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_dme_distance_nm",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253168736,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_dme_distance_nm",
+    "value_type": "float"
+  },
+  {
+    "id": 253168896,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_dme_distance_nm",
+    "value_type": "float"
+  },
+  {
+    "id": 253169216,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_dme_speed_kts",
+    "value_type": "float"
+  },
+  {
+    "id": 253169376,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_dme_speed_kts",
+    "value_type": "float"
+  },
+  {
+    "id": 253169536,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_dme_speed_kts",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253170016,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_dme_speed_kts",
+    "value_type": "float"
+  },
+  {
+    "id": 253170176,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_dme_speed_kts",
+    "value_type": "float"
+  },
+  {
+    "id": 253170496,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_dme_time_min",
+    "value_type": "float"
+  },
+  {
+    "id": 253170656,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_dme_time_min",
+    "value_type": "float"
+  },
+  {
+    "id": 253170816,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav_dme_time_min",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253171296,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_dme_time_min",
+    "value_type": "float"
+  },
+  {
+    "id": 253171456,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_dme_time_min",
+    "value_type": "float"
+  },
+  {
+    "id": 253171776,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253171936,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253172096,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/adf1_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253172256,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/adf2_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253172416,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253172576,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253172736,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms1_act_eta",
+    "value_type": "float"
+  },
+  {
+    "id": 253172896,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms1_act_eta_hour",
+    "value_type": "int"
+  },
+  {
+    "id": 253173056,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms1_act_eta_minute",
+    "value_type": "int"
+  },
+  {
+    "id": 253173216,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms1_act_eta_second",
+    "value_type": "int"
+  },
+  {
+    "id": 253173376,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms2_act_eta",
+    "value_type": "float"
+  },
+  {
+    "id": 253173536,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms2_act_eta_hour",
+    "value_type": "int"
+  },
+  {
+    "id": 253173696,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms2_act_eta_minute",
+    "value_type": "int"
+  },
+  {
+    "id": 253173856,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms2_act_eta_second",
+    "value_type": "int"
+  },
+  {
+    "id": 253174016,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/dme_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253174176,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav3_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253174336,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav4_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253174496,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav5_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253174656,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav6_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253174816,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav7_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253174976,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav8_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253175136,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav9_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253175296,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav10_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253175456,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav11_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253175616,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav12_nav_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253175776,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav1_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253175936,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav2_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253176096,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav3_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253176256,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav4_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253176416,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav5_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253176576,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav6_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253176736,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav7_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253176896,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav8_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253177056,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav9_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253177216,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav10_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253177376,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav11_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253177536,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/nav12_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253177696,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253200832,
+    "is_writable": true,
+    "name": "sim/cockpit2/radios/indicators/gps2_dme_id",
+    "value_type": "data"
+  },
+  {
+    "id": 253200992,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_type",
+    "value_type": "int"
+  },
+  {
+    "id": 253201152,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_type",
+    "value_type": "int"
+  },
+  {
+    "id": 253201312,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_type",
+    "value_type": "int_array"
+  },
+  {
+    "id": 253202912,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/morse_id_tone_nav1",
+    "value_type": "int"
+  },
+  {
+    "id": 253203072,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/morse_id_tone_nav2",
+    "value_type": "int"
+  },
+  {
+    "id": 253204032,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/morse_id_tone_nav3",
+    "value_type": "int"
+  },
+  {
+    "id": 253204192,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/morse_id_tone_nav4",
+    "value_type": "int"
+  },
+  {
+    "id": 253204352,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/morse_id_tone_nav1_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253204512,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/morse_id_tone_nav2_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253205472,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/morse_id_tone_nav3_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253205632,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/morse_id_tone_nav4_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253210272,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_relative_heading_vacuum_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253210432,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_relative_heading_vacuum_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253210592,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_relative_heading_electric_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253210752,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_relative_heading_electric_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253210912,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_relative_heading_AHARS_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253211072,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav1_relative_heading_AHARS_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253211232,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_relative_heading_vacuum_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253211392,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_relative_heading_vacuum_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253211552,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_relative_heading_electric_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253211712,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_relative_heading_electric_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253211872,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_relative_heading_AHARS_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253212032,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav2_relative_heading_AHARS_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253212192,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_relative_heading_vacuum_deg_pilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253212352,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_relative_heading_vacuum_deg_copilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253212512,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_relative_heading_electric_deg_pilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253212672,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_relative_heading_electric_deg_copilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253212832,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_relative_heading_AHARS_deg_pilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253212992,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_relative_heading_AHARS_deg_copilot",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253213152,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps_relative_heading_vacuum_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253213312,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps_relative_heading_vacuum_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253213472,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps_relative_heading_electric_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253213632,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps_relative_heading_electric_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253213792,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps_relative_heading_AHARS_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253213952,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps_relative_heading_AHARS_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253214112,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps2_relative_heading_vacuum_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253214272,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps2_relative_heading_vacuum_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253214432,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps2_relative_heading_electric_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253214592,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps2_relative_heading_electric_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253214752,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps2_relative_heading_AHARS_deg_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253214912,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/gps2_relative_heading_AHARS_deg_copilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253216032,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_exec_light_pilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253216192,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_exec_light_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253216352,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_fpta_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253216512,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_vpa_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253216672,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_vtk_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253216832,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_distance_to_tod_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253216992,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_acceleration_alt",
+    "value_type": "float"
+  },
+  {
+    "id": 253242560,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_thrust_reduction_alt",
+    "value_type": "float"
+  },
+  {
+    "id": 253242720,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_zero_fuel_weight",
+    "value_type": "float"
+  },
+  {
+    "id": 253242880,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_gross_weight",
+    "value_type": "float"
+  },
+  {
+    "id": 253243040,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_tod_before_index_pilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253243200,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_tod_before_distance_pilot",
+    "value_type": "float"
+  },
+  {
+    "id": 253243360,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_vertical_msg_pilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253243520,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_vertical_msg_copilot",
+    "value_type": "int"
+  },
+  {
+    "id": 253243680,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_transition_alt",
+    "value_type": "float"
+  },
+  {
+    "id": 253243840,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_transition_level",
+    "value_type": "float"
+  },
+  {
+    "id": 253244000,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_sel_flap_setting",
+    "value_type": "int"
+  },
+  {
+    "id": 253244160,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/nav_src_ref",
+    "value_type": "int"
+  },
+  {
+    "id": 253246720,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line0",
+    "value_type": "data"
+  },
+  {
+    "id": 253246880,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line1",
+    "value_type": "data"
+  },
+  {
+    "id": 253247040,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line2",
+    "value_type": "data"
+  },
+  {
+    "id": 253247200,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line3",
+    "value_type": "data"
+  },
+  {
+    "id": 253247360,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line4",
+    "value_type": "data"
+  },
+  {
+    "id": 253247520,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line5",
+    "value_type": "data"
+  },
+  {
+    "id": 253247680,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line6",
+    "value_type": "data"
+  },
+  {
+    "id": 253247840,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line7",
+    "value_type": "data"
+  },
+  {
+    "id": 253248000,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line8",
+    "value_type": "data"
+  },
+  {
+    "id": 253248160,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line9",
+    "value_type": "data"
+  },
+  {
+    "id": 253248320,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line10",
+    "value_type": "data"
+  },
+  {
+    "id": 253248480,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line11",
+    "value_type": "data"
+  },
+  {
+    "id": 253248640,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line12",
+    "value_type": "data"
+  },
+  {
+    "id": 253248800,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line13",
+    "value_type": "data"
+  },
+  {
+    "id": 253248960,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line14",
+    "value_type": "data"
+  },
+  {
+    "id": 253249120,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_text_line15",
+    "value_type": "data"
+  },
+  {
+    "id": 253249280,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line0",
+    "value_type": "data"
+  },
+  {
+    "id": 253249440,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line1",
+    "value_type": "data"
+  },
+  {
+    "id": 253249600,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line2",
+    "value_type": "data"
+  },
+  {
+    "id": 253249760,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line3",
+    "value_type": "data"
+  },
+  {
+    "id": 253249920,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line4",
+    "value_type": "data"
+  },
+  {
+    "id": 253250080,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line5",
+    "value_type": "data"
+  },
+  {
+    "id": 253250240,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line6",
+    "value_type": "data"
+  },
+  {
+    "id": 253250400,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line7",
+    "value_type": "data"
+  },
+  {
+    "id": 253250560,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line8",
+    "value_type": "data"
+  },
+  {
+    "id": 253250720,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line9",
+    "value_type": "data"
+  },
+  {
+    "id": 253250880,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line10",
+    "value_type": "data"
+  },
+  {
+    "id": 253251040,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line11",
+    "value_type": "data"
+  },
+  {
+    "id": 253251200,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line12",
+    "value_type": "data"
+  },
+  {
+    "id": 253251360,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line13",
+    "value_type": "data"
+  },
+  {
+    "id": 253251520,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line14",
+    "value_type": "data"
+  },
+  {
+    "id": 253251680,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu1_style_line15",
+    "value_type": "data"
+  },
+  {
+    "id": 253251840,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line0",
+    "value_type": "data"
+  },
+  {
+    "id": 253252000,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line1",
+    "value_type": "data"
+  },
+  {
+    "id": 253252160,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line2",
+    "value_type": "data"
+  },
+  {
+    "id": 253252320,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line3",
+    "value_type": "data"
+  },
+  {
+    "id": 253252480,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line4",
+    "value_type": "data"
+  },
+  {
+    "id": 253252640,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line5",
+    "value_type": "data"
+  },
+  {
+    "id": 253252800,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line6",
+    "value_type": "data"
+  },
+  {
+    "id": 253252960,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line7",
+    "value_type": "data"
+  },
+  {
+    "id": 253253120,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line8",
+    "value_type": "data"
+  },
+  {
+    "id": 253253280,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line9",
+    "value_type": "data"
+  },
+  {
+    "id": 253253440,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line10",
+    "value_type": "data"
+  },
+  {
+    "id": 253253600,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line11",
+    "value_type": "data"
+  },
+  {
+    "id": 253253760,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line12",
+    "value_type": "data"
+  },
+  {
+    "id": 253253920,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line13",
+    "value_type": "data"
+  },
+  {
+    "id": 253254080,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line14",
+    "value_type": "data"
+  },
+  {
+    "id": 253254240,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_text_line15",
+    "value_type": "data"
+  },
+  {
+    "id": 253254400,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line0",
+    "value_type": "data"
+  },
+  {
+    "id": 253254560,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line1",
+    "value_type": "data"
+  },
+  {
+    "id": 253254720,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line2",
+    "value_type": "data"
+  },
+  {
+    "id": 253254880,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line3",
+    "value_type": "data"
+  },
+  {
+    "id": 253255040,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line4",
+    "value_type": "data"
+  },
+  {
+    "id": 253255200,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line5",
+    "value_type": "data"
+  },
+  {
+    "id": 253255360,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line6",
+    "value_type": "data"
+  },
+  {
+    "id": 253255520,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line7",
+    "value_type": "data"
+  },
+  {
+    "id": 253255680,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line8",
+    "value_type": "data"
+  },
+  {
+    "id": 253255840,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line9",
+    "value_type": "data"
+  },
+  {
+    "id": 253256000,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line10",
+    "value_type": "data"
+  },
+  {
+    "id": 253256160,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line11",
+    "value_type": "data"
+  },
+  {
+    "id": 253256320,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line12",
+    "value_type": "data"
+  },
+  {
+    "id": 253256480,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line13",
+    "value_type": "data"
+  },
+  {
+    "id": 253256640,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line14",
+    "value_type": "data"
+  },
+  {
+    "id": 253256800,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu2_style_line15",
+    "value_type": "data"
+  },
+  {
+    "id": 253256960,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line0",
+    "value_type": "data"
+  },
+  {
+    "id": 253257120,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line1",
+    "value_type": "data"
+  },
+  {
+    "id": 253257280,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line2",
+    "value_type": "data"
+  },
+  {
+    "id": 253257440,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line3",
+    "value_type": "data"
+  },
+  {
+    "id": 253257600,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line4",
+    "value_type": "data"
+  },
+  {
+    "id": 253257760,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line5",
+    "value_type": "data"
+  },
+  {
+    "id": 253257920,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line6",
+    "value_type": "data"
+  },
+  {
+    "id": 253258080,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line7",
+    "value_type": "data"
+  },
+  {
+    "id": 253258240,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line8",
+    "value_type": "data"
+  },
+  {
+    "id": 253258400,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line9",
+    "value_type": "data"
+  },
+  {
+    "id": 253258560,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line10",
+    "value_type": "data"
+  },
+  {
+    "id": 253258720,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line11",
+    "value_type": "data"
+  },
+  {
+    "id": 253282960,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line12",
+    "value_type": "data"
+  },
+  {
+    "id": 253283120,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line13",
+    "value_type": "data"
+  },
+  {
+    "id": 253283280,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line14",
+    "value_type": "data"
+  },
+  {
+    "id": 253283440,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_text_line15",
+    "value_type": "data"
+  },
+  {
+    "id": 253283600,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line0",
+    "value_type": "data"
+  },
+  {
+    "id": 253283760,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line1",
+    "value_type": "data"
+  },
+  {
+    "id": 253283920,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line2",
+    "value_type": "data"
+  },
+  {
+    "id": 253284080,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line3",
+    "value_type": "data"
+  },
+  {
+    "id": 253284240,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line4",
+    "value_type": "data"
+  },
+  {
+    "id": 253284400,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line5",
+    "value_type": "data"
+  },
+  {
+    "id": 253284560,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line6",
+    "value_type": "data"
+  },
+  {
+    "id": 253284720,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line7",
+    "value_type": "data"
+  },
+  {
+    "id": 253284880,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line8",
+    "value_type": "data"
+  },
+  {
+    "id": 253285040,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line9",
+    "value_type": "data"
+  },
+  {
+    "id": 253285200,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line10",
+    "value_type": "data"
+  },
+  {
+    "id": 253285360,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line11",
+    "value_type": "data"
+  },
+  {
+    "id": 253285520,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line12",
+    "value_type": "data"
+  },
+  {
+    "id": 253285680,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line13",
+    "value_type": "data"
+  },
+  {
+    "id": 253285840,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line14",
+    "value_type": "data"
+  },
+  {
+    "id": 253286000,
+    "is_writable": false,
+    "name": "sim/cockpit2/radios/indicators/fms_cdu3_style_line15",
+    "value_type": "data"
+  },
+  {
+    "id": 253286480,
+    "is_writable": true,
+    "name": "sim/cockpit2/switches/navigation_lights_on",
+    "value_type": "int"
+  },
+  {
+    "id": 253450752,
+    "is_writable": false,
+    "name": "sim/flightmodel2/lights/nav_lights_brightness_ratio",
+    "value_type": "float_array"
+  },
+  {
+    "id": 253799856,
+    "is_writable": true,
+    "name": "sim/private/controls/xplm/debug_nav_calls",
+    "value_type": "float"
+  },
+  {
+    "id": 253990736,
+    "is_writable": true,
+    "name": "sim/private/controls/map/nav_max_size_m",
+    "value_type": "float"
+  },
+  {
+    "id": 335086240,
+    "is_writable": false,
+    "name": "laminar/sr22/annunciators/nav",
+    "value_type": "double"
+  },
+  {
+    "id": 335088960,
+    "is_writable": false,
+    "name": "laminar/sr22/annunciators/audio/nav1",
+    "value_type": "double"
+  },
+  {
+    "id": 335089120,
+    "is_writable": false,
+    "name": "laminar/sr22/annunciators/audio/nav2",
+    "value_type": "double"
+  },
+  {
+    "id": 349962896,
+    "is_writable": false,
+    "name": "laminar/sr22/annunciators/ap/nav",
+    "value_type": "double"
+  }
+]

@@ -5,16 +5,25 @@ import sys
 from pathlib import Path
 from time import time
 
+from adapters.common.arinc429_encoder import encode_arinc429_labels
 from adapters.common.bus1553_encoder import encode_1553_messages
-from adapters.common.file_exchange import ensure_exchange_dirs, write_1553_exchange, write_adapter_status
+from adapters.common.file_exchange import (
+    ensure_exchange_dirs,
+    write_1553_exchange,
+    write_adapter_status,
+    write_arinc429_exchange,
+    write_route_exchange,
+)
 from adapters.sources.dis import DisCaptureRecorder, DisReplaySource, DisUdpSource
 from adapters.sources.synthetic import SyntheticAircraftSource
+from adapters.sources.xplane import DEFAULT_BASE_URL as XPLANE_DEFAULT_BASE_URL
+from adapters.sources.xplane import XPlaneWebSource
 
 
 SOURCE_SYNTHETIC = "Synthetic Aircraft Source"
 SOURCE_DIS_UDP = "DIS UDP Source"
 SOURCE_DIS_REPLAY = "DIS Capture Replay"
-SOURCE_XPLANE = "X-Plane Stub"
+SOURCE_XPLANE = "X-Plane Web API Source"
 SOURCE_MSFS = "MSFS Stub"
 SOURCE_DCS = "DCS Stub"
 
@@ -56,12 +65,13 @@ def normalize_source(value: str) -> str:
 
 
 class AdapterCore:
-    def __init__(self, dis_port: int = 3000, synthetic_profile: str = "normal"):
+    def __init__(self, dis_port: int = 3000, synthetic_profile: str = "normal", xplane_base_url: str = XPLANE_DEFAULT_BASE_URL):
         ensure_exchange_dirs()
         self.synthetic_profile = synthetic_profile
         self.synthetic = SyntheticAircraftSource(profile=synthetic_profile)
         self.dis_udp = DisUdpSource(port=dis_port)
         self.dis_replay = DisReplaySource()
+        self.xplane = XPlaneWebSource(base_url=xplane_base_url)
         self.recorder = DisCaptureRecorder()
         self.active_source = SOURCE_SYNTHETIC
         self.running = False
@@ -96,6 +106,8 @@ class AdapterCore:
             return self.dis_udp.online()
         if source == SOURCE_DIS_REPLAY:
             return self.dis_replay.online()
+        if source == SOURCE_XPLANE:
+            return self.xplane.online()
         return False
 
     def status(self) -> dict:
@@ -108,6 +120,7 @@ class AdapterCore:
             "synthetic_profile": self.synthetic_profile,
             "recording_dis": self.recorder.enabled,
             "recording_path": str(self.recorder.path) if self.recorder.path else None,
+            "xplane": self.xplane.status(),
             "dis_udp": {
                 "host": self.dis_udp.host,
                 "port": self.dis_udp.port,
@@ -134,13 +147,21 @@ class AdapterCore:
             truth = self.dis_replay.next_truth()
             if truth is None:
                 self.last_message = "Replay loaded, but no decoded aircraft state yet. Raw DIS replay decode is phase 2."
+        elif self.active_source == SOURCE_XPLANE:
+            truth = self.xplane.next_truth()
+            if truth is None:
+                self.last_message = f"X-Plane Web API unavailable/no data: {self.xplane.last_error}"
         else:
-            self.last_message = f"{self.active_source} is stubbed/offline. Select Synthetic or DIS."
+            self.last_message = f"{self.active_source} is stubbed/offline. Select Synthetic, DIS, Replay, or X-Plane."
 
         if truth is not None:
             messages = encode_1553_messages(truth, self.tick)
-            self.last_message = f"Wrote {len(messages)} 1553-style messages from {truth.source}."
-            write_1553_exchange(messages, self.status())
+            arinc_labels = encode_arinc429_labels(truth, self.tick)
+            self.last_message = f"Wrote {len(messages)} 1553 messages and {len(arinc_labels)} ARINC labels from {truth.source}."
+            status = self.status()
+            write_1553_exchange(messages, status)
+            write_arinc429_exchange(arinc_labels, status)
+            write_route_exchange(truth, status)
         else:
             write_adapter_status(self.status())
 
@@ -302,6 +323,7 @@ def main() -> int:
         help="Initial source. Easy values: synthetic, dis, replay, xplane, msfs, dcs",
     )
     parser.add_argument("--dis-port", type=int, default=3000, help="DIS UDP listen port")
+    parser.add_argument("--xplane-base-url", default=XPLANE_DEFAULT_BASE_URL, help="X-Plane Web API base URL")
     parser.add_argument("--replay", help="DIS capture JSONL replay file")
     parser.add_argument("--record-dis", action="store_true", help="Record DIS UDP packets while running headless")
     parser.add_argument(
@@ -312,7 +334,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    core = AdapterCore(dis_port=args.dis_port, synthetic_profile=args.profile)
+    core = AdapterCore(dis_port=args.dis_port, synthetic_profile=args.profile, xplane_base_url=args.xplane_base_url)
     if args.replay:
         core.load_replay(args.replay)
     else:
