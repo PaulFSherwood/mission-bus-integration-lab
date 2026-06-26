@@ -250,6 +250,7 @@ def build_api_state_from_exchange(
             "worst_clearance_ft": _num(taws.get("worst_clearance_ft"), 0),
             "worst_terrain_ft": _num(taws.get("worst_terrain_ft"), 0),
             "worst_point": taws.get("worst_point", {}),
+            "terrain_returns": taws.get("terrain_returns", []),
             "valid": bool(taws.get("valid", True)),
         }
 

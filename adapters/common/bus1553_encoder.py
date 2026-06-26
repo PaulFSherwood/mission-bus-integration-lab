@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from time import time
 from typing import Any
+import math
 
 from .aircraft_truth import AircraftTruth
 from .terrain_model import taws_payload_for
 from .weather_model import weather_radar_payload_for
+from adapters.common.taws_model import build_taws_payload
 
 
 def _message(

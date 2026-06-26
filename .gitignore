@@ -55,6 +55,9 @@ build-PlantSimulator-Desktop-Debug/
 .venv/
 venv/
 
+*.jsonl
+data/exchange/*.jsonl
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*

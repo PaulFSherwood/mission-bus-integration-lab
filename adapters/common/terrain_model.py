@@ -33,6 +33,14 @@ def lat_lon_from_offset(lat: float, lon: float, east_nm: float, north_nm: float)
     out_lon = lon + east_nm / (60.0 * cos(avg_lat_rad))
     return out_lat, out_lon
 
+def terrain_level_from_clearance(clearance_ft: float) -> str:
+    if clearance_ft <= 300.0:
+        return "red"
+
+    if clearance_ft <= 1000.0:
+        return "yellow"
+
+    return "green"
 
 def taws_payload_for(truth: AircraftTruth, range_nm: float = 40.0, sample_step_nm: float = 5.0) -> dict[str, Any]:
     terrain_under = synthetic_terrain_ft(truth.lat, truth.lon)
@@ -40,6 +48,8 @@ def taws_payload_for(truth: AircraftTruth, range_nm: float = 40.0, sample_step_n
     worst_clearance = clearance
     worst_terrain = terrain_under
     worst_point = {"lat": truth.lat, "lon": truth.lon, "east_nm": 0.0, "north_nm": 0.0}
+
+    terrain_returns = []
 
     steps = int(range_nm // sample_step_nm)
     for east_i in range(-steps, steps + 1):
@@ -51,6 +61,17 @@ def taws_payload_for(truth: AircraftTruth, range_nm: float = 40.0, sample_step_n
             lat, lon = lat_lon_from_offset(truth.lat, truth.lon, east_nm, north_nm)
             terrain = synthetic_terrain_ft(lat, lon)
             point_clearance = truth.altitude_ft - terrain
+            terrain_returns.append(
+                {
+                    "east_nm": round(east_nm, 2),
+                    "north_nm": round(north_nm, 2),
+                    "lat": round(lat, 6),
+                    "lon": round(lon, 6),
+                    "elevation_ft": round(terrain, 1),
+                    "clearance_ft": round(point_clearance, 1),
+                    "level": terrain_level_from_clearance(point_clearance),
+                }
+            )
             if point_clearance < worst_clearance:
                 worst_clearance = point_clearance
                 worst_terrain = terrain
@@ -69,5 +90,6 @@ def taws_payload_for(truth: AircraftTruth, range_nm: float = 40.0, sample_step_n
         "worst_point": worst_point,
         "alert_state": alert_from_clearance(min(clearance, worst_clearance)),
         "aircraft_altitude_ft": round(truth.altitude_ft, 1),
+        "terrain_returns": terrain_returns,
         "valid": bool(truth.valid),
     }
