@@ -72,7 +72,8 @@ PAGE_DATA = {
     "/displays": {
         "title": "Displays",
         "subtitle": "Display update rates, stale data detection, and display health.",
-        "template": "not_found.html",
+        "template": "displays.html",
+        "hide_heading": True,
     },
     "/faults": {
         "title": "Fault Injection",

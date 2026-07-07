@@ -71,6 +71,26 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
         word_count=12,
     )
 
+    autopilot_payload = {
+        "ap_engaged": bool(truth.ap_engaged),
+        "fd_engaged": bool(truth.fd_engaged),
+        "yd_engaged": bool(truth.yd_engaged),
+        "modes": {
+            "HDG": bool(truth.ap_hdg_mode),
+            "NAV": bool(truth.ap_nav_mode),
+            "ALT": bool(truth.ap_alt_hold),
+            "VS": bool(truth.ap_vs_mode),
+            "FLC": bool(truth.ap_flc_mode),
+            "APR": bool(truth.ap_apr_mode),
+            "GS": bool(truth.ap_gs_mode),
+        },
+        "selected_heading_deg": round(truth.selected_heading_deg % 360.0, 1) if truth.selected_heading_deg is not None else None,
+        "selected_altitude_ft": round(truth.selected_altitude_ft, 1) if truth.selected_altitude_ft is not None else None,
+        "selected_airspeed_kts": round(truth.selected_airspeed_kts, 1) if truth.selected_airspeed_kts is not None else None,
+        "selected_vertical_speed_fpm": round(truth.selected_vertical_speed_fpm, 1) if truth.selected_vertical_speed_fpm is not None else None,
+        "source": truth.source,
+    }
+
     nav_payload = {
         "lat": truth.lat,
         "lon": truth.lon,
@@ -115,6 +135,18 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
                 "roll_deg": round(truth.roll_deg, 2),
                 "yaw_deg": round(truth.yaw_deg, 2),
             },
+        ),
+        _message(
+            tick=tick,
+            bus="BUS_A",
+            controller="MC1",
+            rt="AUTOPILOT_RT",
+            rt_address=8,
+            subaddress=1,
+            message_type="AUTOPILOT_DATA",
+            status=source_status,
+            payload=autopilot_payload,
+            word_count=12,
         ),
         _message(
             tick=tick,
@@ -195,6 +227,18 @@ def encode_1553_messages(truth: AircraftTruth, tick: int) -> list[dict[str, Any]
             status=source_status,
             payload=nav_payload,
             word_count=20,
+        ),
+        _message(
+            tick=tick,
+            bus="BUS_B",
+            controller="MC2",
+            rt="AUTOPILOT_RT",
+            rt_address=8,
+            subaddress=1,
+            message_type="AUTOPILOT_DATA",
+            status=source_status,
+            payload=autopilot_payload,
+            word_count=12,
         ),
         _message(
             tick=tick,

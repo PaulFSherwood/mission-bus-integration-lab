@@ -672,3 +672,189 @@
     position: relative;
     z-index: 5;
 }
+
+/* Cockpit live PFD / radar wiring */
+.pfd-screen.live-pfd {
+    display: grid;
+    grid-template-rows: 28px 1fr 32px 24px;
+    grid-template-columns: 1fr;
+    color: #dce8ff;
+}
+
+.pfd-annunciator-row,
+.pfd-selected-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    background: #010306;
+    border-bottom: 1px solid #243545;
+    font-family: monospace;
+    font-size: 11px;
+    white-space: nowrap;
+    z-index: 7;
+}
+
+.pfd-selected-row {
+    border-top: 1px solid #243545;
+    border-bottom: none;
+    color: #9fd8ff;
+    gap: 12px;
+}
+
+.ap-annun {
+    min-width: 24px;
+    padding: 2px 3px;
+    border: 1px solid #1e2f3d;
+    border-radius: 3px;
+    color: #294052;
+    background: #05090d;
+    text-align: center;
+    font-weight: 900;
+}
+
+.ap-annun.active {
+    color: #101400;
+    background: #6dff7d;
+    border-color: #ccffd1;
+    box-shadow: 0 0 8px rgba(109, 255, 125, 0.7);
+}
+
+.ap-annun.armed {
+    color: #ffe07a;
+    border-color: #ffe07a;
+}
+
+.pfd-main {
+    display: grid;
+    grid-template-columns: 58px 1fr 68px;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.live-tape .tape-scale {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 58px;
+    line-height: 25px;
+    color: #d7e6ff;
+    text-align: center;
+}
+
+.airspeed-tape.live-tape::after,
+.altitude-tape.live-tape::after {
+    content: none;
+}
+
+.live-attitude {
+    position: relative;
+    overflow: hidden;
+}
+
+.attitude-world {
+    position: absolute;
+    left: -42%;
+    top: -42%;
+    width: 184%;
+    height: 184%;
+    transform-origin: 50% 50%;
+    transition: transform 120ms linear;
+}
+
+.attitude-world .sky {
+    top: 0;
+    height: 50%;
+    left: 0;
+    width: 100%;
+}
+
+.attitude-world .ground {
+    top: 50%;
+    bottom: auto;
+    height: 50%;
+    left: 0;
+    width: 100%;
+}
+
+.attitude-world .horizon-line {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: none;
+}
+
+.attitude-world .pitch-scale {
+    top: 38%;
+    inset-inline: 0;
+    line-height: 27px;
+}
+
+.bank-scale {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 8px;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    font: 10px monospace;
+    z-index: 6;
+    opacity: 0.85;
+}
+
+.bank-pointer {
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    color: #fff;
+    transform-origin: 50% 90px;
+    z-index: 8;
+    text-shadow: 0 0 6px #fff;
+}
+
+.bearing-pointer {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    z-index: 8;
+    color: #ffd84d;
+    font: 11px monospace;
+    text-shadow: 0 0 6px rgba(255, 216, 77, 0.65);
+}
+
+.radar-range-buttons span {
+    cursor: pointer;
+}
+
+.radar-range-buttons span.active-range {
+    color: #061007;
+    background: #6dff7d;
+    border-color: #ccffd1;
+    font-weight: 900;
+}
+
+.display-status-grid {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.display-status-grid strong,
+.system-status-card strong {
+    font-size: 12px;
+}
+
+.warn-pill {
+    border: 1px solid #c99b28;
+    color: #ffd84d;
+    background: rgba(201, 155, 40, 0.13);
+    border-radius: 5px;
+    padding: 9px 16px;
+}
+
+.bad-pill {
+    border: 1px solid #a83232;
+    color: #ff6d6d;
+    background: rgba(168, 50, 50, 0.16);
+    border-radius: 5px;
+    padding: 9px 16px;
+}

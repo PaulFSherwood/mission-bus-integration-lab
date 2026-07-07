@@ -1,6 +1,53 @@
 let movingMapImage = null;
 let movingMapImagePath = null;
 
+
+function cleanWaypointIdent(value, fallback = "WP") {
+   if (value === undefined || value === null) return fallback;
+   let text = String(value).trim();
+
+   function normalize(raw) {
+      let t = String(raw || "").split("\0", 1)[0].trim().toUpperCase();
+      t = t.replace(/[^A-Z0-9_-]/g, "");
+      if (t.length > 8) return "";
+      if (t.length >= 4 && new Set(t).size <= 1) return "";
+      return /^[A-Z0-9][A-Z0-9_-]{1,7}$/.test(t) ? t : "";
+   }
+
+   let direct = normalize(text);
+   if (direct) return direct;
+
+   // X-Plane Web API can expose fixed string buffers as base64-ish text.
+   // TE9YTFkAAAAAAAA -> LOXLY plus NUL padding.
+   if (/^[A-Za-z0-9+/=]{4,}$/.test(text)) {
+      try {
+         const padded = text + "=".repeat((4 - text.length % 4) % 4);
+         const decoded = atob(padded);
+         const ident = normalize(decoded);
+         if (ident) return ident;
+      } catch (_) {
+         // ignore and fall through
+      }
+   }
+
+   return fallback;
+}
+
+function formatDistanceNm(value) {
+   const n = Number(value);
+   if (!Number.isFinite(n)) return "--";
+   if (Math.abs(n) >= 1000) return Math.round(n).toLocaleString();
+   if (Math.abs(n) >= 100) return n.toFixed(0);
+   if (Math.abs(n) >= 10) return n.toFixed(1);
+   return n.toFixed(2);
+}
+
+function formatRouteName(value) {
+   const text = String(value || "").trim();
+   if (!text) return "---";
+   return text.length > 24 ? text.slice(0, 21) + "..." : text;
+}
+
 function getMovingMapImage(path) {
     if (!path) {
         return null;
@@ -38,6 +85,57 @@ function getRoutePoints(data) {
    }
 
    return [];
+}
+
+
+function getRouteIdent(point) {
+   return cleanWaypointIdent(point?.id || point?.ident || point?.name || point?.label || "WP");
+}
+
+function getCurrentWaypoint(data) {
+   return cleanWaypointIdent(
+      data?.nav_display?.current_wp ||
+      data?.route?.current_wp ||
+      data?.sim?.current_wp ||
+      "",
+      ""
+   );
+}
+
+function getNextWaypoint(data) {
+   return cleanWaypointIdent(
+      data?.nav_display?.next_wp ||
+      data?.route?.next_wp ||
+      data?.sim?.next_wp ||
+      "",
+      ""
+   );
+}
+
+function sameWaypointIdent(a, b) {
+   return cleanWaypointIdent(a, "").toUpperCase() === cleanWaypointIdent(b, "").toUpperCase();
+}
+
+function findRoutePointIndex(routePoints, ident) {
+   if (!ident) return -1;
+   return routePoints.findIndex((point) => sameWaypointIdent(getRouteIdent(point), ident));
+}
+
+function getActiveLegIndexes(routePoints, data) {
+   const currentWp = getCurrentWaypoint(data);
+   const nextWp = getNextWaypoint(data);
+   const nextIndex = findRoutePointIndex(routePoints, nextWp);
+   const currentIndex = findRoutePointIndex(routePoints, currentWp);
+
+   if (currentIndex >= 0 && nextIndex >= 0 && Math.abs(nextIndex - currentIndex) === 1) {
+      return { from: currentIndex, to: nextIndex };
+   }
+
+   if (nextIndex > 0) {
+      return { from: nextIndex - 1, to: nextIndex };
+   }
+
+   return null;
 }
 
 function drawMovingMap(data) {
@@ -99,6 +197,7 @@ function drawMovingMap(data) {
 
    drawMapRings(ctx, centerX, centerY, width, height);
    drawRoute(ctx, routePoints, project);
+   drawActiveLeg(ctx, routePoints, project, data);
    drawWaypoints(ctx, routePoints, project, data);
    drawOwnship(ctx, centerX, centerY, data.aircraft.heading);   
 
@@ -203,12 +302,42 @@ function drawRoute(ctx, routePoints, project) {
    ctx.stroke();
 }
 
+
+function drawActiveLeg(ctx, routePoints, project, data) {
+   const leg = getActiveLegIndexes(routePoints, data);
+   if (!leg) return;
+
+   const from = routePoints[leg.from];
+   const to = routePoints[leg.to];
+   if (!from || !to) return;
+
+   const a = project(numberOrZero(from.lat), numberOrZero(from.lon));
+   const b = project(numberOrZero(to.lat), numberOrZero(to.lon));
+
+   ctx.save();
+   ctx.lineCap = "round";
+   ctx.strokeStyle = "rgba(0, 0, 0, 0.85)";
+   ctx.lineWidth = 6;
+   ctx.beginPath();
+   ctx.moveTo(a.x, a.y);
+   ctx.lineTo(b.x, b.y);
+   ctx.stroke();
+
+   ctx.strokeStyle = "rgba(255, 255, 90, 0.98)";
+   ctx.lineWidth = 3;
+   ctx.beginPath();
+   ctx.moveTo(a.x, a.y);
+   ctx.lineTo(b.x, b.y);
+   ctx.stroke();
+   ctx.restore();
+}
+
 function drawWaypoints(ctx, routePoints, project, data) {
-   const currentWp = data.sim ? data.sim.current_wp : "";
-   const nextWp = data.sim ? data.sim.next_wp : "";
+   const currentWp = getCurrentWaypoint(data);
+   const nextWp = getNextWaypoint(data);
 
    routePoints.forEach((point) => {
-      const ident = point.id || point.ident || point.name || "WP";
+      const ident = getRouteIdent(point);
       const pos = project(numberOrZero(point.lat), numberOrZero(point.lon));
 
       if (
@@ -220,20 +349,25 @@ function drawWaypoints(ctx, routePoints, project, data) {
          return;
       }
 
-      if (ident === nextWp) {
-         ctx.fillStyle = "#ffff66";
-      } else if (ident === currentWp) {
-         ctx.fillStyle = "#66ff66";
-      } else {
-         ctx.fillStyle = "#ff66ff";
-      }
+      const isNext = sameWaypointIdent(ident, nextWp);
+      const isCurrent = sameWaypointIdent(ident, currentWp);
 
+      ctx.save();
+      ctx.fillStyle = isNext ? "#ffff66" : (isCurrent ? "#66ff66" : "#ff66ff");
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.95)";
+      ctx.lineWidth = isNext ? 3 : 2;
       ctx.beginPath();
-      ctx.arc(pos.x, pos.y, 4, 0, Math.PI * 2);
+      ctx.arc(pos.x, pos.y, isNext ? 6 : 4, 0, Math.PI * 2);
       ctx.fill();
+      ctx.stroke();
 
-      ctx.font = "11px monospace";
+      ctx.font = isNext ? "bold 11px monospace" : "11px monospace";
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.9)";
+      ctx.strokeText(ident, pos.x + 7, pos.y - 7);
+      ctx.fillStyle = isNext ? "#ffff66" : "#ffffff";
       ctx.fillText(ident, pos.x + 7, pos.y - 7);
+      ctx.restore();
    });
 }
 
@@ -284,7 +418,7 @@ function showJsHeartbeat() {
     box.style.border = "1px solid #1fb6ff";
     box.style.zIndex = "9999";
     box.style.fontFamily = "monospace";
-    documnet.body.appendChild(box);
+    document.body.appendChild(box);
   }
   box.textContent = "JS LIVE " + new Date().toLocaleTimeString();
 }
@@ -298,15 +432,34 @@ function getValueByPath(data, path) {
    }, data);
 }
 
+function formatBoundValue(value, format) {
+   if (value === undefined || value === null) {
+      return "---";
+   }
+
+   if (format === "nm1") {
+      const n = Number(value);
+      return Number.isFinite(n) ? n.toFixed(1) : "---";
+   }
+
+   if (format === "int") {
+      const n = Number(value);
+      return Number.isFinite(n) ? String(Math.round(n)) : "---";
+   }
+
+   return value;
+}
+
 function bindText(data) {
    const elements = document.querySelectorAll("[data-bind]");
 
    elements.forEach((el) => {
       const path = el.getAttribute("data-bind");
+      const format = el.getAttribute("data-format");
       const value = getValueByPath(data, path);
 
       if (value !== undefined && value !== null) {
-         el.textContent = value;
+         el.textContent = formatBoundValue(value, format);
       }
    });
 }
@@ -611,45 +764,468 @@ async function updateBusMessages() {
 setInterval(updateBusMessages, 500);
 updateBusMessages();
 
+
+
+let cockpitRadarRangeNm = Number(localStorage.getItem("mbilCockpitRadarRangeNm") || "40") || 40;
+let cockpitRadarOverlaySeq = 0;
+let cockpitPageStarted = false;
+const cockpitRadarReadoutCache = { bearing: "---", nextWp: "---" };
+
+function numericFromDisplay(value, fallback = 0) {
+   if (value === undefined || value === null) return fallback;
+   const n = Number(String(value).replace(/[^0-9.+-]/g, ""));
+   return Number.isFinite(n) ? n : fallback;
+}
+
+function bearingDegBetween(lat1, lon1, lat2, lon2) {
+   const r = Math.PI / 180.0;
+   const p1 = Number(lat1) * r;
+   const p2 = Number(lat2) * r;
+   const dLon = (Number(lon2) - Number(lon1)) * r;
+   const y = Math.sin(dLon) * Math.cos(p2);
+   const x = Math.cos(p1) * Math.sin(p2) - Math.sin(p1) * Math.cos(p2) * Math.cos(dLon);
+   const brg = Math.atan2(y, x) / r;
+   return ((brg % 360) + 360) % 360;
+}
+
+function radarBearingFromState(data) {
+   const direct = data?.nav_display?.gps_bearing_deg ?? data?.sim?.gps_bearing_deg ?? data?.sim?.bearing_deg;
+   if (direct !== undefined && direct !== null && direct !== "") {
+      const n = Number(String(direct).replace(/[^0-9.+-]/g, ""));
+      if (Number.isFinite(n)) return n;
+   }
+
+   const routePoints = getRoutePoints(data);
+   const nextWp = getNextWaypoint(data);
+   const nextIndex = findRoutePointIndex(routePoints, nextWp);
+   const aircraft = data?.aircraft || {};
+
+   if (nextIndex >= 0 && aircraft.lat !== undefined && aircraft.lon !== undefined) {
+      return bearingDegBetween(aircraft.lat, aircraft.lon, routePoints[nextIndex].lat, routePoints[nextIndex].lon);
+   }
+
+   return null;
+}
+
+function textOrDash(value) {
+   if (value === undefined || value === null || value === "") return "---";
+   return String(value);
+}
+
+function fmt3(value) {
+   const n = Number(value);
+   if (!Number.isFinite(n)) return "---";
+   return String(Math.round(((n % 360) + 360) % 360)).padStart(3, "0");
+}
+
+function fmtInt(value) {
+   const n = Number(value);
+   if (!Number.isFinite(n)) return "---";
+   return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function setClassBool(id, active, armed = false) {
+   const el = document.getElementById(id);
+   if (!el) return;
+   el.classList.toggle("active", !!active);
+   el.classList.toggle("armed", !active && !!armed);
+}
+
+function updateAutopilotAnnunciators(prefix, autopilot) {
+   const modes = autopilot?.modes || {};
+   setClassBool(prefix + "-ap-ap", autopilot?.ap_engaged);
+   setClassBool(prefix + "-ap-fd", autopilot?.fd_engaged);
+   setClassBool(prefix + "-ap-yd", autopilot?.yd_engaged);
+   setClassBool(prefix + "-ap-hdg", modes.HDG);
+   setClassBool(prefix + "-ap-nav", modes.NAV);
+   setClassBool(prefix + "-ap-alt", modes.ALT);
+   setClassBool(prefix + "-ap-vs", modes.VS);
+   setClassBool(prefix + "-ap-flc", modes.FLC);
+   setClassBool(prefix + "-ap-apr", modes.APR);
+   setClassBool(prefix + "-ap-gs", modes.GS);
+}
+
+function buildTape(center, step, count, decimals = 0) {
+   const values = [];
+   const half = Math.floor(count / 2);
+   for (let i = half; i >= -half; i--) {
+      const value = center + i * step;
+      values.push(Number.isFinite(value) ? value.toFixed(decimals) : "---");
+   }
+   return values.join("<br>");
+}
+
+function updatePfd(prefix, data) {
+   const aircraft = data.aircraft || {};
+   const pfd = data.pfd || {};
+   const autopilot = data.autopilot || {};
+
+   const altitudeFt = Number.isFinite(Number(pfd.altitude_ft)) ? Number(pfd.altitude_ft) : numericFromDisplay(aircraft.altitude, 0);
+   const airspeedKts = Number.isFinite(Number(pfd.airspeed_kts)) ? Number(pfd.airspeed_kts) : numericFromDisplay(aircraft.airspeed, 0);
+   const gsKts = numericFromDisplay(aircraft.ground_speed || aircraft.airspeed, airspeedKts);
+   const headingDeg = Number.isFinite(Number(pfd.heading_deg)) ? Number(pfd.heading_deg) : numericFromDisplay(aircraft.heading, 0);
+   const vsFpm = Number.isFinite(Number(pfd.vertical_speed_fpm)) ? Number(pfd.vertical_speed_fpm) : numericFromDisplay(aircraft.vertical_speed, 0);
+   const pitchDeg = Number.isFinite(Number(pfd.pitch_deg)) ? Number(pfd.pitch_deg) : Number(aircraft.pitch_deg || 0);
+   const rollDeg = Number.isFinite(Number(pfd.roll_deg)) ? Number(pfd.roll_deg) : Number(aircraft.roll_deg || 0);
+
+   setText(prefix + "-airspeed-box", fmtInt(airspeedKts));
+   setText(prefix + "-altitude-box", fmtInt(altitudeFt));
+   setText(prefix + "-heading-box", fmt3(headingDeg));
+   setText(prefix + "-gs-box", fmtInt(gsKts));
+   setText(prefix + "-vs-box", (vsFpm >= 0 ? "+" : "") + fmtInt(vsFpm));
+
+   const airScale = document.getElementById(prefix + "-airspeed-scale");
+   if (airScale) airScale.innerHTML = buildTape(Math.round(airspeedKts / 10) * 10, 20, 7, 0);
+
+   const altScale = document.getElementById(prefix + "-altitude-scale");
+   if (altScale) altScale.innerHTML = buildTape(Math.round(altitudeFt / 100) * 100, 200, 7, 0);
+
+   const world = document.getElementById(prefix + "-attitude-world");
+   if (world) {
+      const pitchPx = Math.max(-75, Math.min(75, pitchDeg * 4.0));
+      const roll = Math.max(-80, Math.min(80, rollDeg));
+      world.style.transform = `translateY(${pitchPx}px) rotate(${-roll}deg)`;
+   }
+
+   const bankPointer = document.getElementById(prefix + "-bank-pointer");
+   if (bankPointer) {
+      const roll = Math.max(-80, Math.min(80, rollDeg));
+      bankPointer.style.transform = `translateX(-50%) rotate(${roll}deg)`;
+   }
+
+   updateAutopilotAnnunciators(prefix, autopilot);
+
+   setText(prefix + "-hdg-bug", autopilot.selected_heading_deg !== null && autopilot.selected_heading_deg !== undefined ? fmt3(autopilot.selected_heading_deg) + "°" : "---");
+   setText(prefix + "-alt-bug", autopilot.selected_altitude_ft !== null && autopilot.selected_altitude_ft !== undefined ? fmtInt(autopilot.selected_altitude_ft) : "---");
+   setText(prefix + "-spd-bug", autopilot.selected_airspeed_kts !== null && autopilot.selected_airspeed_kts !== undefined ? fmtInt(autopilot.selected_airspeed_kts) : "---");
+
+   const brg = pfd.bearing_pointer_deg ?? data.nav_display?.gps_bearing_deg ?? data.sim?.gps_bearing_deg;
+   const brgSrc = cleanWaypointIdent(pfd.bearing_pointer_source ?? data.nav_display?.next_wp ?? data.sim?.next_wp ?? "GPS", "GPS");
+   setText(prefix + "-bearing-pointer", brg !== undefined && brg !== null ? `BRG ${fmt3(brg)} ${brgSrc}` : "BRG ---");
+}
+
+function setStatusClass(id, status) {
+   const el = document.getElementById(id);
+   if (!el) return;
+   const normalized = String(status || "UNKNOWN").toUpperCase();
+   el.textContent = normalized;
+   el.classList.remove("good", "warn", "bad", "good-pill", "warn-pill", "bad-pill");
+   if (normalized === "OK" || normalized === "ONLINE" || normalized === "HEALTHY" || normalized === "PRIMARY" || normalized === "STANDBY") {
+      el.classList.add(id.endsWith("pill") ? "good-pill" : "good");
+   } else if (normalized === "STALE" || normalized === "WARN" || normalized === "WARNING" || normalized === "NO DATA") {
+      el.classList.add(id.endsWith("pill") ? "warn-pill" : "warn");
+   } else {
+      el.classList.add(id.endsWith("pill") ? "bad-pill" : "bad");
+   }
+}
+
+function updateMissionComputersCockpit(data) {
+   const mcs = data.mission_computers || {};
+   const mc1 = mcs.mc1 || data.mc1 || {};
+   const mc2 = mcs.mc2 || data.mc2 || {};
+
+   function update(prefix, mc) {
+      setText(prefix + "-role", mc.role || "---");
+      setText(prefix + "-state", mc.state || "---");
+      setText(prefix + "-heartbeat-cockpit", mc.heartbeat || "--");
+      setText(prefix + "-bus-a", mc.bus_a || data.bus1553?.bus_a || "---");
+      setText(prefix + "-bus-b", mc.bus_b || data.bus1553?.bus_b || "---");
+      const inputs = mc.inputs || {};
+      const outputs = mc.outputs || {};
+      setText(prefix + "-air-data", inputs.air_data || "---");
+      setText(prefix + "-ins", inputs.nav || "---");
+      setText(prefix + "-engine", inputs.engine || "---");
+      setText(prefix + "-fuel", inputs.fuel || "---");
+      setText(prefix + "-display", outputs.displays || "---");
+      setText(prefix + "-autopilot", outputs.autopilot || "---");
+      setText(prefix + "-other-mc", outputs.other_mc || "---");
+   }
+
+   update("mc1", mc1);
+   update("mc2", mc2);
+}
+
+function updateSystemStatusCockpit(data) {
+   setStatusClass("bus-a-pill", data.bus1553?.bus_a || "NO DATA");
+   setStatusClass("bus-b-pill", data.bus1553?.bus_b || "NO DATA");
+   const arincOnline = (data.arinc429?.label_count || 0) > 0 ? "ONLINE" : "NO DATA";
+   setStatusClass("arinc-pill", arincOnline);
+
+   setText("input-source-label", data.input?.source || data.input?.active || "---");
+   setText("route-source-label", data.nav_display?.route_source || data.sim?.route_source || "---");
+   setText("taws-source-label", data.taws?.source || "---");
+   setText("weather-source-label", data.weather_radar?.source || "---");
+   setText("cockpit-radar-source", data.weather_radar?.source || "---");
+
+   const stableNextWp = getNextWaypoint(data);
+   if (stableNextWp) cockpitRadarReadoutCache.nextWp = stableNextWp;
+
+   const stableBearing = radarBearingFromState(data);
+   if (stableBearing !== null && stableBearing !== undefined) {
+      cockpitRadarReadoutCache.bearing = fmt3(stableBearing) + "°";
+   }
+
+   setText("cockpit-radar-next-wp", cockpitRadarReadoutCache.nextWp);
+   setText("cockpit-radar-brg", cockpitRadarReadoutCache.bearing);
+
+   const fresh = data.input?.fresh !== false;
+   setStatusClass("pilot-pfd-status", fresh ? "OK" : "STALE");
+   setStatusClass("copilot-pfd-status", fresh ? "OK" : "STALE");
+   setStatusClass("map-nav-status", data.nav_display ? "OK" : "NO DATA");
+   setStatusClass("cockpit-radar-status", data.weather_radar ? "OK" : "NO DATA");
+}
+
+function updateCockpitAlerts(data) {
+   const list = document.getElementById("cockpit-alert-list");
+   const count = document.getElementById("cockpit-alert-count");
+   if (!list) return;
+
+   const alerts = [];
+   if (data.input && data.input.fresh === false) alerts.push(["warn", "Input exchange stale"]);
+   if (data.taws && data.taws.alert_state && data.taws.alert_state !== "CLEAR") alerts.push([data.taws.alert_state.includes("PULL") ? "bad" : "warn", data.taws.alert_state]);
+   if (data.bus1553?.bus_a !== "ONLINE") alerts.push(["warn", "Bus A no data"]);
+   if (data.bus1553?.bus_b !== "ONLINE") alerts.push(["warn", "Bus B no data"]);
+   if (!data.autopilot?.valid) alerts.push(["warn", "Autopilot data unavailable"]);
+
+   if (alerts.length === 0) alerts.push(["good", "Cockpit buses nominal"]);
+   if (count) count.textContent = alerts.length;
+
+   const now = new Date().toLocaleTimeString();
+   list.innerHTML = alerts.slice(0, 5).map(([css, text]) => {
+      return `<li><time>${now}</time><b class="${css}">${text}</b></li>`;
+   }).join("");
+}
+
+function updateCockpitRadarRangeUi() {
+   const canvas = document.getElementById("cockpit-weather-radar-canvas");
+   if (canvas) {
+      canvas.dataset.displayRangeNm = String(cockpitRadarRangeNm);
+   }
+   setText("cockpit-radar-range-label", cockpitRadarRangeNm + " NM");
+   document.querySelectorAll("[data-radar-range]").forEach((el) => {
+      el.classList.toggle("active-range", Number(el.dataset.radarRange) === cockpitRadarRangeNm);
+   });
+}
+
+function setupCockpitRadarRangeButtons() {
+   if (window.__mbilCockpitRadarRangeDelegated) {
+      updateCockpitRadarRangeUi();
+      return;
+   }
+
+   window.__mbilCockpitRadarRangeDelegated = true;
+   document.addEventListener("click", (event) => {
+      const el = event.target.closest("[data-radar-range]");
+      if (!el) return;
+
+      event.preventDefault();
+      cockpitRadarRangeNm = Number(el.dataset.radarRange) || 40;
+      localStorage.setItem("mbilCockpitRadarRangeNm", String(cockpitRadarRangeNm));
+      updateCockpitRadarRangeUi();
+
+      if (window.MbilDisplays && typeof window.MbilDisplays.updateFromApi === "function") {
+         window.MbilDisplays.updateFromApi();
+      } else {
+         updateCockpit();
+      }
+   });
+
+   updateCockpitRadarRangeUi();
+}
+
+function drawCockpitRadarNavOverlay(data) {
+   const canvas = document.getElementById("cockpit-weather-radar-canvas");
+   if (!canvas || !data.aircraft) return;
+
+   const ctx = canvas.getContext("2d");
+   const width = canvas.width;
+   const height = canvas.height;
+   if (!width || !height) return;
+
+   const centerX = width / 2;
+   const centerY = height / 2;
+   const maxRadius = Math.min(width, height) * 0.78;
+   const pxPerNm = maxRadius / cockpitRadarRangeNm;
+   const aircraftLat = Number(data.aircraft.lat || 0);
+   const aircraftLon = Number(data.aircraft.lon || 0);
+   const headingDeg = numericFromDisplay(data.aircraft.heading, 0);
+   const routePoints = getRoutePoints(data);
+   const currentWp = getCurrentWaypoint(data);
+   const nextWp = getNextWaypoint(data);
+
+   if (!routePoints.length) return;
+
+   function projectRadar(lat, lon) {
+      const avgLatRad = aircraftLat * Math.PI / 180.0;
+      const northNm = (lat - aircraftLat) * 60.0;
+      const eastNm = (lon - aircraftLon) * 60.0 * Math.cos(avgLatRad);
+      // Cockpit radar nav overlay is NORTH UP so it matches the MAP / NAV panel.
+      // Weather returns may be produced by the radar renderer, but the flight-plan
+      // overlay must use the same north-up projection as the map page.
+      return {
+         x: centerX + eastNm * pxPerNm,
+         y: centerY - northNm * pxPerNm,
+         rangeNm: Math.sqrt(northNm * northNm + eastNm * eastNm),
+      };
+   }
+
+   function drawRoutePolyline(strokeStyle, lineWidth) {
+      ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = lineWidth;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      let started = false;
+
+      routePoints.forEach((point) => {
+         const pos = projectRadar(numberOrZero(point.lat), numberOrZero(point.lon));
+         if (pos.rangeNm > cockpitRadarRangeNm * 1.25) {
+            started = false;
+            return;
+         }
+         if (!started) {
+            ctx.moveTo(pos.x, pos.y);
+            started = true;
+         } else {
+            ctx.lineTo(pos.x, pos.y);
+         }
+      });
+
+      ctx.stroke();
+   }
+
+   ctx.save();
+   ctx.globalAlpha = 1.0;
+   ctx.globalCompositeOperation = "source-over";
+
+   // Draw the flight plan after weather returns so it stays on top.
+   drawRoutePolyline("rgba(0, 0, 0, 0.95)", 6);
+   drawRoutePolyline("rgba(255, 80, 255, 0.98)", 3);
+
+   const leg = getActiveLegIndexes(routePoints, data);
+   if (leg) {
+      const from = routePoints[leg.from];
+      const to = routePoints[leg.to];
+      if (from && to) {
+         const a = projectRadar(numberOrZero(from.lat), numberOrZero(from.lon));
+         const b = projectRadar(numberOrZero(to.lat), numberOrZero(to.lon));
+         if (a.rangeNm <= cockpitRadarRangeNm * 1.25 || b.rangeNm <= cockpitRadarRangeNm * 1.25) {
+            ctx.lineCap = "round";
+            ctx.strokeStyle = "rgba(0, 0, 0, 0.95)";
+            ctx.lineWidth = 7;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+
+            ctx.strokeStyle = "rgba(255, 255, 90, 1.0)";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+         }
+      }
+   }
+
+   routePoints.forEach((point) => {
+      const ident = getRouteIdent(point);
+      const pos = projectRadar(numberOrZero(point.lat), numberOrZero(point.lon));
+      if (pos.rangeNm > cockpitRadarRangeNm * 1.25) return;
+
+      const isNext = sameWaypointIdent(ident, nextWp);
+      const isCurrent = sameWaypointIdent(ident, currentWp);
+      ctx.fillStyle = isNext ? "#ffff66" : (isCurrent ? "#66ff66" : "#ff66ff");
+      ctx.strokeStyle = "rgba(0,0,0,0.95)";
+      ctx.lineWidth = isNext ? 4 : 3;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, isNext ? 6 : 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = isNext ? "bold 11px monospace" : "11px monospace";
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = "rgba(0,0,0,0.95)";
+      ctx.strokeText(ident, pos.x + 8, pos.y - 8);
+      ctx.fillStyle = isNext ? "#ffff66" : "#ffffff";
+      ctx.fillText(ident, pos.x + 8, pos.y - 8);
+   });
+
+   // Since this overlay is NORTH UP, redraw the ownship with actual heading.
+   // This prevents the radar from looking like a heading-up display while
+   // the route overlay is north-up.
+   ctx.save();
+   ctx.translate(centerX, centerY);
+   ctx.rotate(headingDeg * Math.PI / 180.0);
+   ctx.fillStyle = "#ff66ff";
+   ctx.strokeStyle = "rgba(255,255,255,0.95)";
+   ctx.lineWidth = 2;
+   ctx.beginPath();
+   ctx.moveTo(0, -15);
+   ctx.lineTo(9, 11);
+   ctx.lineTo(0, 6);
+   ctx.lineTo(-9, 11);
+   ctx.closePath();
+   ctx.fill();
+   ctx.stroke();
+   ctx.restore();
+
+   ctx.restore();
+}
+
+function drawCockpitRadarNavOverlayStable(data) {
+   // Route/waypoint drawing is now owned by app/static/js/taws_weather.js.
+   // Keeping a second cockpit-only canvas overlay caused the route and BRG
+   // text to blink because the shared display renderer and cockpit page were
+   // both redrawing the same canvas.
+   return;
+}
+
 async function updateCockpit() {
    try {
       const response = await fetch("/api/state");
       const data = await response.json();
 
+      document.title = "Mission Bus Lab";
       bindText(data);
-      updateBusMessages(data);
       drawMovingMap(data);
+      updateCockpitRadarRangeUi();
 
       if (window.MbilDisplays && typeof window.MbilDisplays.updateAll === "function") {
          window.MbilDisplays.updateAll(data);
       }
+      drawCockpitRadarNavOverlayStable(data);
+
+      updatePfd("pilot", data);
+      updatePfd("copilot", data);
+      updateMissionComputersCockpit(data);
+      updateSystemStatusCockpit(data);
+      updateCockpitAlerts(data);
+
+      setText("aircraft-altitude", data.aircraft?.altitude || "---");
+      setText("aircraft-airspeed", data.aircraft?.airspeed || "---");
+      setText("aircraft-heading", String(data.aircraft?.heading || "---").includes("°") ? data.aircraft.heading : (data.aircraft?.heading || "---") + "°");
+      setText("aircraft-vertical-speed", data.aircraft?.vertical_speed || "---");
+      setText("aircraft-fuel", data.aircraft?.fuel || "---");
+      setText("aircraft-engine-temp", data.aircraft?.engine_temp || "---");
    } catch (error) {
       console.error("Cockpit update failed:", error);
    }
-
-  const response = await fetch("/api/state");
-  const data = await response.json();
-  document.title = "Mission Bus Lab";
-
-  setText("mc1-role", data.mc1.role);
-  setText("mc1-state", data.mc1.state);
-
-  setText("mc2-role", data.mc2.role);
-  setText("mc2-state", data.mc2.state);
-
-//   setText("current_wp", data.current_wp);
-//   setText("next_wp", data.next_wp);
-
-  setText("aircraft-altitude", data.aircraft.altitude);
-  setText("aircraft-airspeed", data.aircraft.airspeed);
-  setText("aircraft-heading", data.aircraft.heading);
-  setText("aircraft-vertical-speed", data.aircraft.vertical_speed);
-  setText("aircraft-fuel", data.aircraft.fuel);
-  setText("aircraft-engine-temp", data.aircraft.engine_temp);
 }
 
-setInterval(updateCockpit, 500);
-updateCockpit();
+function startCockpitPage() {
+   if (cockpitPageStarted) return;
+   cockpitPageStarted = true;
+   setupCockpitRadarRangeButtons();
+   setInterval(updateCockpit, 500);
+   updateCockpit();
+}
+
+if (document.readyState === "loading") {
+   document.addEventListener("DOMContentLoaded", startCockpitPage);
+} else {
+   startCockpitPage();
+}
 
 function updateMissionComputerHeartbeat(data) {
    const mc1Heartbeat = document.getElementById("mc1-heartbeat");

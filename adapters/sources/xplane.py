@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import base64
 import json
 import math
+import os
+import re
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -15,6 +18,10 @@ MPS_TO_KTS = 1.9438444924
 KG_TO_LB = 2.2046226218
 
 DEFAULT_BASE_URL = "http://127.0.0.1:8086/api/v3"
+
+IDENT_RE = re.compile(r"^[A-Z0-9][A-Z0-9_-]{1,7}$")
+BASE64_RE = re.compile(r"^[A-Za-z0-9+/=]{4,}$")
+
 
 DATAREFS = {
     "lat": "sim/flightmodel/position/latitude",
@@ -40,6 +47,25 @@ DATAREFS = {
     "gps_course_deg": "sim/cockpit/radios/gps_course_degtm",
     "gps_destination_type": "sim/cockpit/gps/destination_type",
     "gps_destination_index": "sim/cockpit/gps/destination_index",
+
+    # Autopilot / flight-director. Missing datarefs are treated as OFF/unknown.
+    "ap_state": "sim/cockpit/autopilot/autopilot_state",
+    "ap_on": "sim/cockpit2/autopilot/autopilot_on",
+    "fd_mode": "sim/cockpit2/autopilot/flight_director_mode",
+    "yd_on": "sim/cockpit2/autopilot/yaw_damper_on",
+    "hdg_status": "sim/cockpit2/autopilot/heading_status",
+    "nav_status": "sim/cockpit2/autopilot/nav_status",
+    "alt_status": "sim/cockpit2/autopilot/altitude_hold_status",
+    "vs_status": "sim/cockpit2/autopilot/vvi_status",
+    "spd_status": "sim/cockpit2/autopilot/speed_status",
+    "apr_status": "sim/cockpit2/autopilot/approach_status",
+    "gs_status": "sim/cockpit2/autopilot/glideslope_status",
+    "gpss_status": "sim/cockpit2/autopilot/gpss_status",
+    "fms_vnav": "sim/cockpit2/autopilot/fms_vnav",
+    "selected_heading_deg": "sim/cockpit2/autopilot/heading_dial_deg_mag_pilot",
+    "selected_altitude_ft": "sim/cockpit2/autopilot/altitude_dial_ft",
+    "selected_airspeed": "sim/cockpit2/autopilot/airspeed_dial_kts_mach",
+    "selected_vs_fpm": "sim/cockpit2/autopilot/vvi_dial_fpm",
 }
 
 
@@ -64,18 +90,109 @@ def _first_number(value: Any, default: float = 0.0) -> float:
         return default
 
 
+def _valid_ident(text: str) -> bool:
+    return bool(IDENT_RE.match(text or ""))
+
+
+def _clean_identifier_text(text: str) -> str:
+    text = (text or "").split("\x00", 1)[0].strip().upper()
+    text = "".join(ch for ch in text if ch.isalnum() or ch in {"_", "-"})
+    if len(text) > 8:
+        return ""
+    if len(text) >= 4 and len(set(text)) <= 1:
+        return ""
+    return text if _valid_ident(text) else ""
+
+
+def _decode_xplane_fixed_string(text: str) -> str:
+    # Some X-Plane string datarefs arrive through the Web API as base64-ish
+    # fixed buffers. Example: TE9YTFkAAAAAAAA -> LOXLY + NUL padding.
+    raw = (text or "").strip()
+    if not raw or not BASE64_RE.match(raw):
+        return ""
+    try:
+        padded = raw + ("=" * ((4 - len(raw) % 4) % 4))
+        decoded = base64.b64decode(padded, validate=False)
+        return decoded.decode("ascii", errors="ignore")
+    except Exception:
+        return ""
+
+
 def _clean_xplane_string(value: Any) -> str:
     if isinstance(value, dict):
         value = value.get("data", "")
     if value is None:
         return ""
-    text = str(value).strip().strip("\x00").strip()
-    # X-Plane can return fixed-length garbage/placeholder strings like AAAAAA...
-    if len(text) > 24 and len(set(text)) <= 2:
-        return ""
-    if len(text) > 16:
-        text = text[:16].strip()
-    return text
+
+    raw = str(value).strip()
+
+    direct = _clean_identifier_text(raw)
+    if direct:
+        return direct
+
+    decoded = _clean_identifier_text(_decode_xplane_fixed_string(raw))
+    if decoded:
+        return decoded
+
+    # Last chance: fixed buffers sometimes look like IDENT + NULs, spaces, or filler.
+    no_nuls = raw.split("\x00", 1)[0].strip()
+    direct = _clean_identifier_text(no_nuls)
+    return direct
+
+
+def _distance_nm(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    avg_lat = math.radians((lat1 + lat2) / 2.0)
+    north_nm = (lat2 - lat1) * 60.0
+    east_nm = (lon2 - lon1) * 60.0 * math.cos(avg_lat)
+    return math.sqrt(north_nm * north_nm + east_nm * east_nm)
+
+
+def _bearing_deg(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    r = math.pi / 180.0
+    p1 = lat1 * r
+    p2 = lat2 * r
+    dlon = (lon2 - lon1) * r
+    y = math.sin(dlon) * math.cos(p2)
+    x = math.cos(p1) * math.sin(p2) - math.sin(p1) * math.cos(p2) * math.cos(dlon)
+    return (math.degrees(math.atan2(y, x)) + 360.0) % 360.0
+
+
+def _point_ident(point: dict[str, Any], fallback: str = "WP") -> str:
+    return _clean_xplane_string(point.get("id") or point.get("ident") or point.get("name") or fallback) or fallback
+
+
+def _route_index_by_ident(points: list[dict[str, Any]], ident: str) -> int:
+    ident = _clean_xplane_string(ident)
+    if not ident:
+        return -1
+    for index, point in enumerate(points):
+        if _point_ident(point).upper() == ident.upper():
+            return index
+    return -1
+
+
+def _active_leg_from_route(points: list[dict[str, Any]], lat: float, lon: float, live_next_wp: str = "") -> tuple[str, str]:
+    if len(points) < 2:
+        only = _point_ident(points[0], "XPLN") if points else "XPLN"
+        return only, live_next_wp or "GPS"
+
+    live_index = _route_index_by_ident(points, live_next_wp)
+    if live_index > 0:
+        return _point_ident(points[live_index - 1]), _point_ident(points[live_index])
+    if live_index == 0:
+        return _point_ident(points[0]), _point_ident(points[1])
+
+    nearest = min(range(len(points)), key=lambda i: _distance_nm(lat, lon, float(points[i].get("lat", lat)), float(points[i].get("lon", lon))))
+    if nearest >= len(points) - 1:
+        return _point_ident(points[-2]), _point_ident(points[-1])
+    return _point_ident(points[nearest]), _point_ident(points[nearest + 1])
+
+
+def _route_point(points: list[dict[str, Any]], ident: str) -> dict[str, Any] | None:
+    index = _route_index_by_ident(points, ident)
+    if index >= 0:
+        return points[index]
+    return None
 
 
 def _nm_offset(lat: float, lon: float, bearing_deg: float, distance_nm: float) -> tuple[float, float]:
@@ -89,19 +206,39 @@ def _nm_offset(lat: float, lon: float, bearing_deg: float, distance_nm: float) -
     return new_lat, new_lon
 
 
-def _find_latest_fms_file() -> Path | None:
-    candidates: list[Path] = []
+def _fms_search_roots() -> list[Path]:
     home = Path.home()
-    roots = [
+    roots: list[Path] = []
+
+    env_file = os.environ.get("MBIL_XPLANE_FMS_FILE")
+    if env_file:
+        roots.append(Path(env_file))
+
+    env_dir = os.environ.get("MBIL_XPLANE_FMS_DIR") or os.environ.get("XPLANE_FMS_PLANS_DIR")
+    if env_dir:
+        roots.append(Path(env_dir))
+
+    roots.extend([
         Path("data/xplane_route"),
         home / "X-Plane 12" / "Output" / "FMS plans",
+        home / "Documents" / "X-Plane 12" / "Output" / "FMS plans",
         home / "Games" / "X-Plane 12" / "Output" / "FMS plans",
         home / ".steam" / "steam" / "steamapps" / "common" / "X-Plane 12" / "Output" / "FMS plans",
+        home / ".steam" / "debian-installation" / "steamapps" / "common" / "X-Plane 12" / "Output" / "FMS plans",
         home / ".local" / "share" / "Steam" / "steamapps" / "common" / "X-Plane 12" / "Output" / "FMS plans",
-    ]
-    for root in roots:
+        home / ".var" / "app" / "com.valvesoftware.Steam" / ".local" / "share" / "Steam" / "steamapps" / "common" / "X-Plane 12" / "Output" / "FMS plans",
+        home / "snap" / "steam" / "common" / ".local" / "share" / "Steam" / "steamapps" / "common" / "X-Plane 12" / "Output" / "FMS plans",
+    ])
+    return roots
+
+
+def _find_latest_fms_file() -> Path | None:
+    candidates: list[Path] = []
+    for root in _fms_search_roots():
         try:
-            if root.exists():
+            if root.is_file() and root.suffix.lower() == ".fms":
+                candidates.append(root)
+            elif root.exists():
                 candidates.extend(root.glob("*.fms"))
         except Exception:
             pass
@@ -130,6 +267,7 @@ def parse_fms_file(path: Path) -> list[dict[str, Any]]:
         ident = parts[1] if len(parts) >= 2 else f"WP{len(points) + 1}"
         if ident.upper() in {"ADEP", "ADES", "APP", "DEP", "DES"} and len(parts) >= 3:
             ident = parts[2]
+        ident = _clean_xplane_string(ident) or f"WP{len(points) + 1}"
         points.append({"id": ident, "lat": lat, "lon": lon, "source": "XPLANE_FMS_FILE"})
     return points
 
@@ -180,6 +318,9 @@ class XPlaneWebSource:
     def _text(self, key: str) -> str:
         return _clean_xplane_string(self._value(key, ""))
 
+    def _mode_on(self, key: str) -> bool:
+        return self._num(key, 0.0) > 0.5
+
     def _route_points(self, lat: float, lon: float, next_wp: str, bearing_deg: float | None, distance_nm: float | None) -> tuple[list[dict[str, Any]], str]:
         fms = _find_latest_fms_file()
         if fms:
@@ -216,18 +357,52 @@ class XPlaneWebSource:
             gps_distance = self._num("gps_distance_nm", float("nan"))
             gps_course = self._num("gps_course_deg", float("nan"))
 
-            nav_id = self._text("gps_dme_id") or self._text("gps_nav_id")
-            if not nav_id:
-                nav_id = "GPS"
+            ap_state = self._num("ap_state", 0.0)
+            ap_on = self._mode_on("ap_on") or ap_state > 0.5
+            fd_on = self._mode_on("fd_mode") or ap_on
+            yd_on = self._mode_on("yd_on")
+            hdg_mode = self._mode_on("hdg_status")
+            nav_mode = self._mode_on("nav_status") or self._mode_on("gpss_status")
+            alt_hold = self._mode_on("alt_status")
+            vs_mode = self._mode_on("vs_status")
+            flc_mode = self._mode_on("spd_status")
+            apr_mode = self._mode_on("apr_status")
+            gs_mode = self._mode_on("gs_status") or self._mode_on("fms_vnav")
+            selected_heading = self._num("selected_heading_deg", float("nan"))
+            selected_altitude = self._num("selected_altitude_ft", float("nan"))
+            selected_airspeed = self._num("selected_airspeed", float("nan"))
+            selected_vs = self._num("selected_vs_fpm", float("nan"))
 
-            bearing_value = gps_bearing if math.isfinite(gps_bearing) else None
-            dist_value = gps_distance if math.isfinite(gps_distance) else None
-            desired_track = gps_course if math.isfinite(gps_course) else bearing_value
-            route_points, route_source = self._route_points(lat, lon, nav_id, bearing_value, dist_value)
+            live_nav_id = self._text("gps_dme_id") or self._text("gps_nav_id")
+
+            bearing_value = gps_bearing if math.isfinite(gps_bearing) and gps_bearing >= 0.0 else None
+            dist_value = gps_distance if math.isfinite(gps_distance) and gps_distance > 0.05 else None
+            route_points, route_source = self._route_points(lat, lon, live_nav_id, bearing_value, dist_value)
+
+            current_wp, next_wp = _active_leg_from_route(route_points, lat, lon, live_nav_id)
+            next_point = _route_point(route_points, next_wp)
+            current_point = _route_point(route_points, current_wp)
+
+            if next_point is not None:
+                bearing_value = _bearing_deg(lat, lon, float(next_point.get("lat", lat)), float(next_point.get("lon", lon)))
+                if dist_value is None or route_source.startswith("FMS_FILE"):
+                    dist_value = _distance_nm(lat, lon, float(next_point.get("lat", lat)), float(next_point.get("lon", lon)))
+
+            if current_point is not None and next_point is not None:
+                desired_track = _bearing_deg(
+                    float(current_point.get("lat", lat)),
+                    float(current_point.get("lon", lon)),
+                    float(next_point.get("lat", lat)),
+                    float(next_point.get("lon", lon)),
+                )
+            else:
+                desired_track = gps_course if math.isfinite(gps_course) else bearing_value
+
+            nav_id = live_nav_id or next_wp or "GPS"
 
             route_name = "XPLANE"
             if len(route_points) >= 2:
-                route_name = f"{route_points[0].get('id', 'XPLN')}-{route_points[-1].get('id', nav_id)}"
+                route_name = f"{_point_ident(route_points[0], 'XPLN')}-{_point_ident(route_points[-1], nav_id)}"
 
             self.last_ok_time = time()
             self.last_error = ""
@@ -235,8 +410,8 @@ class XPlaneWebSource:
                 source="XPLANE_WEB_API",
                 timestamp=time(),
                 route=route_name,
-                current_wp=str(route_points[0].get("id", "XPLN")) if route_points else "XPLN",
-                next_wp=nav_id,
+                current_wp=current_wp,
+                next_wp=next_wp,
                 route_points=route_points,
                 route_source=route_source,
                 desired_track_deg=desired_track,
@@ -255,6 +430,20 @@ class XPlaneWebSource:
                 pitch_deg=pitch,
                 roll_deg=roll,
                 yaw_deg=heading,
+                ap_engaged=ap_on,
+                fd_engaged=fd_on,
+                yd_engaged=yd_on,
+                ap_hdg_mode=hdg_mode,
+                ap_nav_mode=nav_mode,
+                ap_alt_hold=alt_hold,
+                ap_vs_mode=vs_mode,
+                ap_flc_mode=flc_mode,
+                ap_apr_mode=apr_mode,
+                ap_gs_mode=gs_mode,
+                selected_heading_deg=selected_heading if math.isfinite(selected_heading) else None,
+                selected_altitude_ft=selected_altitude if math.isfinite(selected_altitude) else None,
+                selected_airspeed_kts=selected_airspeed if math.isfinite(selected_airspeed) else None,
+                selected_vertical_speed_fpm=selected_vs if math.isfinite(selected_vs) else None,
                 fuel_lbs=fuel_lbs,
                 engine_temp_c=egt or itt or 0.0,
                 engine_rpm=rpm,
@@ -278,4 +467,5 @@ class XPlaneWebSource:
             "last_ok_age_sec": round(time() - self.last_ok_time, 2) if self.last_ok_time else None,
             "last_error": self.last_error,
             "last_route_file": self.last_route_file,
+            "fms_search_roots": [str(root) for root in _fms_search_roots()],
         }

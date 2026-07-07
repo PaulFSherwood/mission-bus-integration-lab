@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/80-displays.css">
+
+<section class="displays-shell" data-mbil-displays-page>
+    <div class="displays-page-title-row">
+        <div>
+            <h1>Displays Overview</h1>
+            <p>Live avionics display bench fed by MBIL 1553 / ARINC exchange data.</p>
+        </div>
+        <div class="display-live-pill"><span></span> LIVE</div>
+    </div>
+
+    <section class="display-grid-four">
+        <article class="display-test-card" data-display-card="pilot-pfd">
+            <header><b><span class="display-index">1</span> Pilot PFD</b><span>Status <strong id="disp-pilot-status">OK</strong></span><span>Rate <em id="disp-pilot-rate">--</em></span></header>
+            <canvas id="disp-pilot-pfd" class="display-canvas pfd-canvas"></canvas>
+            <footer>
+                <div><span>Source</span><b id="disp-pilot-source">---</b></div>
+                <div><span>Data Age</span><b id="disp-pilot-age">---</b></div>
+                <div><span>Update Rate</span><b>10 Hz</b></div>
+                <div><span>Stale</span><b id="disp-pilot-stale">NO</b></div>
+            </footer>
+        </article>
+
+        <article class="display-test-card" data-display-card="radar">
+            <header><b><span class="display-index">2</span> Radar</b><span>Status <strong id="disp-radar-status">OK</strong></span><span>Rate <em id="disp-radar-rate">--</em></span></header>
+            <canvas id="disp-radar" class="display-canvas radar-canvas"></canvas>
+            <footer>
+                <div><span>Source</span><b id="disp-radar-source">---</b></div>
+                <div><span>Range</span><b id="disp-radar-range">40 NM</b></div>
+                <div><span>Returns</span><b id="disp-radar-returns">---</b></div>
+                <div><span>Stale</span><b id="disp-radar-stale">NO</b></div>
+            </footer>
+        </article>
+
+        <article class="display-test-card" data-display-card="map-nav">
+            <header><b><span class="display-index">3</span> Map / Nav</b><span>Status <strong id="disp-map-status">OK</strong></span><span>Rate <em id="disp-map-rate">--</em></span></header>
+            <canvas id="disp-map" class="display-canvas map-canvas"></canvas>
+            <footer>
+                <div><span>Source</span><b id="disp-map-source">---</b></div>
+                <div><span>Route</span><b id="disp-map-route">---</b></div>
+                <div><span>Next</span><b id="disp-map-next">---</b></div>
+                <div><span>Stale</span><b id="disp-map-stale">NO</b></div>
+            </footer>
+        </article>
+
+        <article class="display-test-card" data-display-card="copilot-pfd">
+            <header><b><span class="display-index">4</span> Copilot PFD</b><span>Status <strong id="disp-copilot-status">OK</strong></span><span>Rate <em id="disp-copilot-rate">--</em></span></header>
+            <canvas id="disp-copilot-pfd" class="display-canvas pfd-canvas"></canvas>
+            <footer>
+                <div><span>Source</span><b id="disp-copilot-source">---</b></div>
+                <div><span>Data Age</span><b id="disp-copilot-age">---</b></div>
+                <div><span>Update Rate</span><b>10 Hz</b></div>
+                <div><span>Stale</span><b id="disp-copilot-stale">NO</b></div>
+            </footer>
+        </article>
+    </section>
+
+    <section class="display-grid-lower">
+        <article class="display-panel summary-panel">
+            <h2>Display Status Summary</h2>
+            <div class="donut-status"><div><b id="display-total-count">4</b><span>Total</span></div></div>
+            <div class="summary-list">
+                <p><i class="ok-dot"></i> OK <b id="display-ok-count">4</b></p>
+                <p><i class="stale-dot"></i> Stale <b id="display-stale-count">0</b></p>
+                <p><i class="fail-dot"></i> Failed <b id="display-failed-count">0</b></p>
+                <p><i class="off-dot"></i> Offline <b id="display-offline-count">0</b></p>
+            </div>
+        </article>
+
+        <article class="display-panel alerts-panel">
+            <h2>Display Alerts</h2>
+            <ul id="display-alert-list"><li class="good">No active display alerts</li></ul>
+        </article>
+
+        <article class="display-panel controls-panel">
+            <h2>Display Controls</h2>
+            <label>Global Brightness <input id="display-brightness" type="range" min="35" max="100" value="80"></label>
+            <label><input id="display-night-mode" type="checkbox"> Night Mode</label>
+            <label><input id="display-sync" type="checkbox" checked> Synchronize Displays</label>
+            <select id="display-test-pattern">
+                <option value="none">Test Pattern: None</option>
+                <option value="grid">Test Pattern: Grid</option>
+                <option value="fail">Test Pattern: Fail</option>
+            </select>
+            <button id="display-refresh-button">Refresh All Displays</button>
+        </article>
+
+        <article class="display-panel failures-panel">
+            <h2>Display Failures (Simulated)</h2>
+            <p>Select a display to locally simulate failure or degraded behavior.</p>
+            <div class="failure-row"><span>1 Pilot PFD</span><button data-display-fail="pilot-pfd">Fail</button><button data-display-degrade="pilot-pfd">Degrade</button></div>
+            <div class="failure-row"><span>2 Radar</span><button data-display-fail="radar">Fail</button><button data-display-degrade="radar">Degrade</button></div>
+            <div class="failure-row"><span>3 Map / Nav</span><button data-display-fail="map-nav">Fail</button><button data-display-degrade="map-nav">Degrade</button></div>
+            <div class="failure-row"><span>4 Copilot PFD</span><button data-display-fail="copilot-pfd">Fail</button><button data-display-degrade="copilot-pfd">Degrade</button></div>
+            <button id="display-clear-failures">Clear All Display Faults</button>
+        </article>
+    </section>
+
+    <section class="display-data-row">
+        <article class="display-panel flow-panel">
+            <h2>Display Data Flow</h2>
+            <div class="flow-line">
+                <div><b>Sensors</b><span>Air Data</span><span>INS/NAV</span><span>Engine</span><span>Fuel</span></div>
+                <strong>→</strong>
+                <div><b>Mission Computers</b><span>MC1 Primary</span><span>MC2 Standby</span></div>
+                <strong>→</strong>
+                <div><b>Display Bus</b><span id="display-flow-bus-a">Bus A ---</span><span id="display-flow-bus-b">Bus B ---</span><span id="display-flow-arinc">ARINC ---</span></div>
+                <strong>→</strong>
+                <div><b>Displays</b><span>Pilot PFD</span><span>Radar</span><span>Map/Nav</span><span>Copilot PFD</span></div>
+            </div>
+        </article>
+
+        <article class="display-panel perf-panel">
+            <h2>Display Performance <small>(last 60 sec)</small></h2>
+            <div class="perf-grid">
+                <div><span>Avg Update Rate</span><b id="display-avg-rate">--</b></div>
+                <div><span>Min Update Rate</span><b id="display-min-rate">--</b></div>
+                <div><span>Max Update Rate</span><b id="display-max-rate">--</b></div>
+                <div><span>Dropped Updates</span><b id="display-dropped-updates">0</b></div>
+                <div><span>Data Lag Avg</span><b id="display-lag-avg">--</b></div>
+            </div>
+        </article>
+    </section>
+</section>
+
+<script src="/static/js/displays.js"></script>
+{% endblock %}

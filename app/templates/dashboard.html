@@ -8,30 +8,61 @@
             <div class="display-bezel">
                 <div class="display-header">
                     <span>Pilot PFD</span>
-                    <strong class="good">OK</strong>
+                    <strong id="pilot-pfd-status" class="good">OK</strong>
                 </div>
-                <div class="pfd-screen">
-                    <div class="airspeed-tape">
-                        <span>IAS</span>
-                        <b><strong id="aircraft-airspeed2">210</strong></b>
-                        <small>KTS</small>
+                <div class="pfd-screen live-pfd" data-pfd="pilot">
+                    <div class="pfd-annunciator-row">
+                        <span id="pilot-ap-ap" class="ap-annun">AP</span>
+                        <span id="pilot-ap-fd" class="ap-annun">FD</span>
+                        <span id="pilot-ap-yd" class="ap-annun">YD</span>
+                        <span id="pilot-ap-hdg" class="ap-annun">HDG</span>
+                        <span id="pilot-ap-nav" class="ap-annun">NAV</span>
+                        <span id="pilot-ap-alt" class="ap-annun">ALT</span>
+                        <span id="pilot-ap-vs" class="ap-annun">VS</span>
+                        <span id="pilot-ap-flc" class="ap-annun">FLC</span>
+                        <span id="pilot-ap-apr" class="ap-annun">APR</span>
+                        <span id="pilot-ap-gs" class="ap-annun">GS</span>
                     </div>
-                    <div class="attitude-ball">
-                        <div class="sky"></div>
-                        <div class="ground"></div>
-                        <div class="horizon-line"></div>
-                        <div class="pitch-scale">20<br>10<br><b>─ ─ ─</b><br>-10<br>-20</div>
-                        <div class="aircraft-symbol">◇</div>
+
+                    <div class="pfd-main">
+                        <div class="airspeed-tape live-tape">
+                            <span>IAS</span>
+                            <div id="pilot-airspeed-scale" class="tape-scale">260<br>240<br>220<br>200<br>180<br>160</div>
+                            <b id="pilot-airspeed-box">210</b>
+                            <small>KTS</small>
+                        </div>
+
+                        <div class="attitude-ball live-attitude" id="pilot-attitude-ball">
+                            <div class="attitude-world" id="pilot-attitude-world">
+                                <div class="sky"></div>
+                                <div class="ground"></div>
+                                <div class="horizon-line"></div>
+                                <div class="pitch-scale">20<br>10<br><b>─ ─ ─</b><br>-10<br>-20</div>
+                            </div>
+                            <div class="bank-scale"><span>-30</span><span>0</span><span>30</span></div>
+                            <div class="bank-pointer" id="pilot-bank-pointer">▲</div>
+                            <div class="aircraft-symbol">◇</div>
+                            <div class="bearing-pointer" id="pilot-bearing-pointer">BRG ---</div>
+                        </div>
+
+                        <div class="altitude-tape live-tape">
+                            <span>ALT</span>
+                            <div id="pilot-altitude-scale" class="tape-scale">10000<br>9800<br>9600<br>9400<br>9200</div>
+                            <b id="pilot-altitude-box">9600</b>
+                            <small>FT</small>
+                        </div>
                     </div>
-                    <div class="altitude-tape">
-                        <span>ALT</span>
-                        <b>9600</b>
-                        <small>FT</small>
-                    </div>
+
                     <div class="pfd-bottom">
-                        <span data-bind="aircraft.airspeed">215</span>
-                        <strong><span data-bind="aircraft.heading">142</span>°</strong>
-                        <span>29.92 IN</span>
+                        <span>GS <b id="pilot-gs-box">---</b></span>
+                        <strong>HDG <span id="pilot-heading-box">142</span>°</strong>
+                        <span>VS <b id="pilot-vs-box">---</b></span>
+                    </div>
+
+                    <div class="pfd-selected-row">
+                        <span>HDG SEL <b id="pilot-hdg-bug">---</b></span>
+                        <span>ALT SEL <b id="pilot-alt-bug">---</b></span>
+                        <span>SPD SEL <b id="pilot-spd-bug">---</b></span>
                     </div>
                 </div>
                 <div class="display-buttons"><span>BRT</span><span>DIM</span><span>PFD</span><span>MSG</span><span>MENU</span></div>
@@ -42,7 +73,7 @@
             <div class="display-bezel">
                 <div class="display-header">
                     <span>Radar</span>
-                    <strong class="good">GAIN 73%</strong>
+                    <strong id="cockpit-radar-status" class="good">GAIN 73%</strong>
                 </div>
 
                 <div class="radar-screen cockpit-wx-radar-screen">
@@ -51,21 +82,28 @@
                         class="mbil-display-canvas"
                         data-mbil-display="weather-radar"
                         data-display-range-nm="40"
-                        data-display-orientation="heading-up"></canvas>
+                        data-display-orientation="heading-up"
+                        data-route-overlay="true"></canvas>
 
                     <div class="cockpit-radar-overlay radar-top-left">
-                        <div>RNG <strong>40 NM</strong></div>
+                        <div>RNG <strong id="cockpit-radar-range-label">40 NM</strong></div>
                         <div>TILT <strong>0.0°</strong></div>
+                        <div>SRC <strong id="cockpit-radar-source">---</strong></div>
                     </div>
 
                     <div class="cockpit-radar-overlay radar-bottom-right">
                         <div>BRG <strong id="cockpit-radar-brg">---</strong></div>
+                        <div>TO <strong id="cockpit-radar-next-wp">---</strong></div>
                         <div>HDG UP</div>
                     </div>
                 </div>
 
-                <div class="display-buttons">
-                    <span>BRT</span><span>DIM</span><span>RADAR</span><span>CNTL</span><span>MENU</span>
+                <div class="display-buttons radar-range-buttons">
+                    <span data-radar-range="10">10</span>
+                    <span data-radar-range="20">20</span>
+                    <span data-radar-range="40" class="active-range">40</span>
+                    <span data-radar-range="80">80</span>
+                    <span data-radar-range="160">160</span>
                 </div>
             </div>
         </article>
@@ -74,16 +112,17 @@
             <div class="display-bezel">
                 <div class="display-header">
                     <span>Map / Nav</span>
-                    <strong class="good">OK</strong>
+                    <strong id="map-nav-status" class="good">OK</strong>
                 </div>
                 <div class="map-screen">
                   <canvas id="moving-map-canvas" class="moving-map-canvas"></canvas>
 
                   <div class="map-data">
                      TRK <span data-bind="aircraft.heading">142</span><br>
-                     GS <span data-bind="aircraft.airspeed">205 KTS</span><br>
+                     GS <span data-bind="aircraft.ground_speed">205 KTS</span><br>
                      FROM <span data-bind="sim.current_wp">KPNS</span><br>
-                     TO <span data-bind="sim.next_wp">LOXLY</span>
+                     TO <span data-bind="sim.next_wp">LOXLY</span><br>
+                     DIS <span data-bind="sim.gps_distance_nm" data-format="nm1">--</span> NM
                   </div>
                   <div class="eta-box">
                      ROUTE<br>
@@ -98,30 +137,61 @@
             <div class="display-bezel">
                 <div class="display-header">
                     <span>Copilot PFD</span>
-                    <strong class="good">OK</strong>
+                    <strong id="copilot-pfd-status" class="good">OK</strong>
                 </div>
-                <div class="pfd-screen">
-                    <div class="airspeed-tape">
-                        <span>IAS</span>
-                        <b>210</b>
-                        <small>KTS</small>
+                <div class="pfd-screen live-pfd" data-pfd="copilot">
+                    <div class="pfd-annunciator-row">
+                        <span id="copilot-ap-ap" class="ap-annun">AP</span>
+                        <span id="copilot-ap-fd" class="ap-annun">FD</span>
+                        <span id="copilot-ap-yd" class="ap-annun">YD</span>
+                        <span id="copilot-ap-hdg" class="ap-annun">HDG</span>
+                        <span id="copilot-ap-nav" class="ap-annun">NAV</span>
+                        <span id="copilot-ap-alt" class="ap-annun">ALT</span>
+                        <span id="copilot-ap-vs" class="ap-annun">VS</span>
+                        <span id="copilot-ap-flc" class="ap-annun">FLC</span>
+                        <span id="copilot-ap-apr" class="ap-annun">APR</span>
+                        <span id="copilot-ap-gs" class="ap-annun">GS</span>
                     </div>
-                    <div class="attitude-ball">
-                        <div class="sky"></div>
-                        <div class="ground"></div>
-                        <div class="horizon-line"></div>
-                        <div class="pitch-scale">20<br>10<br><b>─ ─ ─</b><br>-10<br>-20</div>
-                        <div class="aircraft-symbol">◇</div>
+
+                    <div class="pfd-main">
+                        <div class="airspeed-tape live-tape">
+                            <span>IAS</span>
+                            <div id="copilot-airspeed-scale" class="tape-scale">260<br>240<br>220<br>200<br>180<br>160</div>
+                            <b id="copilot-airspeed-box">210</b>
+                            <small>KTS</small>
+                        </div>
+
+                        <div class="attitude-ball live-attitude" id="copilot-attitude-ball">
+                            <div class="attitude-world" id="copilot-attitude-world">
+                                <div class="sky"></div>
+                                <div class="ground"></div>
+                                <div class="horizon-line"></div>
+                                <div class="pitch-scale">20<br>10<br><b>─ ─ ─</b><br>-10<br>-20</div>
+                            </div>
+                            <div class="bank-scale"><span>-30</span><span>0</span><span>30</span></div>
+                            <div class="bank-pointer" id="copilot-bank-pointer">▲</div>
+                            <div class="aircraft-symbol">◇</div>
+                            <div class="bearing-pointer" id="copilot-bearing-pointer">BRG ---</div>
+                        </div>
+
+                        <div class="altitude-tape live-tape">
+                            <span>ALT</span>
+                            <div id="copilot-altitude-scale" class="tape-scale">10000<br>9800<br>9600<br>9400<br>9200</div>
+                            <b id="copilot-altitude-box">9600</b>
+                            <small>FT</small>
+                        </div>
                     </div>
-                    <div class="altitude-tape">
-                        <span>ALT</span>
-                        <b>9600</b>
-                        <small>FT</small>
-                    </div>
+
                     <div class="pfd-bottom">
-                        <span data-bind="aircraft.airspeed">215</span>
-                        <strong>HDG <span data-bind="aircraft.heading">142°</span></strong>
-                        <span>29.92 IN</span>
+                        <span>GS <b id="copilot-gs-box">---</b></span>
+                        <strong>HDG <span id="copilot-heading-box">142</span>°</strong>
+                        <span>VS <b id="copilot-vs-box">---</b></span>
+                    </div>
+
+                    <div class="pfd-selected-row">
+                        <span>HDG SEL <b id="copilot-hdg-bug">---</b></span>
+                        <span>ALT SEL <b id="copilot-alt-bug">---</b></span>
+                        <span>SPD SEL <b id="copilot-spd-bug">---</b></span>
                     </div>
                 </div>
                 <div class="display-buttons"><span>BRT</span><span>DIM</span><span>PFD</span><span>MSG</span><span>MENU</span></div>
@@ -135,9 +205,9 @@
             <div class="cni-screen">
                 <h2>MC1 (CNI) - PRIMARY</h2>
                 <div class="cni-columns">
-                    <div><b>Status</b><span>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc1-role">PRIMARY</span></span><span>Health&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc1-state">OK</span></span><span>Heartbeat&nbsp;00:00:00.25</span><span>Bus A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span><span>Bus B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span></div>
-                    <div><b>Inputs</b><span>Air Data&nbsp;&nbsp; <span id="mc1-air-data">OK</span></span><span>INS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc1-ins">OK</span></span><span>Engine&nbsp;&nbsp;&nbsp;&nbsp;OK</span><span>Fuel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span></div>
-                    <div><b>Outputs</b><span>Displays&nbsp;&nbsp; <span id="mc1-display">OK</span></span><span>Autopilot&nbsp; <span id="mc1-autoplit">OK</span></span><span>Other MC&nbsp;&nbsp; <span id="mc1-other-mc">OK</span></span></div>
+                    <div><b>Status</b><span>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc1-role">PRIMARY</span></span><span>Health&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc1-state">OK</span></span><span>Heartbeat&nbsp;<span id="mc1-heartbeat-cockpit">--</span></span><span>Bus A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc1-bus-a">OK</span></span><span>Bus B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc1-bus-b">OK</span></span></div>
+                    <div><b>Inputs</b><span>Air Data&nbsp;&nbsp; <span id="mc1-air-data">OK</span></span><span>INS/NAV&nbsp;&nbsp;&nbsp;<span id="mc1-ins">OK</span></span><span>Engine&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc1-engine">OK</span></span><span>Fuel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc1-fuel">OK</span></span></div>
+                    <div><b>Outputs</b><span>Displays&nbsp;&nbsp; <span id="mc1-display">OK</span></span><span>Autopilot&nbsp; <span id="mc1-autopilot">OK</span></span><span>Other MC&nbsp;&nbsp; <span id="mc1-other-mc">OK</span></span></div>
                 </div>
             </div>
             <div class="cni-keypad"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>CLR</span><span>0</span><span>ENT</span></div>
@@ -148,8 +218,8 @@
             <div class="cni-screen">
                 <h2>MC2 (CNI) - STANDBY</h2>
                 <div class="cni-columns amber-text">
-                    <div><b>Status</b><span>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-role">STANDBY</span></span><span>Health&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-state">OK</span></span><span>Heartbeat&nbsp;00:00:00.28</span><span>Bus A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span><span>Bus B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span></div>
-                    <div><b>Inputs</b><span>Air Data&nbsp;&nbsp; <span id="mc2-air-data">OK</span></span><span>INS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-ins">OK</span></span><span>Engine&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-engine">OK</span></span><span>Fuel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK</span></div>
+                    <div><b>Status</b><span>Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-role">STANDBY</span></span><span>Health&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-state">OK</span></span><span>Heartbeat&nbsp;<span id="mc2-heartbeat-cockpit">--</span></span><span>Bus A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc2-bus-a">OK</span></span><span>Bus B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc2-bus-b">OK</span></span></div>
+                    <div><b>Inputs</b><span>Air Data&nbsp;&nbsp; <span id="mc2-air-data">OK</span></span><span>INS/NAV&nbsp;&nbsp;&nbsp;<span id="mc2-ins">OK</span></span><span>Engine&nbsp;&nbsp;&nbsp;&nbsp; <span id="mc2-engine">OK</span></span><span>Fuel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="mc2-fuel">OK</span></span></div>
                     <div><b>Outputs</b><span>Displays&nbsp;&nbsp; <span id="mc2-display">STANDBY</span></span><span>Autopilot&nbsp; <span id="mc2-autopilot">STANDBY</span></span><span>Other MC&nbsp;&nbsp; <span id="mc2-other-mc">OK</span></span></div>
                 </div>
             </div>
@@ -160,8 +230,9 @@
     <div class="cockpit-bottom-row">
         <section class="status-card system-status-card">
             <h3>System Status</h3>
-            <div class="bus-pill-row"><span>BUS A</span><strong class="good-pill">HEALTHY</strong></div>
-            <div class="bus-pill-row"><span>BUS B</span><strong class="good-pill">HEALTHY</strong></div>
+            <div class="bus-pill-row"><span>BUS A</span><strong id="bus-a-pill" class="good-pill">HEALTHY</strong></div>
+            <div class="bus-pill-row"><span>BUS B</span><strong id="bus-b-pill" class="good-pill">HEALTHY</strong></div>
+            <div class="bus-pill-row"><span>ARINC</span><strong id="arinc-pill" class="good-pill">ONLINE</strong></div>
         </section>
 
         <section class="status-card aircraft-state-card">
@@ -177,21 +248,19 @@
         </section>
 
         <section class="status-card quick-controls-card">
-            <h3>Quick Controls</h3>
-            <div class="quick-controls">
-                <button class="control-button start">Start</button>
-                <button class="control-button pause amber-button">Pause</button>
-                <button class="control-button step">Step</button>
-                <button class="control-button reset">Reset</button>
+            <h3>Display Status</h3>
+            <div class="mini-state-grid display-status-grid">
+                <div><span>Input</span><strong id="input-source-label">---</strong></div>
+                <div><span>Route</span><strong id="route-source-label">---</strong></div>
+                <div><span>TAWS</span><strong id="taws-source-label">---</strong></div>
+                <div><span>Weather</span><strong id="weather-source-label">---</strong></div>
             </div>
         </section>
 
         <section class="status-card alert-card">
-            <h3>Alerts <span>3</span></h3>
-            <ul>
-                <li><time>12:34:10</time><b class="good">MC1 Heartbeat OK</b></li>
-                <li><time>12:34:05</time><b class="warn">Sensor: Engine Temp High</b></li>
-                <li><time>12:33:58</time><b class="warn">Bus A Message Delay</b></li>
+            <h3>Alerts <span id="cockpit-alert-count">0</span></h3>
+            <ul id="cockpit-alert-list">
+                <li><time>--</time><b class="good">Waiting for bus data</b></li>
             </ul>
         </section>
     </div>

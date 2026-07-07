@@ -1,5 +1,5 @@
 {
-  "label_count": 15,
+  "label_count": 19,
   "labels": [
     {
       "bus": "ARINC429_RX_1",
@@ -9,10 +9,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5046985,
+      "tick": 504,
+      "timestamp": 1783439523.324792,
       "units": "ft",
-      "value": 4428.6
+      "value": 3649.3
     },
     {
       "bus": "ARINC429_RX_1",
@@ -22,10 +22,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5046997,
+      "tick": 504,
+      "timestamp": 1783439523.3247936,
       "units": "kt",
-      "value": 105.1
+      "value": 110.1
     },
     {
       "bus": "ARINC429_RX_1",
@@ -35,10 +35,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047004,
+      "tick": 504,
+      "timestamp": 1783439523.3247945,
       "units": "kt",
-      "value": 114.2
+      "value": 119.0
     },
     {
       "bus": "ARINC429_RX_1",
@@ -48,10 +48,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047016,
+      "tick": 504,
+      "timestamp": 1783439523.3247955,
       "units": "kt",
-      "value": 104.0
+      "value": 107.3
     },
     {
       "bus": "ARINC429_RX_1",
@@ -61,10 +61,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047026,
+      "tick": 504,
+      "timestamp": 1783439523.324797,
       "units": "deg",
-      "value": 291.83
+      "value": 29.04
     },
     {
       "bus": "ARINC429_RX_1",
@@ -74,10 +74,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047035,
+      "tick": 504,
+      "timestamp": 1783439523.324798,
       "units": "deg",
-      "value": 1.59
+      "value": -0.58
     },
     {
       "bus": "ARINC429_RX_1",
@@ -87,10 +87,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047042,
+      "tick": 504,
+      "timestamp": 1783439523.3247993,
       "units": "deg",
-      "value": -0.43
+      "value": 0.1
     },
     {
       "bus": "ARINC429_RX_1",
@@ -100,10 +100,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.504705,
+      "tick": 504,
+      "timestamp": 1783439523.3248003,
       "units": "fpm",
-      "value": 1002.5
+      "value": -5.6
     },
     {
       "bus": "ARINC429_RX_1",
@@ -113,10 +113,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.504706,
+      "tick": 504,
+      "timestamp": 1783439523.3248012,
       "units": "deg",
-      "value": 30.5902169
+      "value": 30.6201761
     },
     {
       "bus": "ARINC429_RX_1",
@@ -126,10 +126,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047066,
+      "tick": 504,
+      "timestamp": 1783439523.3248024,
       "units": "deg",
-      "value": -87.5454889
+      "value": -87.0904682
     },
     {
       "bus": "ARINC429_RX_1",
@@ -139,10 +139,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047076,
+      "tick": 504,
+      "timestamp": 1783439523.324804,
       "units": "deg",
-      "value": 293.81
+      "value": 29.53
     },
     {
       "bus": "ARINC429_RX_1",
@@ -152,10 +152,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047085,
+      "tick": 504,
+      "timestamp": 1783439523.3248053,
       "units": "nm",
-      "value": 995.83
+      "value": 7.17
     },
     {
       "bus": "ARINC429_RX_1",
@@ -165,10 +165,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047095,
+      "tick": 504,
+      "timestamp": 1783439523.3248067,
       "units": "rpm",
-      "value": 2511.3
+      "value": 2583.9
     },
     {
       "bus": "ARINC429_RX_1",
@@ -178,10 +178,10 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047104,
+      "tick": 504,
+      "timestamp": 1783439523.3248081,
       "units": "deg C",
-      "value": 817.9
+      "value": 1192.0
     },
     {
       "bus": "ARINC429_RX_1",
@@ -191,14 +191,66 @@
       "schema": "MBIL-ARINC429-LABEL-1",
       "source": "XPLANE_WEB_API",
       "ssm": "NORMAL",
-      "tick": 40,
-      "timestamp": 1782458224.5047112,
+      "tick": 504,
+      "timestamp": 1783439523.3248096,
       "units": "lb",
-      "value": 120.8
+      "value": 161.4
+    },
+    {
+      "bus": "ARINC429_RX_1",
+      "label_octal": "140",
+      "name": "AUTOPILOT_ENGAGED",
+      "note": "educational ARINC-429-style label, not binary encoded",
+      "schema": "MBIL-ARINC429-LABEL-1",
+      "source": "XPLANE_WEB_API",
+      "ssm": "NORMAL",
+      "tick": 504,
+      "timestamp": 1783439523.3248107,
+      "units": "bool",
+      "value": true
+    },
+    {
+      "bus": "ARINC429_RX_1",
+      "label_octal": "141",
+      "name": "FLIGHT_DIRECTOR",
+      "note": "educational ARINC-429-style label, not binary encoded",
+      "schema": "MBIL-ARINC429-LABEL-1",
+      "source": "XPLANE_WEB_API",
+      "ssm": "NORMAL",
+      "tick": 504,
+      "timestamp": 1783439523.3248112,
+      "units": "bool",
+      "value": true
+    },
+    {
+      "bus": "ARINC429_RX_1",
+      "label_octal": "142",
+      "name": "SELECTED_HEADING",
+      "note": "educational ARINC-429-style label, not binary encoded",
+      "schema": "MBIL-ARINC429-LABEL-1",
+      "source": "XPLANE_WEB_API",
+      "ssm": "NORMAL",
+      "tick": 504,
+      "timestamp": 1783439523.324813,
+      "units": "deg",
+      "value": 300.4
+    },
+    {
+      "bus": "ARINC429_RX_1",
+      "label_octal": "143",
+      "name": "SELECTED_ALTITUDE",
+      "note": "educational ARINC-429-style label, not binary encoded",
+      "schema": "MBIL-ARINC429-LABEL-1",
+      "source": "XPLANE_WEB_API",
+      "ssm": "NORMAL",
+      "tick": 504,
+      "timestamp": 1783439523.3248136,
+      "units": "ft",
+      "value": 0.0
     }
   ],
   "schema": "MBIL-ARINC429-LATEST-1",
   "source": "X-Plane Web API Source",
   "stub": false,
-  "timestamp": 1782458224.5215006
+  "timestamp": 1783439523.347857
 }

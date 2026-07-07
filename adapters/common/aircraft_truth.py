@@ -41,6 +41,22 @@ class AircraftTruth:
     roll_deg: float = 0.0
     yaw_deg: float = 0.0
 
+    # Autopilot / flight director / selected bugs
+    ap_engaged: bool = False
+    fd_engaged: bool = False
+    yd_engaged: bool = False
+    ap_hdg_mode: bool = False
+    ap_nav_mode: bool = False
+    ap_alt_hold: bool = False
+    ap_vs_mode: bool = False
+    ap_flc_mode: bool = False
+    ap_apr_mode: bool = False
+    ap_gs_mode: bool = False
+    selected_heading_deg: float | None = None
+    selected_altitude_ft: float | None = None
+    selected_airspeed_kts: float | None = None
+    selected_vertical_speed_fpm: float | None = None
+
     # Engine/fuel/environment
     fuel_lbs: float = 5320.0
     engine_temp_c: float = 625.0
@@ -108,6 +124,20 @@ class AircraftTruth:
             pitch_deg=num("pitch_deg", cls.pitch_deg),
             roll_deg=num("roll_deg", cls.roll_deg),
             yaw_deg=num("yaw_deg", data.get("heading_deg", cls.yaw_deg)),
+            ap_engaged=bool(data.get("ap_engaged", False)),
+            fd_engaged=bool(data.get("fd_engaged", False)),
+            yd_engaged=bool(data.get("yd_engaged", False)),
+            ap_hdg_mode=bool(data.get("ap_hdg_mode", False)),
+            ap_nav_mode=bool(data.get("ap_nav_mode", False)),
+            ap_alt_hold=bool(data.get("ap_alt_hold", False)),
+            ap_vs_mode=bool(data.get("ap_vs_mode", False)),
+            ap_flc_mode=bool(data.get("ap_flc_mode", False)),
+            ap_apr_mode=bool(data.get("ap_apr_mode", False)),
+            ap_gs_mode=bool(data.get("ap_gs_mode", False)),
+            selected_heading_deg=opt_num("selected_heading_deg"),
+            selected_altitude_ft=opt_num("selected_altitude_ft"),
+            selected_airspeed_kts=opt_num("selected_airspeed_kts"),
+            selected_vertical_speed_fpm=opt_num("selected_vertical_speed_fpm"),
             fuel_lbs=num("fuel_lbs", cls.fuel_lbs),
             engine_temp_c=num("engine_temp_c", cls.engine_temp_c),
             engine_rpm=opt_num("engine_rpm"),

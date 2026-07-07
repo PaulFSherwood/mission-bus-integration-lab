@@ -178,6 +178,7 @@ def build_api_state_from_exchange(
     air = payload_for(messages, "AIR_DATA")
     nav = payload_for(messages, "NAV_DATA")
     attitude = payload_for(messages, "ATTITUDE_DATA")
+    autopilot = payload_for(messages, "AUTOPILOT_DATA")
     engine = payload_for(messages, "ENGINE_DATA")
     fuel = payload_for(messages, "FUEL_DATA")
     taws = payload_for(messages, "TAWS_DATA")
@@ -197,6 +198,8 @@ def build_api_state_from_exchange(
     lon = _num(nav.get("lon"), _num(fallback_aircraft.get("lon"), 0))
     fuel_lbs = _num(fuel.get("fuel_lbs"), _num(str(fallback_aircraft.get("fuel", "5320")).replace(",", "").split()[0], 5320))
     engine_temp_c = _num(engine.get("engine_temp_c"), _num(str(fallback_aircraft.get("engine_temp", "625")).split()[0], 625))
+    pitch_deg = _num(attitude.get("pitch_deg"), _num(fallback_aircraft.get("pitch_deg"), 0))
+    roll_deg = _num(attitude.get("roll_deg"), _num(fallback_aircraft.get("roll_deg"), 0))
 
     latest_tick = max(int(m.get("tick", 0) or 0) for m in messages)
     source = str(nav.get("source") or status.get("adapter", {}).get("active_source") or "EXCHANGE")
@@ -236,8 +239,8 @@ def build_api_state_from_exchange(
         "lon": lon,
         "current_wp": current_wp,
         "next_wp": next_wp,
-        "pitch_deg": _num(attitude.get("pitch_deg"), _num(fallback_aircraft.get("pitch_deg"), 0)),
-        "roll_deg": _num(attitude.get("roll_deg"), _num(fallback_aircraft.get("roll_deg"), 0)),
+        "pitch_deg": pitch_deg,
+        "roll_deg": roll_deg,
         "oat": f"{_num(air.get('oat_c'), 0):.0f} °C",
     }
 
@@ -248,6 +251,85 @@ def build_api_state_from_exchange(
         "bus_b": "ONLINE" if any(m.get("bus") == "BUS_B" for m in messages) else "NO DATA",
         "message_count": len(messages),
         "source": source,
+    }
+
+
+    ap_modes = autopilot.get("modes") if isinstance(autopilot.get("modes"), dict) else {}
+    state["autopilot"] = {
+        "source": autopilot.get("source", source),
+        "ap_engaged": bool(autopilot.get("ap_engaged", False)),
+        "fd_engaged": bool(autopilot.get("fd_engaged", False)),
+        "yd_engaged": bool(autopilot.get("yd_engaged", False)),
+        "modes": {
+            "HDG": bool(ap_modes.get("HDG", False)),
+            "NAV": bool(ap_modes.get("NAV", False)),
+            "ALT": bool(ap_modes.get("ALT", False)),
+            "VS": bool(ap_modes.get("VS", False)),
+            "FLC": bool(ap_modes.get("FLC", False)),
+            "APR": bool(ap_modes.get("APR", False)),
+            "GS": bool(ap_modes.get("GS", False)),
+        },
+        "selected_heading_deg": autopilot.get("selected_heading_deg"),
+        "selected_altitude_ft": autopilot.get("selected_altitude_ft"),
+        "selected_airspeed_kts": autopilot.get("selected_airspeed_kts"),
+        "selected_vertical_speed_fpm": autopilot.get("selected_vertical_speed_fpm"),
+        "valid": bool(autopilot) and fresh,
+    }
+
+    bus_a_online = state["bus1553"].get("bus_a") == "ONLINE"
+    bus_b_online = state["bus1553"].get("bus_b") == "ONLINE"
+    state["mission_computers"] = {
+        "mc1": {
+            "role": "PRIMARY",
+            "state": "OK" if fresh and bus_a_online else "STALE",
+            "heartbeat": f"00:00:{latest_tick / 10.0:05.2f}",
+            "bus_a": state["bus1553"].get("bus_a"),
+            "bus_b": state["bus1553"].get("bus_b"),
+            "inputs": {
+                "air_data": "OK" if air else "NO DATA",
+                "nav": "OK" if nav else "NO DATA",
+                "engine": "OK" if engine else "NO DATA",
+                "fuel": "OK" if fuel else "NO DATA",
+            },
+            "outputs": {"displays": "OK" if fresh else "STALE", "autopilot": "OK" if autopilot else "NO DATA", "other_mc": "OK" if bus_b_online else "NO DATA"},
+        },
+        "mc2": {
+            "role": "STANDBY",
+            "state": "OK" if fresh and bus_b_online else "STALE",
+            "heartbeat": f"00:00:{latest_tick / 10.0 + 0.02:05.2f}",
+            "bus_a": state["bus1553"].get("bus_a"),
+            "bus_b": state["bus1553"].get("bus_b"),
+            "inputs": {
+                "air_data": "OK" if air else "NO DATA",
+                "nav": "OK" if nav else "NO DATA",
+                "engine": "OK" if engine else "NO DATA",
+                "fuel": "OK" if fuel else "NO DATA",
+            },
+            "outputs": {"displays": "STANDBY" if fresh else "STALE", "autopilot": "STANDBY", "other_mc": "OK" if bus_a_online else "NO DATA"},
+        },
+    }
+
+    state["pfd"] = {
+        "source": "1553:AIR_DATA+ATTITUDE_DATA+AUTOPILOT_DATA",
+        "pitch_deg": pitch_deg,
+        "roll_deg": roll_deg,
+        "heading_deg": heading_deg,
+        "airspeed_kts": airspeed_kts,
+        "altitude_ft": altitude_ft,
+        "vertical_speed_fpm": vertical_speed_fpm,
+        "bearing_pointer_deg": route_block.get("gps_bearing_deg") or nav.get("gps_bearing_deg"),
+        "bearing_pointer_source": route_block.get("gps_nav_id") or nav.get("gps_nav_id") or next_wp,
+    }
+
+    state["nav_display"] = {
+        "source": "1553:NAV_DATA",
+        "route": route,
+        "current_wp": current_wp,
+        "next_wp": next_wp,
+        "desired_track_deg": route_block.get("desired_track_deg") or nav.get("desired_track_deg"),
+        "gps_bearing_deg": route_block.get("gps_bearing_deg") or nav.get("gps_bearing_deg"),
+        "gps_distance_nm": route_block.get("gps_distance_nm") or nav.get("gps_distance_nm"),
+        "route_source": route_block.get("route_source") or nav.get("route_source"),
     }
 
     route_points = route_block.get("route_points") or nav.get("route_points") or []
@@ -302,6 +384,14 @@ def build_api_state_from_exchange(
             "lightning_count": int(_num(weather_radar.get("lightning_count"), 0)),
             "valid": bool(weather_radar.get("valid", True)),
         }
+
+    state["radar_display"] = {
+        "source": state.get("weather_radar", {}).get("source", "1553:WEATHER_RADAR" if weather_radar else "NO DATA"),
+        "range_nm": state.get("weather_radar", {}).get("range_nm", 40),
+        "next_wp": next_wp,
+        "gps_bearing_deg": route_block.get("gps_bearing_deg") or nav.get("gps_bearing_deg"),
+        "gps_distance_nm": route_block.get("gps_distance_nm") or nav.get("gps_distance_nm"),
+    }
 
     return state
 

@@ -67,6 +67,13 @@ def encode_arinc429_labels(truth: AircraftTruth, tick: int) -> list[dict[str, An
     if truth.fuel_lbs is not None:
         labels.append(_label(label_octal="250", name="FUEL_TOTAL", value=round(truth.fuel_lbs, 1), units="lb", ssm=valid_ssm, source=source))
 
+    labels.append(_label(label_octal="140", name="AUTOPILOT_ENGAGED", value=bool(truth.ap_engaged), units="bool", ssm=valid_ssm, source=source))
+    labels.append(_label(label_octal="141", name="FLIGHT_DIRECTOR", value=bool(truth.fd_engaged), units="bool", ssm=valid_ssm, source=source))
+    if truth.selected_heading_deg is not None:
+        labels.append(_label(label_octal="142", name="SELECTED_HEADING", value=round(truth.selected_heading_deg % 360.0, 1), units="deg", ssm=valid_ssm, source=source))
+    if truth.selected_altitude_ft is not None:
+        labels.append(_label(label_octal="143", name="SELECTED_ALTITUDE", value=round(truth.selected_altitude_ft, 1), units="ft", ssm=valid_ssm, source=source))
+
     for label in labels:
         label["tick"] = tick
 

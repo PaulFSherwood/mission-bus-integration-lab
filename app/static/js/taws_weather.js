@@ -15,6 +15,53 @@
         pollHandle: null,
     };
 
+
+    function cleanWaypointIdent(value, fallback = "WP") {
+   if (value === undefined || value === null) return fallback;
+   let text = String(value).trim();
+
+   function normalize(raw) {
+      let t = String(raw || "").split("\0", 1)[0].trim().toUpperCase();
+      t = t.replace(/[^A-Z0-9_-]/g, "");
+      if (t.length > 8) return "";
+      if (t.length >= 4 && new Set(t).size <= 1) return "";
+      return /^[A-Z0-9][A-Z0-9_-]{1,7}$/.test(t) ? t : "";
+   }
+
+   let direct = normalize(text);
+   if (direct) return direct;
+
+   // X-Plane Web API can expose fixed string buffers as base64-ish text.
+   // TE9YTFkAAAAAAAA -> LOXLY plus NUL padding.
+   if (/^[A-Za-z0-9+/=]{4,}$/.test(text)) {
+      try {
+         const padded = text + "=".repeat((4 - text.length % 4) % 4);
+         const decoded = atob(padded);
+         const ident = normalize(decoded);
+         if (ident) return ident;
+      } catch (_) {
+         // ignore and fall through
+      }
+   }
+
+   return fallback;
+    }
+
+    function formatDistanceNm(value) {
+   const n = Number(value);
+   if (!Number.isFinite(n)) return "--";
+   if (Math.abs(n) >= 1000) return Math.round(n).toLocaleString();
+   if (Math.abs(n) >= 100) return n.toFixed(0);
+   if (Math.abs(n) >= 10) return n.toFixed(1);
+   return n.toFixed(2);
+    }
+
+    function formatRouteName(value) {
+   const text = String(value || "").trim();
+   if (!text) return "---";
+   return text.length > 24 ? text.slice(0, 21) + "..." : text;
+    }
+
     function number(value, fallback = 0) {
         if (typeof value === "number") return value;
         if (value === null || value === undefined) return fallback;
@@ -256,29 +303,111 @@
         ctx.restore();
     }
 
-    function drawRoute(ctx, data, aircraft, cx, cy, pixelsPerNm) {
-        const route = data?.route_points || [];
+    function routePointsFromData(data) {
+        if (Array.isArray(data?.route_points)) return data.route_points;
+        if (Array.isArray(data?.sim?.route_points)) return data.sim.route_points;
+        if (Array.isArray(data?.route?.points)) return data.route.points;
+        return [];
+    }
+
+    function routeIdent(wp) {
+        return cleanWaypointIdent(wp?.id || wp?.ident || wp?.name || wp?.label || "WP");
+    }
+
+    function sameIdent(a, b) {
+        return cleanWaypointIdent(a, "").toUpperCase() === cleanWaypointIdent(b, "").toUpperCase();
+    }
+
+    function currentWaypoint(data) {
+        return cleanWaypointIdent(data?.nav_display?.current_wp || data?.route?.current_wp || data?.sim?.current_wp || "", "");
+    }
+
+    function nextWaypoint(data) {
+        return cleanWaypointIdent(data?.nav_display?.next_wp || data?.route?.next_wp || data?.sim?.next_wp || "", "");
+    }
+
+    function findRouteIndex(route, ident) {
+        if (!ident) return -1;
+        return route.findIndex((wp) => sameIdent(routeIdent(wp), ident));
+    }
+
+    function activeLegIndexes(route, data) {
+        const current = findRouteIndex(route, currentWaypoint(data));
+        const next = findRouteIndex(route, nextWaypoint(data));
+        if (current >= 0 && next >= 0 && Math.abs(next - current) === 1) return { from: current, to: next };
+        if (next > 0) return { from: next - 1, to: next };
+        return null;
+    }
+
+    function routeProjector(aircraft, wp, cx, cy, pixelsPerNm, headingUp) {
+        const northUpPoint = projectNorthUp(aircraft, wp.lat, wp.lon, cx, cy, pixelsPerNm);
+        if (!headingUp) return northUpPoint;
+
+        return projectHeadingUp(
+            { eastNm: northUpPoint.eastNm, northNm: northUpPoint.northNm },
+            aircraft,
+            cx,
+            cy,
+            pixelsPerNm
+        );
+    }
+
+    function drawRoute(ctx, data, aircraft, cx, cy, pixelsPerNm, options = {}) {
+        const route = routePointsFromData(data);
         if (route.length < 2) return;
 
-        ctx.save();
-        ctx.strokeStyle = "rgba(255, 80, 255, 0.95)";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
+        const headingUp = Boolean(options.headingUp);
+        const next = nextWaypoint(data);
+        const current = currentWaypoint(data);
 
-        route.forEach((wp, index) => {
-            const p = projectNorthUp(aircraft, wp.lat, wp.lon, cx, cy, pixelsPerNm);
-            if (index === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
-        });
-        ctx.stroke();
+        ctx.save();
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+
+        function drawPolyline(color, width) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = width;
+            ctx.beginPath();
+            route.forEach((wp, index) => {
+                const p = routeProjector(aircraft, wp, cx, cy, pixelsPerNm, headingUp);
+                if (index === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+            });
+            ctx.stroke();
+        }
+
+        drawPolyline("rgba(0, 0, 0, 0.92)", 5);
+        drawPolyline("rgba(255, 80, 255, 0.95)", 2);
+
+        const leg = activeLegIndexes(route, data);
+        if (leg) {
+            const a = routeProjector(aircraft, route[leg.from], cx, cy, pixelsPerNm, headingUp);
+            const b = routeProjector(aircraft, route[leg.to], cx, cy, pixelsPerNm, headingUp);
+            ctx.strokeStyle = "rgba(0, 0, 0, 0.95)";
+            ctx.lineWidth = 7;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+            ctx.strokeStyle = "rgba(255, 255, 90, 1.0)";
+            ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
 
         route.forEach((wp) => {
-            const p = projectNorthUp(aircraft, wp.lat, wp.lon, cx, cy, pixelsPerNm);
-            if (p.x < -20 || p.x > ctx.canvas.width + 20 || p.y < -20 || p.y > ctx.canvas.height + 20) return;
-            ctx.fillStyle = "rgba(255, 80, 255, 0.95)";
-            ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = "#ffffff";
-            ctx.font = "bold 11px monospace";
-            ctx.fillText(wp.id || wp.ident || "WP", p.x + 7, p.y - 6);
+            const ident = routeIdent(wp);
+            const p = routeProjector(aircraft, wp, cx, cy, pixelsPerNm, headingUp);
+            if (p.x < -25 || p.x > ctx.canvas.width + 25 || p.y < -25 || p.y > ctx.canvas.height + 25) return;
+
+            const isNext = sameIdent(ident, next);
+            const isCurrent = sameIdent(ident, current);
+            ctx.fillStyle = isNext ? "#ffff66" : (isCurrent ? "#66ff66" : "#ff66ff");
+            ctx.strokeStyle = "rgba(0,0,0,0.95)";
+            ctx.lineWidth = isNext ? 4 : 3;
+            ctx.beginPath(); ctx.arc(p.x, p.y, isNext ? 6 : 4, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+            ctx.font = isNext ? "bold 11px monospace" : "11px monospace";
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "rgba(0,0,0,0.95)";
+            ctx.strokeText(ident, p.x + 7, p.y - 6);
+            ctx.fillStyle = isNext ? "#ffff66" : "#ffffff";
+            ctx.fillText(ident, p.x + 7, p.y - 6);
         });
         ctx.restore();
     }
@@ -387,6 +516,7 @@
     function renderWeatherRadar(canvas, data, ctx, size, aircraft, rangeNm) {
         const radiusPx = Math.min(size.width, size.height) * 0.42;
         const pixelsPerNm = radiusPx / rangeNm;
+        const northUp = (canvas.dataset.displayOrientation || "heading-up") === "north-up";
 
         ctx.fillStyle = "#02070b";
         ctx.fillRect(0, 0, size.width, size.height);
@@ -402,12 +532,26 @@
         ctx.fillStyle = sweep;
         ctx.fillRect(size.centerX - radiusPx, size.centerY - radiusPx, radiusPx * 2, radiusPx * 2);
 
-        drawWeatherHeadingUp(ctx, data, aircraft, size.centerX, size.centerY, pixelsPerNm, radiusPx);
+        if (northUp) {
+            drawWeatherNorthUp(ctx, data, aircraft, size.centerX, size.centerY, pixelsPerNm);
+        } else {
+            drawWeatherHeadingUp(ctx, data, aircraft, size.centerX, size.centerY, pixelsPerNm, radiusPx);
+        }
         ctx.restore();
 
         drawRangeRings(ctx, size.centerX, size.centerY, radiusPx);
-        drawOwnship(ctx, size.centerX, size.centerY, 0, { headingUp: true, color: "#ff66ff", stroke: "#ffb3ff" });
-        setText("cockpit-radar-brg", String(Math.round(aircraft.headingDeg)).padStart(3, "0") + "°");
+
+        if (canvas.dataset.routeOverlay !== "false") {
+            drawRoute(ctx, data, aircraft, size.centerX, size.centerY, pixelsPerNm, {
+                headingUp: !northUp,
+            });
+        }
+
+        drawOwnship(ctx, size.centerX, size.centerY, northUp ? aircraft.headingDeg : 0, {
+            headingUp: !northUp,
+            color: "#ff66ff",
+            stroke: "#ffb3ff"
+        });
     }
 
     function renderTawsWeather(canvas, data, ctx, size, aircraft, rangeNm) {

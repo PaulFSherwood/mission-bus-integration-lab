@@ -35,18 +35,31 @@
     "port": 3000,
     "raw_packets_seen": 0
   },
-  "message": "Wrote 10 1553 messages and 15 ARINC labels from XPLANE_WEB_API.",
+  "message": "Wrote 12 1553 messages and 19 ARINC labels from XPLANE_WEB_API.",
   "recording_dis": false,
   "recording_path": null,
+  "recording_translated_dis": true,
   "schema": "MBIL-ADAPTER-STATUS-1",
   "synthetic_profile": "normal",
-  "timestamp": 1782458224.520735,
+  "timestamp": 1783439523.347065,
+  "translated_dis_recording_path": "data/dis_captures/dis_capture_1783439133.jsonl",
   "xplane": {
     "base_url": "http://127.0.0.1:8086/api/v3",
-    "dataref_count": 7583,
+    "dataref_count": 7593,
+    "fms_search_roots": [
+      "data/xplane_route",
+      "/home/sherwood/X-Plane 12/Output/FMS plans",
+      "/home/sherwood/Documents/X-Plane 12/Output/FMS plans",
+      "/home/sherwood/Games/X-Plane 12/Output/FMS plans",
+      "/home/sherwood/.steam/steam/steamapps/common/X-Plane 12/Output/FMS plans",
+      "/home/sherwood/.steam/debian-installation/steamapps/common/X-Plane 12/Output/FMS plans",
+      "/home/sherwood/.local/share/Steam/steamapps/common/X-Plane 12/Output/FMS plans",
+      "/home/sherwood/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/X-Plane 12/Output/FMS plans",
+      "/home/sherwood/snap/steam/common/.local/share/Steam/steamapps/common/X-Plane 12/Output/FMS plans"
+    ],
     "last_error": "",
     "last_ok_age_sec": 0.0,
-    "last_route_file": null,
+    "last_route_file": "/home/sherwood/.steam/steam/steamapps/common/X-Plane 12/Output/FMS plans/KPNS-KABQ.fms",
     "online": true
   }
 }

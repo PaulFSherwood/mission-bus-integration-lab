@@ -182,7 +182,8 @@ class MbilControlCenter(QMainWindow):
         self.dis_port.setRange(1, 65535)
         self.dis_port.setValue(3000)
 
-        self.record_dis = QCheckBox("Record DIS packets")
+        self.record_dis = QCheckBox("Record raw DIS packets")
+        self.record_translated_dis = QCheckBox("Record selected source as DIS replay")
         self.replay_path = QLineEdit()
         self.replay_path.setPlaceholderText("data/dis_captures/example.jsonl")
         browse_replay = QPushButton("Browse Replay")
@@ -200,18 +201,19 @@ class MbilControlCenter(QMainWindow):
         grid.addWidget(QLabel("DIS UDP Port"), 2, 0)
         grid.addWidget(self.dis_port, 2, 1, 1, 2)
         grid.addWidget(self.record_dis, 3, 1, 1, 2)
-        grid.addWidget(QLabel("Replay File"), 4, 0)
-        grid.addWidget(self.replay_path, 4, 1)
-        grid.addWidget(browse_replay, 4, 2)
-        grid.addWidget(start, 5, 1)
-        grid.addWidget(stop, 5, 2)
+        grid.addWidget(self.record_translated_dis, 4, 1, 1, 2)
+        grid.addWidget(QLabel("Replay File"), 5, 0)
+        grid.addWidget(self.replay_path, 5, 1)
+        grid.addWidget(browse_replay, 5, 2)
+        grid.addWidget(start, 6, 1)
+        grid.addWidget(stop, 6, 2)
         return box
 
     def _mbil_group(self) -> QGroupBox:
         box = QGroupBox("MBIL Web")
         grid = QGridLayout(box)
 
-        self.host = QLineEdit("127.0.0.1")
+        self.host = QLineEdit("0.0.0.0")
         self.port = QSpinBox()
         self.port.setRange(1, 65535)
         self.port.setValue(8000)
@@ -247,6 +249,7 @@ class MbilControlCenter(QMainWindow):
         send_dis = QPushButton("Send DIS JSON Test")
         overview = QPushButton("Open Cockpit")
         taws = QPushButton("Open TAWS / Weather")
+        displays = QPushButton("Open Displays")
         api_status = QPushButton("Open /api/input/status")
 
         start_stack.clicked.connect(self.start_stack)
@@ -256,9 +259,10 @@ class MbilControlCenter(QMainWindow):
         send_dis.clicked.connect(self.send_dis_test)
         overview.clicked.connect(lambda: self.open_url("/overview"))
         taws.clicked.connect(lambda: self.open_url("/taws-weather"))
+        displays.clicked.connect(lambda: self.open_url("/displays"))
         api_status.clicked.connect(lambda: self.open_url("/api/input/status"))
 
-        for btn in [start_stack, stop_all, start_watch, stop_watch, send_dis, overview, taws, api_status]:
+        for btn in [start_stack, stop_all, start_watch, stop_watch, send_dis, overview, taws, displays, api_status]:
             layout.addWidget(btn)
         layout.addStretch(1)
         return box
@@ -302,6 +306,8 @@ class MbilControlCenter(QMainWindow):
         ]
         if self.record_dis.isChecked():
             args.append("--record-dis")
+        if self.record_translated_dis.isChecked():
+            args.append("--record-translated-dis")
         if source == "replay":
             replay = self.replay_path.text().strip()
             if not replay:

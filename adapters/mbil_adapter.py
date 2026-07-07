@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 from time import time
@@ -73,6 +74,7 @@ class AdapterCore:
         self.dis_replay = DisReplaySource()
         self.xplane = XPlaneWebSource(base_url=xplane_base_url)
         self.recorder = DisCaptureRecorder()
+        self.translated_dis_recorder = DisCaptureRecorder()
         self.active_source = SOURCE_SYNTHETIC
         self.running = False
         self.tick = 0
@@ -99,6 +101,26 @@ class AdapterCore:
         self.last_message = f"Stopped DIS recording: {path}."
         return path
 
+    def start_translated_dis_recording(self) -> Path:
+        path = self.translated_dis_recorder.start()
+        self.last_message = f"Recording translated source replay to {path}."
+        return path
+
+    def stop_translated_dis_recording(self) -> Path | None:
+        path = self.translated_dis_recorder.stop()
+        self.last_message = f"Stopped translated source replay recording: {path}."
+        return path
+
+    def record_truth_as_dis_json(self, truth) -> None:
+        if not self.translated_dis_recorder.enabled:
+            return
+        payload = truth.to_dict()
+        payload["schema"] = "MBIL-DIS-JSON-TRUTH-1"
+        payload["source"] = f"TRANSLATED:{truth.source}"
+        payload["adapter_tick"] = self.tick
+        raw = json.dumps(payload, sort_keys=True).encode("utf-8")
+        self.translated_dis_recorder.record(raw, ("MBIL_TRANSLATED", 0))
+
     def source_online(self, source: str) -> bool:
         if source == SOURCE_SYNTHETIC:
             return True
@@ -120,6 +142,8 @@ class AdapterCore:
             "synthetic_profile": self.synthetic_profile,
             "recording_dis": self.recorder.enabled,
             "recording_path": str(self.recorder.path) if self.recorder.path else None,
+            "recording_translated_dis": self.translated_dis_recorder.enabled,
+            "translated_dis_recording_path": str(self.translated_dis_recorder.path) if self.translated_dis_recorder.path else None,
             "xplane": self.xplane.status(),
             "dis_udp": {
                 "host": self.dis_udp.host,
@@ -155,6 +179,7 @@ class AdapterCore:
             self.last_message = f"{self.active_source} is stubbed/offline. Select Synthetic, DIS, Replay, or X-Plane."
 
         if truth is not None:
+            self.record_truth_as_dis_json(truth)
             messages = encode_1553_messages(truth, self.tick)
             arinc_labels = encode_arinc429_labels(truth, self.tick)
             self.last_message = f"Wrote {len(messages)} 1553 messages and {len(arinc_labels)} ARINC labels from {truth.source}."
@@ -273,7 +298,8 @@ def run_gui(core: AdapterCore) -> int:
                 lines.append(f"[{marker}] {item['name']}")
             lines.append(f"DIS raw packets: {status['dis_udp']['raw_packets_seen']}")
             lines.append(f"DIS decoded packets: {status['dis_udp']['decoded_packets_seen']}")
-            lines.append(f"Recording: {status['recording_dis']}")
+            lines.append(f"Recording raw DIS: {status['recording_dis']}")
+            lines.append(f"Recording translated replay: {status['recording_translated_dis']}")
             self.source_status.setText("\n".join(lines))
             write_adapter_status(status)
 
@@ -283,11 +309,14 @@ def run_gui(core: AdapterCore) -> int:
     return app.exec()
 
 
-def run_headless(core: AdapterCore, record_dis: bool = False) -> int:
+def run_headless(core: AdapterCore, record_dis: bool = False, record_translated_dis: bool = False) -> int:
     print(f"MBIL adapter running headless. Active source: {core.active_source}. Ctrl+C to stop.")
     if record_dis:
         path = core.start_recording()
-        print(f"Recording DIS capture to {path}")
+        print(f"Recording raw DIS UDP capture to {path}")
+    if record_translated_dis:
+        path = core.start_translated_dis_recording()
+        print(f"Recording translated source DIS JSON replay to {path}")
     core.running = True
     last_print = 0.0
     try:
@@ -298,9 +327,10 @@ def run_headless(core: AdapterCore, record_dis: bool = False) -> int:
                 last_print = now
                 status = core.status()
                 dis = status["dis_udp"]
+                extra = " translated_rec=" + str(status.get("recording_translated_dis", False))
                 print(
                     f"{status['active_source']} | {status['message']} | "
-                    f"DIS raw={dis['raw_packets_seen']} decoded={dis['decoded_packets_seen']}"
+                    f"DIS raw={dis['raw_packets_seen']} decoded={dis['decoded_packets_seen']}" + extra
                 )
             from time import sleep
             sleep(0.2)
@@ -308,6 +338,8 @@ def run_headless(core: AdapterCore, record_dis: bool = False) -> int:
         core.running = False
         if record_dis:
             core.stop_recording()
+        if record_translated_dis:
+            core.stop_translated_dis_recording()
         write_adapter_status(core.status())
         print("Stopped.")
         return 0
@@ -325,7 +357,8 @@ def main() -> int:
     parser.add_argument("--dis-port", type=int, default=3000, help="DIS UDP listen port")
     parser.add_argument("--xplane-base-url", default=XPLANE_DEFAULT_BASE_URL, help="X-Plane Web API base URL")
     parser.add_argument("--replay", help="DIS capture JSONL replay file")
-    parser.add_argument("--record-dis", action="store_true", help="Record DIS UDP packets while running headless")
+    parser.add_argument("--record-dis", action="store_true", help="Record raw DIS UDP packets while running headless")
+    parser.add_argument("--record-translated-dis", action="store_true", help="Record the selected source as replayable MBIL DIS JSON packets")
     parser.add_argument(
         "--profile",
         default="normal",
@@ -341,7 +374,7 @@ def main() -> int:
         core.set_source(args.source)
 
     if args.headless:
-        return run_headless(core, record_dis=args.record_dis)
+        return run_headless(core, record_dis=args.record_dis, record_translated_dis=args.record_translated_dis)
     return run_gui(core)
 
 
